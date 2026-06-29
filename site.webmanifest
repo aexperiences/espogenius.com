@@ -1,0 +1,16 @@
+{
+  "name": "MarketNarc — ESPO Genius",
+  "short_name": "MarketNarc",
+  "description": "Plain-English market intelligence — what's happening and why, without the charts, jargon, or noise.",
+  "id": "/",
+  "start_url": "/marketnarc",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0E2B2A",
+  "theme_color": "#0E2B2A",
+  "icons": [
+    { "src": "/favicon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/favicon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
