@@ -3,170 +3,141 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ESPO Genius — plain-English intelligence</title>
-<meta name="description" content="ESPO Genius is the plain-English intelligence line from Accelerated Experiences. What's happening and why — without the charts, jargon, or noise. Home of MarketNarc.">
+<title>ESPO Genius — the why, in plain English</title>
+<meta name="description" content="ESPO Genius is plain-English intelligence for everyday people — what's happening and why, without the charts, jargon, or noise. Home of MarketNarc, your plain-English stock analyst.">
 <link rel="canonical" href="https://espogenius.com/">
 <meta name="theme-color" content="#0E2B2A">
 <meta name="robots" content="index,follow">
-
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ESPO Genius">
-<meta property="og:title" content="ESPO Genius — plain-English intelligence">
-<meta property="og:description" content="The signal, in language a normal person can read. Home of MarketNarc.">
+<meta property="og:title" content="ESPO Genius — the why, in plain English">
+<meta property="og:description" content="Plain-English intelligence for everyday people. Home of MarketNarc.">
 <meta property="og:url" content="https://espogenius.com/">
 <meta property="og:image" content="https://espogenius.com/og-espogenius.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ESPO Genius — plain-English intelligence">
-<meta name="twitter:description" content="The signal, in language a normal person can read. Home of MarketNarc.">
+<meta name="twitter:title" content="ESPO Genius — the why, in plain English">
+<meta name="twitter:description" content="Plain-English intelligence for everyday people. Home of MarketNarc.">
 <meta name="twitter:image" content="https://espogenius.com/og-espogenius.png">
-
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css">
-
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"ESPO Genius","url":"https://espogenius.com/","publisher":{"@type":"Organization","name":"Accelerated Experiences LLC","url":"https://aexperiences.com"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"ESPO Genius","url":"https://espogenius.com/","parentOrganization":{"@type":"Organization","name":"Accelerated Experiences LLC","url":"https://aexperiences.com"},"sameAs":["https://aexperiences.com","https://espomusic.com","https://espodrama.com"]}</script>
+<style>
+  /* espomusic-style architecture, in the ESPO Genius (Signal) brand */
+  .gnav{position:sticky;top:0;z-index:30;background:rgba(10,33,32,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .gnav .wrap{display:flex;align-items:center;gap:16px;padding-block:14px}
+  .ghero{text-align:center;padding:clamp(54px,9vw,96px) 0 clamp(40px,6vw,64px)}
+  .ghero .wordmark{font-family:Lato;font-weight:900;font-size:clamp(15px,2vw,17px);letter-spacing:2px;text-transform:uppercase;color:var(--sea);margin:0 0 22px}
+  .ghero .wordmark .n{color:var(--amber)}
+  .ghero h1{font-size:clamp(40px,7.5vw,74px);max-width:16ch;margin:0 auto .42em}
+  .ghero h1 em{font-style:italic;color:var(--amber)}
+  .ghero .lede{font-size:clamp(18px,2.3vw,22px);color:var(--sea);max-width:52ch;margin:0 auto 30px}
+  .ghero .btn-row{justify-content:center}
+  .ghero .trial{margin-top:22px;color:var(--sea);font-size:14px}
+  .ghero .trial .status{margin-right:4px}
+  .sec-intro{max-width:30ch}
+  .sec-intro.center{margin-inline:auto;text-align:center;max-width:46ch}
+  /* product 'have a play below' card */
+  .product{background:var(--ink-700);border:1px solid var(--line);border-radius:22px;padding:clamp(22px,4vw,40px);margin-bottom:20px}
+  .product .plabel{font-family:Lato;font-weight:900;font-size:clamp(24px,3.4vw,34px);letter-spacing:-.4px;margin:0 0 4px}
+  .product .plabel .n{color:var(--amber)}
+  .product .ptype{color:var(--sea);font-size:14px;font-weight:600;letter-spacing:.4px;margin:0 0 14px}
+  .product p.pdesc{font-size:clamp(15px,1.8vw,17px);color:var(--off);max-width:60ch;margin:0 0 16px;line-height:1.6}
+  .product .playlink{display:inline-flex;align-items:center;gap:7px;font-weight:700;color:var(--amber);font-size:15px}
+  .demoframe{margin-top:22px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--ink-800)}
+  .demoframe iframe{display:block;width:100%;height:720px;border:0}
+  .haveaplay{font-size:13px;color:var(--sea);text-align:center;margin:10px 0 0}
+  .soon{opacity:.72}
+  .why-grid .card.light h3{display:flex;align-items:center;gap:10px}
+  .why-grid .emoji{font-size:22px}
+  .gfoot{background:var(--ink-800);border-top:1px solid var(--line);padding:40px 0;font-size:14.5px}
+  .gfoot .meta{color:var(--sea);margin:0 0 14px}
+  .gfoot nav{display:flex;gap:20px;flex-wrap:wrap}
+  .gfoot nav a{color:var(--off);opacity:.82}.gfoot nav a:hover{opacity:1}
+</style>
 </head>
 <body>
-<h1 class="sr-only">ESPO Genius — plain-English intelligence apps from Accelerated Experiences</h1>
+<h1 class="sr-only">ESPO Genius — plain-English intelligence for everyday people, home of MarketNarc</h1>
 
-<div class="famstrip"><div class="wrap">
-  <span class="fam-label">The ESPO family</span>
-  <a href="https://aexperiences.com" rel="noopener">Accelerated Experiences</a>
-  <a href="https://espomusic.com" rel="noopener">ESPO Music</a>
-  <a href="https://espodrama.com" rel="noopener">ESPO Drama</a>
-  <span class="fam-current">ESPO Genius</span>
-</div></div>
-
-<header class="nav"><div class="wrap">
-  <a class="brand" href="/"><img src="/favicon.svg" alt=""><span class="wm">ESPO <span class="n">Genius</span></span></a>
-  <nav>
-    <a href="#what" class="hide-sm">What it is</a>
-    <a href="#engine" class="hide-sm">How it works</a>
-    <a href="/marketnarc">MarketNarc</a>
-    <a href="mailto:anthonye@aexperiences.studio?subject=ESPO%20Genius%20early%20access">Get on the list</a>
-  </nav>
+<!-- HEADER -->
+<header class="gnav"><div class="wrap">
+  <a class="brand" href="/"><img src="/favicon.svg" alt="" style="height:30px;width:30px;border-radius:8px"><span class="wm" style="font-family:Lato;font-weight:900;font-size:21px">ESPO <span class="n" style="color:var(--amber)">Genius</span></span></a>
+  <a class="btn" href="#try" style="margin-left:auto">Try MarketNarc</a>
 </div></header>
 
 <!-- HERO -->
-<section class="hero section">
-  <div class="wrap hero-grid">
-    <div>
-      <p class="kicker">A plain-English intelligence line · Accelerated Experiences</p>
-      <h1>ESPO <span class="n">Genius</span></h1>
-      <p class="lede">The signal — in language a normal person can read.</p>
-      <p class="sub">Plain-English intelligence apps. What's happening and <em>why</em> — without the charts, the jargon, or the Wall-Street noise. Built for the person who was never let into the room.</p>
-      <p style="margin:22px 0 18px"><span class="status"><span class="dot"></span>In production</span></p>
-      <div class="btn-row">
-        <a class="btn" href="/marketnarc">Meet MarketNarc <span aria-hidden="true">→</span></a>
-        <a class="btn btn-ghost" href="#engine">How the engine works</a>
-      </div>
-    </div>
-    <div>
-      <!-- signature object: a sample plain-English call (illustrative) -->
-      <div class="callcard" role="img" aria-label="Illustrative MarketNarc call: FCX, Buy, 88 percent confidence, because input costs are easing and margins should widen. Includes a bull case, a bear case, and a not-financial-advice note.">
-        <div class="cc-top">
-          <div class="ticker">FCX <small>Freeport-McMoRan</small></div>
-          <span class="preview-tag">illustrative preview</span>
-        </div>
-        <div class="verdict">
-          <span class="vpill">BUY</span>
-          <span class="conf tnum">88%<small>confidence it earned</small></span>
-        </div>
-        <p class="why">Input costs are <b>easing</b> while demand holds — margins should widen before the market reprices it.</p>
-        <div class="cc-split">
-          <div class="bull"><div class="h">Bull</div><p>Cost relief + steady demand = expanding margins.</p></div>
-          <div class="bear"><div class="h">Bear</div><p>A demand shock would undercut the thesis fast.</p></div>
-        </div>
-        <div class="nfa"><span>Educational · not financial advice</span><span>ESPO Genius</span></div>
-      </div>
-    </div>
+<section class="ghero"><div class="wrap">
+  <p class="wordmark">ESPO <span class="n">Genius</span> · plain-English intelligence</p>
+  <h1>The <em>why</em>, finally in plain English.</h1>
+  <p class="lede">ESPO Genius helps everyday people understand the things experts keep behind charts and jargon — starting with the stock market. The point in a sentence, the why spelled out, and an honest "I'm not sure" when it should be. No finance degree required.</p>
+  <div class="btn-row">
+    <a class="btn" href="#try">Try MarketNarc <span aria-hidden="true">›</span></a>
+    <a class="btn btn-ghost" href="#why">Why it's different</a>
   </div>
-</section>
+  <p class="trial"><span class="status"><span class="dot"></span>In production</span> · the first app is MarketNarc — be first when it opens.</p>
+</div></section>
 
-<!-- WHAT IT IS -->
-<section class="section" id="what">
-  <div class="wrap">
-    <p class="kicker">What ESPO Genius is</p>
-    <h2>Expert-only information, finally said plainly.</h2>
-    <p class="lede" style="margin-bottom:36px">Every Genius app takes something noisy and gatekept and hands you the point — in a sentence you'd actually say out loud.</p>
-    <div class="grid cols-3">
-      <div class="card"><div class="num">01</div><h3>Plain English, always</h3><p>No charts to decode, no jargon to look up. Just what's happening and why, in words a beginner gets on the first read.</p></div>
-      <div class="card"><div class="num">02</div><h3>It shows its work</h3><p>You don't get a verdict from a black box. You see the reasoning — the case for, the case against, and how sure it actually is.</p></div>
-      <div class="card"><div class="num">03</div><h3>Honest by default</h3><p>It earns its confidence instead of faking it, and says "I'm not sure" when the data is thin. We don't claim outcomes we haven't earned.</p></div>
+<!-- THE FAMILY / HAVE A PLAY -->
+<section class="section" id="try"><div class="wrap">
+  <p class="kicker">The ESPO Genius family</p>
+  <h2>One honest read. Starting with the markets.</h2>
+  <p class="lede sec-intro" style="margin-bottom:30px">Every ESPO Genius app shares the same honest approach — what's happening and why, in language a normal person can read. Here's the first. Have a play with it, right here on the page.</p>
+
+  <div class="product">
+    <p class="plabel">Market<span class="n">Narc</span></p>
+    <p class="ptype">● market intelligence · in production</p>
+    <p class="pdesc">Your stock-market read, spelled out — a clear <strong>Buy, Sell, Hold,</strong> or <strong>Watch</strong> with the why, from <strong>Bart</strong>, your plain-English AI analyst. He leads with names a beginner can actually afford, says "I'm not sure" when the data's thin, and keeps you in fake money until you decide otherwise. <strong>Have a play below.</strong></p>
+    <a class="playlink" href="/marketnarc">Open MarketNarc <span aria-hidden="true">→</span></a>
+    <div class="demoframe">
+      <iframe src="/demo" title="Try MarketNarc — pick a stock, get Bart's call" loading="lazy"></iframe>
     </div>
+    <p class="haveaplay">A 30-second taste — illustrative, not financial advice.</p>
   </div>
-</section>
 
-<!-- THE ENGINE -->
-<section class="section bleed-light" id="engine">
-  <div class="wrap">
-    <p class="kicker">The standard</p>
-    <h2>Honesty, built in — not bolted on.</h2>
-    <p class="lede" style="margin-bottom:38px">Every ESPO Genius app holds to one rule: show your work, and earn your confidence. You get the verdict with the <em>why</em> in plain English, a confidence score that's earned rather than handed out, and an honest "I'm not sure" when the data is thin.</p>
-    <div class="grid cols-3">
-      <div class="card light"><h3>Shows its work</h3><p>You don't get a number from a black box. You see the reasoning — the case for, the case against, and how sure it actually is.</p></div>
-      <div class="card light"><h3>Confidence it earns</h3><p>High only when the signals line up on solid data; low and honest when they don't. Thin data degrades to low-conviction, never to false certainty.</p></div>
-      <div class="card light"><h3>A voice, not a black box</h3><p>In MarketNarc, that voice is <strong>Bart</strong> — he does the reading and hands you a clear, plain-English call you can act on.</p></div>
-    </div>
+  <div class="product soon">
+    <p class="plabel">More to come</p>
+    <p class="ptype">● on the way</p>
+    <p class="pdesc">Other corners of "what's happening and why," translated the same honest way. We'll show each one when it's real — not before.</p>
   </div>
-</section>
+</div></section>
 
-<!-- THE LINE -->
-<section class="section" id="apps">
-  <div class="wrap">
-    <p class="kicker">The line</p>
-    <h2>The family, starting with the markets.</h2>
-    <p class="lede" style="margin-bottom:34px">ESPO Genius grows one proven app at a time. The first reads the stock market for you.</p>
-    <div class="grid" style="gap:16px">
-      <a class="prod" href="/marketnarc" style="text-decoration:none;color:inherit">
-        <img src="/favicon.svg" alt="MarketNarc icon">
-        <div><h3 style="color:var(--off)">MarketNarc <span class="tag" style="vertical-align:middle">first family member</span></h3>
-          <p>Plain-English market intelligence — a clear Buy / Sell / Hold / Watch call, the why, and a confidence score it earned. For beginners, built to grow you into a confident investor.</p></div>
-        <span class="arrow">In production · See it →</span>
-      </a>
-      <div class="prod soon">
-        <img src="/favicon.svg" alt="" style="filter:grayscale(1) opacity(.5)">
-        <div><h3 style="color:var(--off)">More to come</h3>
-          <p>Other corners of "what's happening and why," translated the same honest way. We'll show each one when it's real — not before.</p></div>
-        <span class="arrow" style="color:var(--sea)">On the way</span>
-      </div>
-    </div>
+<!-- WHY -->
+<section class="section bleed-light" id="why"><div class="wrap">
+  <p class="kicker">Why ESPO Genius</p>
+  <h2>Built for the person who was never let in the room.</h2>
+  <p class="lede sec-intro" style="margin-bottom:34px">Most market tools are built for traders with twelve monitors. ESPO Genius is built for you.</p>
+  <div class="grid cols-3 why-grid">
+    <div class="card light"><h3><span class="emoji">🗣️</span> A guide, not a firehose</h3><p>Not sure what a stock is even doing? Bart explains it plainly — and tells you the truth, including an honest "I'm not sure," instead of charts, jargon, and noise.</p></div>
+    <div class="card light"><h3><span class="emoji">🛡️</span> Honest by default</h3><p>It earns its confidence instead of faking it, shows the bull case <em>and</em> the bear case, and never claims outcomes it hasn't earned.</p></div>
+    <div class="card light"><h3><span class="emoji">🌱</span> Start from zero</h3><p>No finance degree, no Wall-Street decoder ring. Learn as you go, in plain language — and practice with fake money before a real dollar is ever involved.</p></div>
   </div>
-</section>
+</div></section>
 
-<!-- HONEST STRIP -->
-<div class="honest"><div class="wrap">
-  <p>We'll always say plainly <b>what's live and what isn't</b>, and we don't claim outcomes we haven't earned. ESPO Genius is in production now — there's a real person behind it.</p>
-</div></div>
-
-<!-- CTA -->
-<section class="section center">
-  <div class="wrap" style="max-width:660px">
-    <h2>Be first when MarketNarc opens.</h2>
-    <p class="lede center" style="margin-bottom:26px">No spam, no hype — just a note when there's something real to try.</p>
-    <div class="btn-row" style="justify-content:center">
-      <a class="btn" href="mailto:anthonye@aexperiences.studio?subject=ESPO%20Genius%20early%20access&body=I'd%20like%20first%20look%20when%20MarketNarc%20opens.">Get on the list <span aria-hidden="true">→</span></a>
-      <a class="btn btn-ghost" href="/marketnarc">Explore MarketNarc</a>
-    </div>
+<!-- TRY IT THIS WEEK -->
+<section class="section center"><div class="wrap" style="max-width:680px">
+  <h2>Get in early on MarketNarc.</h2>
+  <p class="lede center" style="margin-bottom:26px">MarketNarc is the first ESPO Genius app — market intelligence in plain English. More of the family is on the way. No spam, no hype — just a note when there's something real to try.</p>
+  <div class="btn-row" style="justify-content:center">
+    <a class="btn" href="mailto:anthonye@aexperiences.studio?subject=ESPO%20Genius%20early%20access&body=I'd%20like%20first%20look%20when%20MarketNarc%20opens.">Get early access <span aria-hidden="true">→</span></a>
+    <a class="btn btn-ghost" href="/marketnarc">Explore MarketNarc</a>
   </div>
-</section>
+</div></section>
 
 <!-- FOOTER -->
-<footer class="esp-footer"><div class="wrap">
-  <div class="foot-brand"><img src="/favicon.svg" alt=""><span class="wm">ESPO <span class="n">Genius</span></span></div>
-  <p class="meta">An <a href="https://aexperiences.com" rel="noopener">Accelerated Experiences LLC</a> product · © 2026 ESPO Genius · Post Falls, Idaho</p>
-  <nav class="esp-family">
+<footer class="gfoot"><div class="wrap">
+  <div class="foot-brand" style="display:flex;align-items:center;gap:12px;margin-bottom:16px"><img src="/favicon.svg" alt="" style="height:32px;width:32px;border-radius:9px"><span class="wm" style="font-family:Lato;font-weight:900;font-size:20px">ESPO <span class="n" style="color:var(--amber)">Genius</span></span></div>
+  <p class="meta">An <a href="https://aexperiences.com" rel="noopener" style="color:var(--amber)">Accelerated Experiences LLC</a> product · © 2026 ESPO Genius · Post Falls, Idaho</p>
+  <nav>
+    <a href="/marketnarc">MarketNarc</a>
     <a href="https://aexperiences.com" rel="noopener">Accelerated Experiences</a>
     <a href="https://espomusic.com" rel="noopener">ESPO Music</a>
     <a href="https://espodrama.com" rel="noopener">ESPO Drama</a>
-    <a href="/marketnarc">MarketNarc</a>
     <a href="/privacy">Privacy</a>
     <a href="/terms">Terms</a>
   </nav>
