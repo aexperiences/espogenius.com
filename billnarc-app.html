@@ -69,6 +69,7 @@ body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#
 .nfa{font-size:12px;color:var(--sea);text-align:center;line-height:1.5;margin:6px 0 0}
 .foot{text-align:center;margin-top:22px}
 .foot a{color:var(--accent);font-weight:700;text-decoration:none;font-size:14px}
+.brandmark{width:36px;height:35px;margin:26px auto 8px;opacity:.5;background-color:#E9DEC7;-webkit-mask:url(/ae-mark.png) center/contain no-repeat;mask:url(/ae-mark.png) center/contain no-repeat}
 </style>
 </head>
 <body>
@@ -215,5 +216,6 @@ function decode(){
 function escapeHtml(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 addRow();addRow();addRow();
 </script>
+<div class="brandmark" aria-label="Accelerated Experiences" title="An Accelerated Experiences app"></div>
 </body>
 </html>
