@@ -60,6 +60,14 @@
   .gfoot .meta{color:var(--sea);margin:0 0 14px}
   .gfoot nav{display:flex;gap:20px;flex-wrap:wrap}
   .gfoot nav a{color:var(--off);opacity:.82}.gfoot nav a:hover{opacity:1}
+  .product .pnum{font-size:12px;font-weight:700;letter-spacing:.5px;color:var(--sea);margin:0 0 6px;text-transform:uppercase}
+  .coming-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:2px}
+  @media(max-width:760px){.coming-grid{grid-template-columns:1fr}}
+  .coming-card{background:var(--ink-800);border:1px dashed var(--line);border-radius:18px;padding:22px}
+  .coming-card .cbrain{width:36px;height:36px;border-radius:9px;opacity:.5;display:block;margin-bottom:14px}
+  .coming-card .cbadge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.4px;color:var(--sea);border:1px solid var(--line);border-radius:999px;padding:3px 10px;margin-bottom:11px}
+  .coming-card h3{font-family:Lato;font-weight:900;font-size:18px;margin:0 0 6px}
+  .coming-card p{font-size:13.5px;color:var(--sea);margin:0;line-height:1.55}
 </style>
 </head>
 <body>
@@ -75,21 +83,22 @@
 <section class="ghero"><div class="wrap">
   <p class="wordmark">ESPO <span class="n">Genius</span> · plain-English intelligence</p>
   <h1>The <em>why</em>, finally in plain English.</h1>
-  <p class="lede">ESPO Genius helps everyday people understand the things experts keep behind charts and jargon — starting with the stock market. The point in a sentence, the why spelled out, and an honest "I'm not sure" when it should be. No finance degree required.</p>
+  <p class="lede">ESPO Genius is a <em>family</em> of plain-English apps for the things experts keep behind charts and jargon — what's happening and why, in a sentence, with an honest "I'm not sure" when it should be. Four apps in the line. MarketNarc, for the stock market, is first.</p>
   <div class="btn-row">
-    <a class="btn" href="#try">Try MarketNarc <span aria-hidden="true">›</span></a>
-    <a class="btn btn-ghost" href="#why">Why it's different</a>
+    <a class="btn" href="#try">Meet the family <span aria-hidden="true">›</span></a>
+    <a class="btn btn-ghost" href="/marketnarc">Try MarketNarc</a>
   </div>
-  <p class="trial"><span class="status"><span class="dot"></span>In production</span> · the first app is MarketNarc — be first when it opens.</p>
+  <p class="trial"><span class="status"><span class="dot"></span>In production</span> · MarketNarc is live — three more plain-English apps on the way.</p>
 </div></section>
 
 <!-- THE FAMILY / HAVE A PLAY -->
 <section class="section" id="try"><div class="wrap">
   <p class="kicker">The ESPO Genius family</p>
-  <h2>One honest read. Starting with the markets.</h2>
-  <p class="lede sec-intro" style="margin-bottom:30px">Every ESPO Genius app shares the same honest approach — what's happening and why, in language a normal person can read. Here's the first. Have a play with it, right here on the page.</p>
+  <h2>One honest read. Four apps. MarketNarc is first.</h2>
+  <p class="lede sec-intro" style="margin-bottom:30px">Every ESPO Genius app shares the same honest approach — what's happening and why, in language a normal person can read. MarketNarc is live now; three more plain-English apps are on the way. Here's the first — have a play, right on the page.</p>
 
   <div class="product">
+    <p class="pnum">01 · in production</p>
     <p class="plabel">Market<span class="n">Narc</span></p>
     <p class="ptype">● market intelligence · in production</p>
     <p class="pdesc">Your stock-market read, spelled out — a clear <strong>Buy, Sell, Hold,</strong> or <strong>Watch</strong> with the why, from <strong>Bart</strong>, your plain-English AI analyst. He leads with names a beginner can actually afford, says "I'm not sure" when the data's thin, and keeps you in fake money until you decide otherwise. <strong>Have a play below.</strong></p>
@@ -100,10 +109,22 @@
     <p class="haveaplay">A 30-second taste — illustrative, not financial advice.</p>
   </div>
 
-  <div class="product soon">
-    <p class="plabel">More to come</p>
-    <p class="ptype">● on the way</p>
-    <p class="pdesc">Other corners of "what's happening and why," translated the same honest way. We'll show each one when it's real — not before.</p>
+  <p class="kicker" style="margin-top:46px">More of the family</p>
+  <h3 style="font-family:Lato;font-weight:900;font-size:clamp(21px,2.8vw,28px);letter-spacing:-.3px;margin:0 0 8px">Three more plain-English apps — in development.</h3>
+  <p class="lede sec-intro" style="margin-bottom:24px">Same honest read, for other corners of everyday life that shouldn't need a decoder ring. We show each one when it's real — not before.</p>
+  <div class="coming-grid">
+    <div class="coming-card">
+      <svg class="cbrain" viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="232" fill="#1B1148"/><circle cx="512" cy="330" r="148" fill="none" stroke="#FF9E6B" stroke-width="13" opacity="0.5"/><g stroke="#36306B" stroke-width="20" stroke-linecap="round"><path d="M330,672 L694,672"/><path d="M330,672 L512,330"/><path d="M694,672 L512,330"/></g><circle cx="330" cy="672" r="84" fill="#5FE3C0"/><circle cx="694" cy="672" r="84" fill="#5FE3C0"/><circle cx="512" cy="330" r="104" fill="#FF9E6B"/></svg>
+      <span class="cbadge">02 · in development</span><h3>The next Genius app</h3><p>Another everyday thing, translated to plain English — honest by default, like MarketNarc.</p>
+    </div>
+    <div class="coming-card">
+      <svg class="cbrain" viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="232" fill="#1B1148"/><circle cx="512" cy="330" r="148" fill="none" stroke="#FF9E6B" stroke-width="13" opacity="0.5"/><g stroke="#36306B" stroke-width="20" stroke-linecap="round"><path d="M330,672 L694,672"/><path d="M330,672 L512,330"/><path d="M694,672 L512,330"/></g><circle cx="330" cy="672" r="84" fill="#5FE3C0"/><circle cx="694" cy="672" r="84" fill="#5FE3C0"/><circle cx="512" cy="330" r="104" fill="#FF9E6B"/></svg>
+      <span class="cbadge">03 · in development</span><h3>In the lab</h3><p>What's happening and why, for something new. Revealed when it's proven — not before.</p>
+    </div>
+    <div class="coming-card">
+      <svg class="cbrain" viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="232" fill="#1B1148"/><circle cx="512" cy="330" r="148" fill="none" stroke="#FF9E6B" stroke-width="13" opacity="0.5"/><g stroke="#36306B" stroke-width="20" stroke-linecap="round"><path d="M330,672 L694,672"/><path d="M330,672 L512,330"/><path d="M694,672 L512,330"/></g><circle cx="330" cy="672" r="84" fill="#5FE3C0"/><circle cx="694" cy="672" r="84" fill="#5FE3C0"/><circle cx="512" cy="330" r="104" fill="#FF9E6B"/></svg>
+      <span class="cbadge">04 · in development</span><h3>On the way</h3><p>The fourth in the line — same plain-English promise, a different corner of life.</p>
+    </div>
   </div>
 </div></section>
 
@@ -121,8 +142,8 @@
 
 <!-- TRY IT THIS WEEK -->
 <section class="section center"><div class="wrap" style="max-width:680px">
-  <h2>Get in early on MarketNarc.</h2>
-  <p class="lede center" style="margin-bottom:26px">MarketNarc is the first ESPO Genius app — market intelligence in plain English. More of the family is on the way. No spam, no hype — just a note when there's something real to try.</p>
+  <h2>Get in early on ESPO Genius.</h2>
+  <p class="lede center" style="margin-bottom:26px">MarketNarc is live in production today; three more plain-English apps are on the way. No spam, no hype — just a note when there's something real to try.</p>
   <div class="btn-row" style="justify-content:center">
     <a class="btn" href="mailto:anthonye@aexperiences.studio?subject=ESPO%20Genius%20early%20access&body=I'd%20like%20first%20look%20when%20MarketNarc%20opens.">Get early access <span aria-hidden="true">→</span></a>
     <a class="btn btn-ghost" href="/marketnarc">Explore MarketNarc</a>
