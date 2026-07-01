@@ -45,9 +45,16 @@
   .product .plabel{font-family:Lato;font-weight:900;font-size:clamp(22px,3vw,30px);margin:0 0 4px}.product .plabel .n{color:var(--amber)}
   .product .ptype{color:var(--sea);font-size:14px;font-weight:600;margin:0 0 14px}
   .product p.pdesc{font-size:clamp(15px,1.8vw,17px);color:var(--off);max-width:64ch;margin:0 0 16px;line-height:1.6}
-  .demoframe{margin-top:18px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--ink-800)}
-  .demoframe iframe{display:block;width:100%;height:720px;border:0}
+  .demoframe{margin-top:16px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--ink-800)}
+  .demoframe iframe{display:block;width:100%;height:800px;border:0}
   .haveaplay{font-size:13px;color:var(--sea);text-align:center;margin:10px 0 0}
+  .trydemo{background:var(--ink-700);border:1px solid var(--line);border-radius:22px;padding:clamp(22px,4vw,40px);margin-top:26px}
+  .trydemo .plabel{font-family:Lato;font-weight:900;font-size:clamp(22px,3vw,30px);margin:0 0 4px}
+  .trydemo .ptype{color:var(--sea);font-size:14px;font-weight:600;margin:0 0 16px}
+  .demotabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+  .dtab{font-family:Lato;font-weight:900;font-size:14px;color:var(--sea);background:var(--ink-800);border:1px solid var(--line);border-radius:999px;padding:9px 16px;cursor:pointer;transition:.14s}
+  .dtab:hover{color:var(--off);border-color:var(--tac)}
+  .dtab.on{color:#0E1630;background:var(--tac);border-color:var(--tac)}
   .gfoot{background:var(--ink-800);border-top:1px solid var(--line);padding:40px 0;font-size:14.5px}
   .gfoot .meta{color:var(--sea);margin:0 0 14px}
   .gfoot nav{display:flex;gap:18px;flex-wrap:wrap}.gfoot nav a{color:var(--off);opacity:.82}.gfoot nav a:hover{opacity:1}
@@ -107,12 +114,20 @@
     <a class="narc" href="/carenarc" style="--nac:#E0909C;--nln:#B6CDC0"><svg class="nicon" viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="232" fill="#123B2C"/><circle cx="512" cy="330" r="148" fill="none" stroke="#E0909C" stroke-width="13" opacity="0.5"/><g stroke="#2C5545" stroke-width="20" stroke-linecap="round"><path d="M330,672 L694,672"/><path d="M330,672 L512,330"/><path d="M694,672 L512,330"/></g><circle cx="330" cy="672" r="84" fill="#B6CDC0"/><circle cx="694" cy="672" r="84" fill="#B6CDC0"/><circle cx="512" cy="330" r="104" fill="#E0909C"/></svg><div class="ntop"><span class="nname">Care<span class="n">Narc</span></span><span class="nstat">in development</span></div><p class="ndom">long-term care</p><p class="ndesc">Your finances vs. your state’s Medicaid rules — the plain-English move.</p><span class="nlink">Get early access →</span></a>
   </div>
 
-  <div class="product">
-    <p class="plabel">Market<span class="n">Narc</span> is live.</p>
-    <p class="ptype">● market intelligence · in production</p>
-    <p class="pdesc">A clear <strong>Buy, Sell, Hold,</strong> or <strong>Watch</strong> with the why, from <strong>Bart</strong> — who leads with names a beginner can afford, says “I’m not sure” when the data’s thin, and keeps you in fake money until you decide otherwise. Have a play, right here.</p>
-    <div class="demoframe"><iframe src="/demo" title="Try MarketNarc — pick a stock, get Bart's call" loading="lazy"></iframe></div>
-    <p class="haveaplay">A 30-second taste — illustrative, not financial advice.</p>
+  <div class="trydemo">
+    <p class="plabel">Try any of the six.</p>
+    <p class="ptype">● pick a Narc — a 30-second taste, right on the page</p>
+    <div class="demotabs" id="demotabs">
+      <button class="dtab on" data-src="/demo" style="--tac:#E6A93C">MarketNarc</button>
+      <button class="dtab" data-src="/billnarc-demo" style="--tac:#4FCB8E">BillNarc</button>
+      <button class="dtab" data-src="/iepnarc-demo" style="--tac:#F0C24A">IEPNarc</button>
+      <button class="dtab" data-src="/homenarc-demo" style="--tac:#E0A24E">HomeNarc</button>
+      <button class="dtab" data-src="/pawnarc-demo" style="--tac:#52C6B9">PawNarc</button>
+      <button class="dtab" data-src="/carenarc-demo" style="--tac:#E0909C">CareNarc</button>
+    </div>
+    <div class="demoframe"><iframe id="demoframe" src="/demo" title="Try an ESPO Genius app — a 30-second taste" loading="lazy"></iframe></div>
+    <p class="haveaplay">A 30-second taste each — illustrative, not advice. MarketNarc is the one you can subscribe to today.</p>
+    <script>(function(){var t=document.querySelectorAll("#demotabs .dtab"),f=document.getElementById("demoframe");t.forEach(function(b){b.addEventListener("click",function(){t.forEach(function(x){x.classList.remove("on")});b.classList.add("on");f.src=b.getAttribute("data-src");});});})();</script>
   </div>
 </div></section>
 
