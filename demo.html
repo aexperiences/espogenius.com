@@ -208,6 +208,8 @@ function renderCall(){
     <p class="nfa">Educational · not financial advice · you decide</p>`;
 }
 renderStocks();
+// When embedded, report height to the parent so the frame can auto-size (no clipping / nested scroll on mobile).
+(function(){if(window.self===window.top)return;var b=document.body;b.style.minHeight='0';b.style.display='block';b.style.padding='16px';var c=b.querySelector('.card');if(c)c.style.margin='0 auto';function ph(){parent.postMessage({espoHeight:Math.ceil(b.scrollHeight)},'*');}try{new ResizeObserver(ph).observe(b);}catch(e){}window.addEventListener('load',ph);ph();setTimeout(ph,300);}());
 </script>
 </body>
 </html>
