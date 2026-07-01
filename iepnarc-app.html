@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IEPNarc — check your child's IEP</title>
+<meta name="description" content="Check your child's IEP goal against their rights. IEPNarc flags gaps — missing measurable targets, baselines, service minutes, and placement — in plain English. Runs entirely in your browser; nothing is sent anywhere.">
+<meta name="theme-color" content="#2A1A4A">
+<link rel="icon" href="/iepnarc-icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#2A1A4A;--ink800:#1C1233;--ink700:#3B2C5C;--ink600:#493A69;--line:#453874;--accent:#F0C24A;--accent6:#CDA23A;--off:#EAF3F0;--sea:#B3A5EC;--ok:#56C98B;--warn:#E6B45C;--bad:#F0846A}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#3A2A5C 0%,#150D26 55%,#0A0717 100%);
+ font-family:Inter,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--off);padding:26px 18px 70px}
+.tnum{font-variant-numeric:tabular-nums}
+.app{max-width:660px;margin:0 auto}
+.head{display:flex;align-items:center;gap:11px;justify-content:center;margin-bottom:6px}
+.head svg{width:34px;height:34px;border-radius:9px}
+.head .wm{font-family:Lato;font-weight:900;font-size:24px}.head .wm .n{color:var(--accent)}
+.sub{text-align:center;color:var(--sea);font-size:13.5px;font-style:italic;margin:0 0 4px}
+.priv{text-align:center;color:var(--accent);font-size:12px;font-weight:600;margin:0 0 22px}
+.card{background:rgba(26,58,102,.34);border:1px solid var(--line);border-radius:20px;padding:22px 20px;margin-bottom:18px}
+.card h2{font-family:Lato;font-weight:900;font-size:16px;margin:0 0 4px}
+.card .h2sub{color:var(--sea);font-size:13px;margin:0 0 15px}
+.tog{display:flex;flex-direction:column;gap:10px;margin-bottom:4px}
+.tog label{display:flex;align-items:flex-start;gap:11px;font-size:14px;cursor:pointer;color:var(--off)}
+.tog input{margin-top:2px;width:18px;height:18px;accent-color:var(--accent);flex:0 0 auto}
+.rows{display:flex;flex-direction:column;gap:9px;margin-bottom:12px}
+.rw{display:grid;grid-template-columns:1fr 108px 34px;gap:8px;align-items:center}
+.rw input{background:var(--ink800);border:1px solid var(--line);border-radius:10px;color:var(--off);
+ font-family:Inter;font-size:14px;padding:11px 12px;width:100%}
+.rw input:focus{outline:none;border-color:var(--accent)}
+.rw input::placeholder{color:#5c789e}
+.rw .amtwrap{position:relative}.rw .amtwrap::before{content:"$";position:absolute;left:11px;top:11px;color:var(--sea);font-size:14px}
+.rw .amtwrap input{padding-left:22px;text-align:right}
+.rmx{background:none;border:1px solid var(--line);color:var(--sea);border-radius:9px;height:40px;cursor:pointer;font-size:16px}
+.rmx:hover{border-color:var(--bad);color:var(--bad)}
+.rowbtns{display:flex;gap:9px;flex-wrap:wrap}
+.lnk{background:var(--ink700);border:1px solid var(--line);color:var(--off);font-weight:600;font-size:13px;border-radius:999px;padding:9px 15px;cursor:pointer}
+.lnk:hover{border-color:var(--accent)}
+.ta{background:var(--ink800);border:1px solid var(--line);border-radius:10px;color:var(--off);
+ font-family:Inter;font-size:14px;padding:11px 12px;width:100%;min-height:88px;resize:vertical;line-height:1.5}
+.ta:focus{outline:none;border-color:var(--accent)}
+.ta::placeholder{color:#5c789e}
+.go{display:block;width:100%;margin-top:16px;background:var(--accent);color:var(--ink800);font-family:Lato;font-weight:900;
+ font-size:17px;border:0;border-radius:14px;padding:16px;cursor:pointer;transition:.14s}
+.go:hover{background:var(--accent6)}
+.go:disabled{opacity:.45;cursor:default}
+/* report */
+#report{display:none}
+.dsum{font-size:14px;color:var(--off);background:var(--ink800);border:1px solid var(--line);border-radius:11px;padding:11px 14px;margin:0 0 14px}
+.dsum b{color:var(--accent)}
+.line{border-top:1px solid var(--line);padding:11px 0}.line:first-child{border-top:0}
+.lrow{display:flex;align-items:baseline;gap:8px}
+.lname{font-weight:700;font-size:14.5px;line-height:1.25}
+.lwhat{display:block;color:var(--sea);font-size:12.5px;font-weight:400;margin-top:2px}
+.lamt{margin-left:auto;font-family:Lato;font-weight:900;font-size:14px;white-space:nowrap}
+.chip{display:inline-block;margin-top:7px;font-size:9.5px;font-weight:800;letter-spacing:.3px;padding:3px 9px;border-radius:999px;text-transform:uppercase}
+.chip.ok{color:#0C2038;background:var(--ok)}.chip.warn{color:var(--warn);border:1px solid var(--warn)}.chip.bad{color:#2A0F0A;background:var(--bad)}
+.lflag{margin-top:8px;font-size:13px;line-height:1.45;border-radius:9px;padding:9px 12px}
+.lflag.warn{background:rgba(230,180,92,.10);border-left:3px solid var(--warn)}
+.lflag.bad{background:rgba(240,132,106,.11);border-left:3px solid var(--bad)}
+.lflag b{color:var(--off)}
+.bottom{background:var(--ink800);border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+.brow{display:flex;align-items:baseline;justify-content:space-between;font-size:14px;padding:4px 0}
+.brow span{color:var(--sea)}.brow b{font-family:Lato;font-weight:900}
+.brow.big{border-top:1px solid var(--line);margin-top:6px;padding-top:10px}.brow.big b{font-size:20px;color:var(--accent)}
+.todo{font-size:14px;line-height:1.55;color:var(--off);background:rgba(240,194,74,.08);border:1px solid #6a5a2f;border-radius:11px;padding:12px 14px;margin-bottom:12px}
+.todo b{color:var(--accent)}.todo ul{margin:8px 0 0;padding-left:18px}.todo li{margin-bottom:5px}
+.nfa{font-size:12px;color:var(--sea);text-align:center;line-height:1.5;margin:6px 0 0}
+.foot{text-align:center;margin-top:22px}
+.foot a{color:var(--accent);font-weight:700;text-decoration:none;font-size:14px}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="head">
+    <svg viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="232" fill="#2A1A4A"/><circle cx="512" cy="330" r="148" fill="none" stroke="#F0C24A" stroke-width="13" opacity="0.5"/><g stroke="#453874" stroke-width="20" stroke-linecap="round"><path d="M330,672 L694,672"/><path d="M330,672 L512,330"/><path d="M694,672 L512,330"/></g><circle cx="330" cy="672" r="84" fill="#B3A5EC"/><circle cx="694" cy="672" r="84" fill="#B3A5EC"/><circle cx="512" cy="330" r="104" fill="#F0C24A"/></svg>
+    <span class="wm">IEP<span class="n">Narc</span></span>
+  </div>
+  <p class="sub">your child's IEP, checked against their rights</p>
+  <p class="priv">🔒 Runs entirely in your browser. Nothing you type is sent anywhere.</p>
+
+  <div class="card">
+    <h2>1 · The goal you're checking</h2>
+    <textarea class="ta" id="goaltext" placeholder="Paste the IEP goal here (optional — for your reference)"></textarea>
+  </div>
+
+  <div class="card">
+    <h2>2 · The rights checklist</h2>
+    <p class="h2sub">Check each box that's TRUE of your child's IEP. Anything left unchecked is a gap worth raising.</p>
+    <div class="tog">
+      <label><input type="checkbox" id="ck1"> The goal has a specific, measurable target — a number or level, not just 'improve'</label>
+      <label><input type="checkbox" id="ck2"> It states a baseline — your child's current level</label>
+      <label><input type="checkbox" id="ck3"> Progress is measured with objective data (tests/records), not just teacher observation</label>
+      <label><input type="checkbox" id="ck4"> Services list exact minutes and frequency (not 'as needed')</label>
+      <label><input type="checkbox" id="ck5"> It names where services happen (Least Restrictive Environment / LRE)</label>
+    </div>
+    <div class="rowbtns">
+      <button class="lnk" onclick="loadSample()">Load a sample</button>
+      <button class="lnk" onclick="clearAll()">Clear</button>
+    </div>
+    <button class="go" id="go" onclick="decode()">Check my IEP →</button>
+  </div>
+
+  <div class="card" id="report">
+    <h2>IEPNarc's read</h2>
+    <div id="reportbody"></div>
+  </div>
+
+  <div class="foot"><a href="/iepnarc">← Back to IEPNarc</a> &nbsp;·&nbsp; <a href="/">ESPO Genius</a></div>
+</div>
+
+<script>
+// ---- the rights checklist: label, what it means, why an unchecked box is a gap ----
+var CHECKS=[
+ {id:"ck1", label:"Measurable target", what:"a number or level the goal aims for",
+   why:"A legal IEP goal must be measurable. 'Improve' isn't — there's no way to prove progress. <b>Ask for a specific target with a baseline</b> (e.g., 'from a 2nd- to 3rd-grade reading level by June')."},
+ {id:"ck2", label:"Baseline", what:"your child's current level",
+   why:"IDEA requires a present level of performance. Without a starting point, no one can tell if the goal is appropriate. <b>Ask them to add the current level.</b>"},
+ {id:"ck3", label:"Objective progress data", what:"how progress is proven",
+   why:"Observation alone is subjective. <b>Ask for objective data</b> — running records or benchmark scores — reported each grading period."},
+ {id:"ck4", label:"Specific service minutes", what:"how much service, how often",
+   why:"'As needed' isn't a commitment. Services must state exact minutes and frequency. <b>Ask for something like '30 min, 2×/week'</b> so it's enforceable."},
+ {id:"ck5", label:"Placement (LRE)", what:"where services happen",
+   why:"Least Restrictive Environment means your child stays with peers as much as is appropriate. <b>If it's blank or fully separate, ask why in-class support won't work.</b>"}
+];
+// short asks appended to the to-do list, keyed by check index (0-based)
+var ASKS=[
+ "Get a measurable target with a baseline.",
+ "Add a baseline (current level).",
+ "Require objective progress data each term.",
+ "Pin services to exact minutes per week.",
+ "Ask why the placement isn't the least restrictive."
+];
+function clearAll(){
+  document.getElementById('goaltext').value='';
+  CHECKS.forEach(function(c){document.getElementById(c.id).checked=false;});
+  document.getElementById('report').style.display='none';
+}
+function loadSample(){
+  document.getElementById('goaltext').value="Student will improve reading.";
+  document.getElementById('ck1').checked=false;
+  document.getElementById('ck2').checked=false;
+  document.getElementById('ck3').checked=false;
+  document.getElementById('ck4').checked=true;
+  document.getElementById('ck5').checked=true;
+}
+function decode(){
+  var met=0, gaps=0, todos=[];
+  var linesHtml=CHECKS.map(function(c,idx){
+    var checked=document.getElementById(c.id).checked;
+    var s, chipTxt, flag='';
+    if(checked){s="ok";chipTxt="✓ Solid";met++;}
+    else{s="bad";chipTxt="✕ Rights gap";gaps++;flag='<div class="lflag bad">'+c.why+'</div>';todos.push(ASKS[idx]);}
+    return '<div class="line"><div class="lrow"><span class="lname">'+(idx+1)+'. '+escapeHtml(c.label)
+      +'<span class="lwhat">'+c.what+'</span></span></div>'
+      +'<div><span class="chip '+s+'">'+chipTxt+'</span></div>'
+      +flag+'</div>';
+  }).join('');
+  if(todos.length===0)todos.push("Bring these questions anyway, and ask for the data behind each goal.");
+  var sumTxt = gaps>0
+    ? ("5 rights checks · "+met+" met. <b>"+gaps+" to raise.</b>")
+    : ("5 rights checks · all met. <b>Bring questions anyway.</b>");
+  var html='<p class="dsum">'+sumTxt+'</p>'+linesHtml
+    +'<div class="bottom"><div class="brow"><span>Rights checks</span><b class="tnum">5</b></div>'
+    +'<div class="brow"><span>Met</span><b class="tnum">'+met+' of 5</b></div>'
+    +'<div class="brow big"><span>Gaps to raise</span><b>'+String(gaps)+'</b></div></div>'
+    +'<div class="todo"><b>What I\'d do:</b><ul><li>'+todos.join('</li><li>')+'</li></ul></div>'
+    +'<p class="nfa">Educational read of what you entered — <b>not legal advice</b>. Every child and district is different; this is a starting point for your IEP conversation, not a substitute for it. Nothing you typed left your browser.</p>';
+  document.getElementById('reportbody').innerHTML=html;
+  var rep=document.getElementById('report');rep.style.display='block';rep.scrollIntoView({behavior:'smooth'});
+}
+function escapeHtml(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+</script>
+</body>
+</html>
