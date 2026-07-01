@@ -77,6 +77,7 @@ h1 .n{color:var(--amber)}
 .split p{font-size:12.5px;color:var(--sea);margin:0;line-height:1.4}
 .risk{font-size:11.5px;color:var(--clay);background:rgba(217,138,99,.09);border:1px solid #5e3f31;border-radius:9px;padding:7px 10px;margin-bottom:12px}
 .nfa{font-size:11.5px;color:var(--sea);text-align:center}
+.samplebar{font-size:11px;font-weight:700;letter-spacing:.3px;color:var(--amber);background:rgba(230,169,60,.09);border:1px solid #5e4a2a;border-radius:8px;padding:6px 10px;margin-bottom:12px;text-align:center}
 
 /* footer */
 .foot{display:flex;align-items:center;gap:14px;border-top:1px solid var(--line);
@@ -113,7 +114,7 @@ h1 .n{color:var(--amber)}
     <!-- STEP 1 — pick a stock -->
     <div id="s1" class="hidden">
       <p class="steplabel">Pick a stock</p>
-      <p class="stepsub">Bart leads with what a beginner can actually afford — <b>not</b> the expensive names.</p>
+      <p class="stepsub">Sample stocks — this is how Bart's read works. He leads with what a beginner can actually afford, <b>not</b> the expensive names.</p>
       <div class="stocks" id="stocks"></div>
     </div>
 
@@ -133,24 +134,25 @@ h1 .n{color:var(--amber)}
 
 <script>
 // Engine-shaped picks (Bart only — "the business" / "the chart"). Affordable-first.
+// Illustrative sample companies (fictional) — they teach Bart's four verdicts and his honesty, without posing as live calls on real tickers.
 const PICKS = [
- {tk:"NU",co:"Nu Holdings",price:12.94,band:"Affordable",call:"BUY",conf:95,conv:"high",tgt:"+19.8%",up:1,
-  why:"Two straight earnings beats with margins expanding, still priced cheap — and the chart agrees. This one's earned its call.",
-  business:"Two earnings beats running; margins expanding; valuation still cheap.",
+ {tk:"RVLN",co:"Riverline Bank",price:13.20,band:"Affordable",call:"BUY",conf:92,conv:"high",tgt:"+17%",up:1,
+  why:"Two straight earnings beats with margins widening, and it's still priced cheap — the business and the chart agree. This one earned its call.",
+  business:"Two beats running; margins expanding; still cheap.",
   chart:"Holding above its moving averages, volume confirming, pressing its highs.",
   bull:"Profitable growth the market is still pricing cheaply.",bear:"A rate shock could cool the story fast."},
- {tk:"NOVA",co:"Penny example",price:3.40,band:"Penny",call:"WATCH",conf:44,conv:"low",tgt:"—",up:1,
-  why:"The chart looks fine, but there's no real fundamentals to lean on. At 44% I'm under my bar — I won't hand you a low-conviction buy. Watching, not buying.",
-  business:"No solid fundamentals supplied — staying low-conviction rather than guessing.",
-  chart:"Holding above its averages with volume confirming.",
+ {tk:"PNNY",co:"a penny-stock example",price:2.80,band:"Penny",call:"WATCH",conf:41,conv:"low",tgt:"—",up:1,
+  why:"The chart looks fine, but there's no real fundamentals to lean on. At 41% I'm under my bar — I won't hand you a low-conviction buy. Watching, not buying.",
+  business:"No solid fundamentals here — staying honest instead of guessing.",
+  chart:"Above its averages with volume confirming — for now.",
   bull:"If real earnings show up, the cheap price has room to run.",bear:"Thin data — it can drop as fast as it pops.",
   risk:"Higher risk · thin data · can swing hard"},
- {tk:"FCX",co:"Freeport-McMoRan",price:62.38,band:"Mid",call:"BUY",conf:95,conv:"high",tgt:"+15.4%",up:1,
+ {tk:"CPRM",co:"Copperfield Mining",price:58.40,band:"Mid",call:"BUY",conf:90,conv:"high",tgt:"+14%",up:1,
   why:"Margins look pressured today, but input costs are <b>easing</b> — that's a forward tailwind, not a red flag. The chart's already confirming it.",
   business:"Three beats running; cost relief is the forward story under the margins.",
   chart:"Above its averages, volume confirming, near the top of its range.",
   bull:"Cost relief + steady demand = margins widen.",bear:"A demand shock would undercut it quickly."},
- {tk:"SOFI",co:"SoFi Technologies",price:9.40,band:"Affordable",call:"HOLD",conf:59,conv:"standard",tgt:"—",up:0,
+ {tk:"MRDN",co:"Meridian Pay",price:9.10,band:"Affordable",call:"HOLD",conf:58,conv:"standard",tgt:"—",up:0,
   why:"Mixed signals — a decent business on a choppy chart. Nothing forces a move, so I'm holding rather than pretending I'm sure.",
   business:"Improving, but not yet consistently profitable.",
   chart:"Chopping around its averages on thin volume.",
@@ -194,6 +196,7 @@ function pick(tk){
 function renderCall(){
   const p=PICKS.find(x=>x.tk===picked)||PICKS[0];
   document.getElementById('callcard').innerHTML=`
+    <div class="samplebar">▸ Sample call · illustrative — not live data or a real recommendation</div>
     <div class="ctop"><div class="tk">${p.tk}<small>${p.co}</small></div>
       <div class="px"><div class="p tnum">$${p.price.toFixed(2)}</div>${p.tgt!=='—'?`<div class="t tnum">${p.tgt} target</div>`:''}</div></div>
     <div class="verdict"><span class="pill ${p.call}">${p.call}</span><span class="cf tnum">${p.conf}%<small>confidence it earned · ${p.conv}</small></span></div>
