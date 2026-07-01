@@ -209,7 +209,7 @@ function renderCall(){
 }
 renderStocks();
 // When embedded, report height to the parent so the frame can auto-size (no clipping / nested scroll on mobile).
-(function(){if(window.self===window.top)return;var b=document.body;b.style.minHeight='0';b.style.display='block';b.style.padding='16px';var c=b.querySelector('.card');if(c)c.style.margin='0 auto';function ph(){parent.postMessage({espoHeight:Math.ceil(b.scrollHeight)},'*');}try{new ResizeObserver(ph).observe(b);}catch(e){}window.addEventListener('load',ph);ph();setTimeout(ph,300);}());
+(function(){if(window.self===window.top)return;var b=document.body;b.style.minHeight='0';b.style.display='block';b.style.padding='16px';var c=b.querySelector('.card');if(c)c.style.margin='0 auto';var t;function ph(){clearTimeout(t);t=setTimeout(function(){parent.postMessage({espoHeight:Math.ceil(b.scrollHeight)},'*');},60);}try{new MutationObserver(ph).observe(b,{childList:true,subtree:true,attributes:true});}catch(e){}try{new ResizeObserver(ph).observe(b);}catch(e){}window.addEventListener('load',ph);ph();setTimeout(ph,400);}());
 </script>
 </body>
 </html>
