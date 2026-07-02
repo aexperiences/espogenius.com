@@ -201,4 +201,4 @@ a:hover{text-decoration:underline}
 .theme-carenarc{--ink:#123B2C;--ink-800:#0C261D;--ink-700:#274D3F;--ink-600:#385A4E;--line:#2C5545;--amber:#E0909C;--amber-600:#AF707A;--sea:#B6CDC0;--clay:#B6CDC0}
 .theme-carenarc .hero::after{background:radial-gradient(closest-side,rgba(224,144,156,0.12),transparent 70%)}
 
-.brandmark{width:36px;height:35px;margin:26px auto 8px;opacity:.5;background-color:#E9DEC7;-webkit-mask:url(/ae-mark.png) center/contain no-repeat;mask:url(/ae-mark.png) center/contain no-repeat}
+.brandmark{width:42px;height:41px;margin:24px auto 8px;opacity:.78;background:url(/ae-mark.png) center/contain no-repeat}
