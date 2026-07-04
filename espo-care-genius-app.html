@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ESPO Care Genius — long-term care & Medicaid, in plain English</title>
+<meta name="description" content="Answer a few plain questions and ESPO Care Genius explains long-term care and Medicaid — what's protected, the honest spend-down moves, the 5-year look-back — before you spend down savings or sell the house. Runs in your browser; nothing is sent anywhere. Educational, not legal advice.">
+<meta name="theme-color" content="#1B1148">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1B1148;--ink800:#150D38;--ink700:#2A1F5E;--ink600:#352873;--line:#3A2F74;
+ --accent:#FF9E6B;--accent6:#E4875A;--mint:#5FE3C0;--off:#EEEAFB;--sea:#B3A5EC;--ok:#5FE3C0;--warn:#FFC46B;--bad:#F0846A}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#2A1F5E 0%,#160D3A 55%,#0E0827 100%);
+ font-family:Inter,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--off);padding:26px 18px 70px}
+.app{max-width:680px;margin:0 auto}
+.head{display:flex;align-items:center;gap:11px;justify-content:center;margin-bottom:6px}
+.head svg{width:34px;height:34px;border-radius:9px}
+.head .wm{font-family:Lato;font-weight:900;font-size:23px}.head .wm .g{color:var(--accent)}
+.sub{text-align:center;color:var(--sea);font-size:13.5px;font-style:italic;margin:0 0 4px}
+.priv{text-align:center;color:var(--mint);font-size:12px;font-weight:600;margin:0 0 20px}
+.inbar{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:0 0 6px}
+.inbtn{background:var(--ink700);border:1px solid var(--accent);color:var(--accent);font-family:Lato;font-weight:900;font-size:13px;border-radius:999px;padding:9px 14px;cursor:pointer}
+.inbtn:hover{background:var(--accent);color:#20103A}
+.inbtn.rec{background:var(--bad);border-color:var(--bad);color:#2A0F0A}
+.inhint{color:var(--sea);font-size:12px}
+.innote{color:var(--sea);font-size:11px;margin:0 0 16px;line-height:1.5}
+.scanpanel{background:var(--ink800);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 16px}
+.card{background:rgba(42,31,94,.4);border:1px solid var(--line);border-radius:20px;padding:22px 20px;margin-bottom:18px}
+.card h2{font-family:Lato;font-weight:900;font-size:16px;margin:0 0 4px}
+.card .h2sub{color:var(--sea);font-size:13px;margin:0 0 14px}
+.seg{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:6px}
+.seg label{flex:1;min-width:200px;display:flex;gap:9px;align-items:flex-start;background:var(--ink800);border:1px solid var(--line);border-radius:12px;padding:12px 13px;cursor:pointer;font-size:14px}
+.seg input{margin-top:2px;accent-color:var(--accent)}
+.seg label:has(input:checked){border-color:var(--accent)}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}
+@media(max-width:520px){.fg{grid-template-columns:1fr}}
+.f label{display:block;font-size:12.5px;color:var(--sea);margin-bottom:5px;font-weight:600}
+.f input,.f select{width:100%;background:var(--ink800);border:1px solid var(--line);border-radius:10px;color:var(--off);font-family:Inter;font-size:15px;padding:11px 12px}
+.f input:focus,.f select:focus{outline:none;border-color:var(--accent)}
+.f .money{position:relative}.f .money input{padding-left:22px}.f .money::before{content:"$";position:absolute;left:11px;top:34px;color:var(--sea);font-size:14px}
+.tog{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.tog label{display:flex;align-items:flex-start;gap:11px;font-size:14px;cursor:pointer;color:var(--off)}
+.tog input{margin-top:2px;width:18px;height:18px;accent-color:var(--accent);flex:0 0 auto}
+.go{display:block;width:100%;margin-top:16px;background:var(--accent);color:#20103A;font-family:Lato;font-weight:900;font-size:17px;border:0;border-radius:14px;padding:16px;cursor:pointer;transition:.14s}
+.go:hover{background:var(--accent6)}
+.lnk{background:var(--ink700);border:1px solid var(--line);color:var(--off);font-weight:600;font-size:13px;border-radius:999px;padding:9px 15px;cursor:pointer}
+.lnk:hover{border-color:var(--accent)}
+#report{display:none}
+.dsum{font-size:14px;color:var(--off);background:var(--ink800);border:1px solid var(--line);border-radius:11px;padding:12px 14px;margin:0 0 14px}
+.dsum b{color:var(--accent)}
+.line{border-top:1px solid var(--line);padding:12px 0}.line:first-child{border-top:0}
+.lname{font-weight:700;font-size:14.5px}
+.chip{display:inline-block;margin-top:7px;font-size:9.5px;font-weight:800;letter-spacing:.3px;padding:3px 9px;border-radius:999px;text-transform:uppercase}
+.chip.protect{color:#0C2038;background:var(--ok)}.chip.careful{color:#2A0F0A;background:var(--bad)}.chip.move{color:var(--mint);border:1px solid var(--mint)}.chip.know{color:var(--warn);border:1px solid var(--warn)}
+.lflag{margin-top:8px;font-size:13px;line-height:1.5;border-radius:9px;padding:9px 12px;background:rgba(255,158,107,.09);border-left:3px solid var(--accent)}
+.lflag.mint{background:rgba(95,227,192,.08);border-left-color:var(--mint)}
+.lflag b{color:var(--off)}
+.todo{font-size:14px;line-height:1.55;color:var(--off);background:rgba(95,227,192,.07);border:1px solid #2f6a5e;border-radius:11px;padding:12px 14px;margin:14px 0 12px}
+.todo b{color:var(--mint)}.todo ul{margin:8px 0 0;padding-left:18px}.todo li{margin-bottom:5px}
+.blk{background:var(--ink800);border:1px dashed var(--line);border-radius:12px;padding:16px;margin:12px 0;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.6;white-space:pre-wrap}
+.blkt{font-family:Lato;font-weight:900;font-size:14px;color:var(--accent);margin:16px 0 6px}
+.readbar{margin-top:14px;display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
+.nfa{font-size:12px;color:var(--sea);text-align:center;line-height:1.5;margin:8px 0 0}
+.foot{text-align:center;margin-top:22px}.foot a{color:var(--accent);font-weight:700;text-decoration:none;font-size:14px}
+.brandmark{width:42px;height:41px;margin:24px auto 8px;opacity:.78;background:url(/ae-mark.png) center/contain no-repeat}
+@media print{body{background:#fff;color:#111}.card,.go,.foot,.priv,.inbar,.innote,.readbar,.scanpanel{display:none!important}#report{display:block!important;border:0}.blk{color:#111;border-color:#999}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="head">
+    <svg viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="232" fill="#1B1148"/><circle cx="512" cy="330" r="148" fill="none" stroke="#FF9E6B" stroke-width="13" opacity="0.5"/><g stroke="#36306B" stroke-width="20" stroke-linecap="round"><path d="M330,672 L694,672"/><path d="M330,672 L512,330"/><path d="M694,672 L512,330"/></g><circle cx="330" cy="672" r="84" fill="#5FE3C0"/><circle cx="694" cy="672" r="84" fill="#5FE3C0"/><circle cx="512" cy="330" r="104" fill="#FF9E6B"/></svg>
+    <span class="wm">ESPO Care <span class="g">Genius</span></span>
+  </div>
+  <p class="sub">long-term care &amp; Medicaid, in plain English &mdash; before you spend down or sell</p>
+  <p class="priv">&#128274; Runs entirely in your browser. Nothing you enter is sent anywhere.</p>
+
+  <div class="inbar">
+    <button class="inbtn" id="ntalk" type="button" onclick="nTalk()">&#127908; Talk to me</button>
+    <span class="inhint">&mdash; or just tap the answers</span>
+  </div>
+  <p class="innote" id="nstatus">Voice runs <b>on your device</b> with your browser&rsquo;s own tools &mdash; nothing you enter leaves your phone.</p>
+
+  <div class="card">
+    <h2>1 &middot; Where are things right now?</h2>
+    <div class="seg">
+      <label><input type="radio" name="sit" value="now" checked> Care is <b>needed now or soon</b> (a nursing home / assisted living is on the table)</label>
+      <label><input type="radio" name="sit" value="plan"> <b>Planning ahead</b> &mdash; no crisis yet</label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>2 &middot; A few plain facts</h2>
+    <p class="h2sub">Rough is fine. This is about <b>the person who needs care</b>.</p>
+    <div class="fg">
+      <div class="f"><label>Marital status</label>
+        <select id="marital"><option value="single">Single / widowed</option><option value="married">Married</option></select></div>
+      <div class="f money"><label>Savings &amp; accounts (roughly) &mdash; not the home/car</label><input id="savings" type="number" min="0" placeholder="e.g. 40000"></div>
+    </div>
+    <div class="tog">
+      <label><input type="checkbox" id="cHome"> They (or a spouse) <b>own the home they live in</b></label>
+      <label><input type="checkbox" id="cGift"> Money or property was <b>given away or sold cheap in the last 5 years</b></label>
+      <label><input type="checkbox" id="cVet"> They&rsquo;re a <b>veteran or a veteran&rsquo;s surviving spouse</b></label>
+    </div>
+    <button class="go" onclick="decode()">Show me the honest moves &rarr;</button>
+  </div>
+
+  <div class="card" id="report">
+    <h2>ESPO Care Genius&rsquo;s read</h2>
+    <div id="reportbody"></div>
+    <div class="readbar">
+      <button class="lnk" type="button" onclick="showLetter()">&#9993; Get your checklist</button>
+      <button class="lnk" type="button" onclick="speakRead()">&#128266; Read it to me</button>
+      <button class="lnk" id="stopread" type="button" style="display:none" onclick="stopRead()">&#9209; Stop</button>
+      <button class="lnk" type="button" onclick="window.print()">&#128424; Print case file</button>
+    </div>
+    <div id="letterwrap" style="display:none;margin-top:14px"></div>
+  </div>
+
+  <div class="foot"><a href="/carenarc">&larr; ESPO Care Genius</a> &nbsp;&middot;&nbsp; <a href="/">ESPO Genius</a></div>
+  <div class="brandmark" aria-label="Accelerated Experiences" title="An Accelerated Experiences app"></div>
+</div>
+
+<script>
+function nStatus(m){var e=document.getElementById('nstatus');if(e)e.innerHTML=m;}
+function nTalk(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;var btn=document.getElementById('ntalk');
+ if(!SR){nStatus('Voice isn&rsquo;t supported here &mdash; just tap the answers, or try Chrome/Safari.');return;}
+ if(window._nrec){try{window._nrec.stop();}catch(e){}window._nrec=null;return;}
+ var rec=new SR();window._nrec=rec;rec.lang='en-US';rec.interimResults=false;rec.maxAlternatives=1;if(btn)btn.classList.add('rec');
+ nStatus('Listening&hellip; say the savings amount, and I&rsquo;ll fill it in.');
+ rec.onresult=function(e){var t=e.results[0][0].transcript;var num=t.replace(/[^0-9.]/g,'');if(num){document.getElementById('savings').value=num;nStatus('Filled in $'+num+' &mdash; check it and run the read.');}else{nStatus('Say the dollar amount, e.g. &ldquo;forty thousand&rdquo;.');}};
+ rec.onerror=function(){nStatus('Didn&rsquo;t catch that &mdash; try again.');};
+ rec.onend=function(){window._nrec=null;if(btn)btn.classList.remove('rec');};rec.start();}
+
+var LETTER='';
+function showLetter(){var w=document.getElementById('letterwrap');w.style.display=(w.style.display==='none'||!w.style.display)?'block':'none';if(w.style.display==='block')w.scrollIntoView({behavior:'smooth'});}
+function narcText(){var el=document.getElementById('reportbody');var t=el?(el.innerText||el.textContent||''):'';return t.replace(/ /g,' ').replace(/\s+/g,' ').trim();}
+function toggleStop(on){var s=document.getElementById('stopread');if(s)s.style.display=on?'inline-block':'none';}
+function speakRead(){if(!('speechSynthesis' in window))return;var t=narcText();if(!t)return;try{speechSynthesis.cancel();}catch(e){}var u=new SpeechSynthesisUtterance(t);u.rate=0.98;u.onend=function(){toggleStop(false);};u.onerror=function(){toggleStop(false);};speechSynthesis.speak(u);toggleStop(true);}
+function stopRead(){try{speechSynthesis.cancel();}catch(e){}toggleStop(false);}
+function money(x){return '$'+Math.round(x).toLocaleString();}
+
+function decode(){
+  var sit=document.querySelector('input[name="sit"]:checked').value;
+  var married=document.getElementById('marital').value==='married';
+  var savings=Math.max(0,parseFloat(document.getElementById('savings').value)||0);
+  var home=document.getElementById('cHome').checked,gift=document.getElementById('cGift').checked,vet=document.getElementById('cVet').checked;
+  var F=[];
+  var limit=2000;
+  if(savings>limit){
+    F.push({name:'You&rsquo;re over the Medicaid asset line &mdash; but don&rsquo;t just hand it over',chip:'move',clabel:'The honest move',
+      why:'Medicaid generally allows only about <b>$2,000 in countable assets</b> for a single person. You&rsquo;re over by roughly <b>'+money(savings-limit)+'</b>. The mistake families make is <b>spending it all on the nursing home first</b>. You don&rsquo;t have to. That money can often be <b>legally converted into things that don&rsquo;t count</b>: home repairs, a reliable car, an <b>irrevocable</b> funeral/burial plan, paying off debt, needed dental/medical. It stays in the family instead of going to the facility.'});
+  } else {
+    F.push({name:'Assets look near the Medicaid line',chip:'protect',clabel:'On track',mint:true,
+      why:'Countable savings look at or under the rough <b>$2,000</b> limit for a single person. Don&rsquo;t spend down further than you must &mdash; and confirm exactly what counts, because rules and the exact figures vary by state.'});
+  }
+  if(gift){
+    F.push({name:'The 5-year look-back &mdash; handle with care',chip:'careful',clabel:'Careful',
+      why:'Gifts or below-value transfers in the <b>last 5 years</b> can trigger a <b>penalty period</b> (months of no Medicaid). <b>Do NOT give money away to &ldquo;hide&rdquo; it</b> &mdash; that&rsquo;s the classic mistake and it usually backfires. If gifts already happened, <b>document them</b> and get advice; there are legal ways to cure or plan around a penalty, but only with an elder-law attorney.'});
+  }
+  if(home){
+    F.push({name:'The home is usually protected &mdash; don&rsquo;t rush to sell',chip:'protect',clabel:'Protected (mostly)',mint:true,
+      why:'While your parent (or their spouse) lives there, the home is <b>usually exempt</b> &mdash; it doesn&rsquo;t count against Medicaid. <b>Selling it turns a protected house into countable cash</b>, often the worst move. Later, &ldquo;estate recovery&rdquo; can make a claim against it &mdash; but planning (a life estate, certain trusts, or the spouse/heir rules) can protect it. <b>Talk to an elder-law attorney before selling anything.</b>'});
+  }
+  if(married){
+    F.push({name:'The at-home spouse is NOT left broke',chip:'protect',clabel:'Spouse protection',mint:true,
+      why:'When one spouse needs care, the <b>&ldquo;community spouse&rdquo;</b> at home is allowed to keep a protected share of the assets (often up to roughly <b>$150,000</b>) <b>and</b> a minimum monthly income. Most families never claim these protections. Make sure yours does.'});
+  }
+  F.push({name:'Medicare does NOT pay for long-term custodial care',chip:'know',clabel:'The big surprise',
+    why:'This blindsides almost everyone: <b>Medicare covers only short rehab stays</b>, not ongoing help with daily living in a nursing home. <b>Medicaid</b> is the program that covers long-term care &mdash; which is exactly why these rules matter.'});
+  if(vet){
+    F.push({name:'Check VA Aid &amp; Attendance',chip:'move',clabel:'Money on the table',
+      why:'A wartime veteran or surviving spouse who needs help with daily living may qualify for <b>VA Aid &amp; Attendance</b> &mdash; a monthly benefit that can be worth <b>~$1,500&ndash;$2,700/month</b> toward care. Widely unclaimed. Worth checking through an accredited VA rep (free).'});
+  }
+
+  LETTER='ELDER-LAW / MEDICAID VISIT &mdash; WHAT TO BRING & ASK\n\nBring:\n- List of all accounts and rough balances (savings, checking, CDs, investments, life insurance cash value)\n- Deed to the home; recent property tax bill\n- 5 years of bank statements (they will ask)\n- Any gifts/transfers in the last 5 years, with dates and amounts\n- Marriage certificate (if married); military discharge (DD-214) if a veteran\n- Current income sources (Social Security, pension) for the person needing care'+(married?' and the spouse':'')+'\n\nAsk the attorney:\n- Given our state, what counts and what is exempt for us?\n- What can we legally convert countable savings into (spend-down) so it stays in the family?'+(gift?'\n- We made gifts in the last 5 years &mdash; what is the penalty risk and how do we cure it?':'')+(home?'\n- How do we protect the home from estate recovery WITHOUT selling it?':'')+(married?'\n- What is the maximum the at-home spouse can keep (assets and monthly income)?':'')+'\n- Should we apply now, or is there planning to do first?\n\nAlso free: a SHIP counselor (shiphelp.org) for Medicare/Medicaid questions at no cost.';
+
+  var h='<div class="dsum">Here&rsquo;s the honest read &mdash; <b>'+F.length+' thing'+(F.length>1?'s':'')+'</b> to know before anyone spends down savings or sells the house. Do these wrong and it&rsquo;s expensive and hard to undo.</div>';
+  F.forEach(function(f){h+='<div class="line"><span class="lname">'+f.name+'</span><br><span class="chip '+f.chip+'">'+f.clabel+'</span><div class="lflag'+(f.mint?' mint':'')+'">'+f.why+'</div></div>';});
+  h+='<div class="todo"><b>What I&rsquo;d do, in order:</b><ul>'+
+     '<li><b>Do not spend down, gift, or sell anything yet.</b> The wrong move now can cost months of coverage or the house. Slow down &mdash; you have more room than it feels like.</li>'+
+     '<li>Talk to a <b>free SHIP counselor</b> (shiphelp.org) about Medicare/Medicaid, and a <b>free consult with an elder-law attorney</b> (find one at naela.org) BEFORE moving money.</li>'+
+     '<li>Take the <b>checklist below</b> to that visit &mdash; it&rsquo;s exactly what they&rsquo;ll need and what to ask.</li>'+
+     (vet?'<li>Ask an accredited VA rep about <b>Aid &amp; Attendance</b> &mdash; it&rsquo;s often left on the table.</li>':'')+'</ul></div>';
+  h+='<p class="nfa"><b>Educational &middot; not legal or financial advice.</b> Medicaid and elder-law rules are complex, state-specific, and mistakes are costly and hard to reverse. The dollar figures here are rough national ballparks. <b>Confirm everything with a SHIP counselor and an elder-law attorney before you act.</b> You&rsquo;re not alone in this, and there are more protections than families are told.</p>';
+  document.getElementById('reportbody').innerHTML=h;
+  document.getElementById('letterwrap').innerHTML='<div class="blkt">&#128203; Your visit checklist &mdash; print it and take it in</div><div class="blk">'+LETTER.replace(/</g,'&lt;')+'</div>';
+  document.getElementById('letterwrap').style.display='none';
+  var r=document.getElementById('report');r.style.display='block';r.scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
