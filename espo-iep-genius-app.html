@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ESPO IEP Genius — your child's IEP, read against their rights</title>
+<meta name="description" content="Paste, scan, or say a goal from your child's IEP and ESPO IEP Genius checks it against their rights under IDEA — flagging goals that aren't legally measurable, in plain English. Runs in your browser; nothing you enter is sent anywhere. Educational, not legal advice.">
+<meta name="theme-color" content="#1B1148">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1B1148;--ink800:#150D38;--ink700:#2A1F5E;--ink600:#352873;--line:#3A2F74;
+ --accent:#FF9E6B;--accent6:#E4875A;--mint:#5FE3C0;--off:#EEEAFB;--sea:#B3A5EC;--ok:#5FE3C0;--warn:#FFC46B;--bad:#F0846A}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#2A1F5E 0%,#160D3A 55%,#0E0827 100%);
+ font-family:Inter,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--off);padding:26px 18px 70px}
+.app{max-width:680px;margin:0 auto}
+.head{display:flex;align-items:center;gap:11px;justify-content:center;margin-bottom:6px}
+.head svg{width:34px;height:34px;border-radius:9px}
+.head .wm{font-family:Lato;font-weight:900;font-size:23px}.head .wm .g{color:var(--accent)}
+.sub{text-align:center;color:var(--sea);font-size:13.5px;font-style:italic;margin:0 0 4px}
+.priv{text-align:center;color:var(--mint);font-size:12px;font-weight:600;margin:0 0 20px}
+.inbar{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:0 0 6px}
+.inbtn{background:var(--ink700);border:1px solid var(--accent);color:var(--accent);font-family:Lato;font-weight:900;font-size:13px;border-radius:999px;padding:9px 14px;cursor:pointer}
+.inbtn:hover{background:var(--accent);color:#20103A}
+.inbtn.rec{background:var(--bad);border-color:var(--bad);color:#2A0F0A}
+.inhint{color:var(--sea);font-size:12px}
+.innote{color:var(--sea);font-size:11px;margin:0 0 16px;line-height:1.5}
+.scanpanel{background:var(--ink800);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 16px}
+.sp-t{font-size:12.5px;color:var(--off);margin-bottom:8px}
+.chipbtn{background:var(--ink700);border:1px solid var(--accent);color:var(--accent);font-weight:800;border-radius:999px;padding:6px 11px;margin:3px;cursor:pointer;font-size:12px}
+.card{background:rgba(42,31,94,.4);border:1px solid var(--line);border-radius:20px;padding:22px 20px;margin-bottom:18px}
+.card h2{font-family:Lato;font-weight:900;font-size:16px;margin:0 0 4px}
+.card .h2sub{color:var(--sea);font-size:13px;margin:0 0 14px}
+textarea{width:100%;min-height:92px;background:var(--ink800);border:1px solid var(--line);border-radius:12px;color:var(--off);font-family:Inter;font-size:15px;padding:12px 13px;resize:vertical}
+textarea:focus{outline:none;border-color:var(--accent)}
+.tog{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.tog label{display:flex;align-items:flex-start;gap:11px;font-size:14px;cursor:pointer;color:var(--off)}
+.tog input{margin-top:2px;width:18px;height:18px;accent-color:var(--accent);flex:0 0 auto}
+.go{display:block;width:100%;margin-top:16px;background:var(--accent);color:#20103A;font-family:Lato;font-weight:900;font-size:17px;border:0;border-radius:14px;padding:16px;cursor:pointer;transition:.14s}
+.go:hover{background:var(--accent6)}
+.lnk{background:var(--ink700);border:1px solid var(--line);color:var(--off);font-weight:600;font-size:13px;border-radius:999px;padding:9px 15px;cursor:pointer}
+.lnk:hover{border-color:var(--accent)}
+#report{display:none}
+.dsum{font-size:14px;color:var(--off);background:var(--ink800);border:1px solid var(--line);border-radius:11px;padding:12px 14px;margin:0 0 14px}
+.dsum b{color:var(--accent)}
+.line{border-top:1px solid var(--line);padding:12px 0}.line:first-child{border-top:0}
+.lname{font-weight:700;font-size:14.5px}
+.chip{display:inline-block;margin-top:7px;font-size:9.5px;font-weight:800;letter-spacing:.3px;padding:3px 9px;border-radius:999px;text-transform:uppercase}
+.chip.strong{color:#0C2038;background:var(--ok)}.chip.weak{color:#2A0F0A;background:var(--bad)}.chip.right{color:var(--mint);border:1px solid var(--mint)}.chip.ask{color:var(--warn);border:1px solid var(--warn)}
+.lflag{margin-top:8px;font-size:13px;line-height:1.5;border-radius:9px;padding:9px 12px;background:rgba(255,158,107,.09);border-left:3px solid var(--accent)}
+.lflag.mint{background:rgba(95,227,192,.08);border-left-color:var(--mint)}
+.lflag b{color:var(--off)}
+.todo{font-size:14px;line-height:1.55;color:var(--off);background:rgba(95,227,192,.07);border:1px solid #2f6a5e;border-radius:11px;padding:12px 14px;margin:14px 0 12px}
+.todo b{color:var(--mint)}.todo ul{margin:8px 0 0;padding-left:18px}.todo li{margin-bottom:5px}
+.blk{background:var(--ink800);border:1px dashed var(--line);border-radius:12px;padding:16px;margin:12px 0;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.6;white-space:pre-wrap}
+.blkt{font-family:Lato;font-weight:900;font-size:14px;color:var(--accent);margin:16px 0 6px}
+.readbar{margin-top:14px;display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
+.nfa{font-size:12px;color:var(--sea);text-align:center;line-height:1.5;margin:8px 0 0}
+.foot{text-align:center;margin-top:22px}.foot a{color:var(--accent);font-weight:700;text-decoration:none;font-size:14px}
+.brandmark{width:42px;height:41px;margin:24px auto 8px;opacity:.78;background:url(/ae-mark.png) center/contain no-repeat}
+@media print{body{background:#fff;color:#111}.card,.go,.foot,.priv,.inbar,.innote,.readbar,.scanpanel{display:none!important}#report{display:block!important;border:0}.blk{color:#111;border-color:#999}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="head">
+    <svg viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="232" fill="#1B1148"/><circle cx="512" cy="330" r="148" fill="none" stroke="#FF9E6B" stroke-width="13" opacity="0.5"/><g stroke="#36306B" stroke-width="20" stroke-linecap="round"><path d="M330,672 L694,672"/><path d="M330,672 L512,330"/><path d="M694,672 L512,330"/></g><circle cx="330" cy="672" r="84" fill="#5FE3C0"/><circle cx="694" cy="672" r="84" fill="#5FE3C0"/><circle cx="512" cy="330" r="104" fill="#FF9E6B"/></svg>
+    <span class="wm">ESPO IEP <span class="g">Genius</span></span>
+  </div>
+  <p class="sub">your child&rsquo;s IEP, read against their rights &mdash; in plain English</p>
+  <p class="priv">&#128274; Runs entirely in your browser. Nothing you enter is sent anywhere.</p>
+
+  <div class="inbar">
+    <button class="inbtn" type="button" onclick="nScan()">&#128247; Scan the page</button>
+    <button class="inbtn" id="ntalk" type="button" onclick="nTalk()">&#127908; Read it aloud to me</button>
+    <span class="inhint">&mdash; or type / paste</span>
+  </div>
+  <p class="innote" id="nstatus">Scan &amp; voice run <b>on your device</b> with your browser&rsquo;s own tools &mdash; nothing you enter leaves your phone. Tip: tap the goal box, then Scan or Talk.</p>
+  <div class="scanpanel" id="scanpanel" style="display:none"></div>
+
+  <div class="card">
+    <h2>1 &middot; The goal you&rsquo;re worried about</h2>
+    <p class="h2sub">Copy one annual goal from the IEP &mdash; word for word. (You can check more, one at a time.)</p>
+    <textarea id="goal" placeholder="e.g. &ldquo;Student will improve reading comprehension.&rdquo;"></textarea>
+  </div>
+
+  <div class="card">
+    <h2>2 &middot; A few quick checks on that goal</h2>
+    <p class="h2sub">Under IDEA, an annual goal must be <b>measurable</b>. Check what&rsquo;s actually in the wording.</p>
+    <div class="tog">
+      <label><input type="checkbox" id="gBase"> It says <b>where my child is starting</b> (a baseline &mdash; e.g. &ldquo;reads 40 words/min now&rdquo;)</label>
+      <label><input type="checkbox" id="gTarget"> It says <b>the number to reach</b> (a target &mdash; e.g. &ldquo;to 90 words/min&rdquo;)</label>
+      <label><input type="checkbox" id="gMeasure"> It says <b>how they&rsquo;ll measure it</b> (e.g. &ldquo;on 4 of 5 trials,&rdquo; &ldquo;80% accuracy&rdquo;)</label>
+      <label><input type="checkbox" id="gWhen"> It says <b>by when</b> (a date, or &ldquo;by the end of the IEP year&rdquo;)</label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>3 &middot; About the plan overall</h2>
+    <p class="h2sub">Optional &mdash; check anything that&rsquo;s true.</p>
+    <div class="tog">
+      <label><input type="checkbox" id="pMin"> The services (speech, OT, etc.) have <b>actual minutes written down</b> (e.g. &ldquo;30 min/week&rdquo;)</label>
+      <label><input type="checkbox" id="pEval"> I <b>asked for an evaluation</b> and it&rsquo;s been more than 60 days</label>
+      <label><input type="checkbox" id="pLRE"> I think my child is being <b>pulled out of the regular classroom more than needed</b></label>
+      <label><input type="checkbox" id="pDenied"> The school <b>said no</b> to something I asked for</label>
+    </div>
+    <button class="go" onclick="decode()">Read my IEP &rarr;</button>
+  </div>
+
+  <div class="card" id="report">
+    <h2>ESPO IEP Genius&rsquo;s read</h2>
+    <div id="reportbody"></div>
+    <div class="readbar">
+      <button class="lnk" type="button" onclick="showLetter()">&#9993; Get your letter</button>
+      <button class="lnk" type="button" onclick="speakRead()">&#128266; Read it to me</button>
+      <button class="lnk" id="stopread" type="button" style="display:none" onclick="stopRead()">&#9209; Stop</button>
+      <button class="lnk" type="button" onclick="window.print()">&#128424; Print case file</button>
+    </div>
+    <div id="letterwrap" style="display:none;margin-top:14px"></div>
+  </div>
+
+  <div class="foot"><a href="/iepnarc">&larr; ESPO IEP Genius</a> &nbsp;&middot;&nbsp; <a href="/">ESPO Genius</a></div>
+  <div class="brandmark" aria-label="Accelerated Experiences" title="An Accelerated Experiences app"></div>
+</div>
+
+<script>
+var _lastIn=null;
+document.addEventListener('focusin',function(e){var t=e.target;if(t&&(t.tagName==='INPUT'||t.tagName==='TEXTAREA')&&t.type!=='checkbox'&&t.type!=='radio')_lastIn=t;});
+function nStatus(m){var e=document.getElementById('nstatus');if(e)e.innerHTML=m;}
+function fillLast(v){var el=_lastIn||document.getElementById('goal');if(!el){return false;}el.value=(el.value?el.value+' ':'')+v;el.dispatchEvent(new Event('input',{bubbles:true}));return true;}
+function nScan(){var inp=document.createElement('input');inp.type='file';inp.accept='image/*';inp.setAttribute('capture','environment');
+ inp.onchange=function(){var f=inp.files&&inp.files[0];if(!f)return;
+  if(!('TextDetector' in window)){nStatus('This browser has no built-in text reader (iPhone Safari doesn&rsquo;t). Use <b>&#127908;</b>, or type it in.');return;}
+  nStatus('Reading the page <b>on your device</b>&hellip;');var img=new Image();
+  img.onload=function(){try{new TextDetector().detect(img).then(function(r){
+    var text=(r||[]).map(function(b){return b.rawValue;}).join(' ').replace(/\s+/g,' ').trim();
+    var g=document.getElementById('goal');g.value=(g.value?g.value+' ':'')+text;
+    document.getElementById('scanpanel').innerHTML='<div class="sp-t">&#128196; I read this and dropped it into the goal box &mdash; check it, then run the read:</div><div style="font-size:12px;color:var(--sea);white-space:pre-wrap">'+text.replace(/</g,'&lt;')+'</div>';
+    document.getElementById('scanpanel').style.display='block';nStatus('Read on your device &mdash; nothing was sent anywhere.');
+  }).catch(function(){nStatus('Couldn&rsquo;t read that image &mdash; try a clearer, straight-on photo.');});}catch(e){nStatus('Text reading failed on this device.');}};
+  img.onerror=function(){nStatus('Couldn&rsquo;t open that image.');};img.src=URL.createObjectURL(f);};
+ inp.click();}
+function nTalk(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;var btn=document.getElementById('ntalk');
+ if(!SR){nStatus('Voice isn&rsquo;t supported here &mdash; type it in, or try Chrome/Safari.');return;}
+ if(window._nrec){try{window._nrec.stop();}catch(e){}window._nrec=null;return;}
+ var rec=new SR();window._nrec=rec;rec.lang='en-US';rec.interimResults=false;rec.continuous=true;rec.maxAlternatives=1;if(btn)btn.classList.add('rec');
+ nStatus('Listening&hellip; read the goal out loud. Tap again to stop.');var buf='';
+ rec.onresult=function(e){for(var i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)buf+=e.results[i][0].transcript+' ';}};
+ rec.onerror=function(){nStatus('Didn&rsquo;t catch that &mdash; try again.');};
+ rec.onend=function(){window._nrec=null;if(btn)btn.classList.remove('rec');var g=document.getElementById('goal');g.value=(g.value?g.value+' ':'')+buf.trim();nStatus('Got it &mdash; check the goal box and run the read.');};
+ rec.start();}
+
+var LETTER='';
+function showLetter(){var w=document.getElementById('letterwrap');w.style.display=(w.style.display==='none'||!w.style.display)?'block':'none';if(w.style.display==='block')w.scrollIntoView({behavior:'smooth'});}
+function narcText(){var el=document.getElementById('reportbody');var t=el?(el.innerText||el.textContent||''):'';return t.replace(/ /g,' ').replace(/\s+/g,' ').trim();}
+function toggleStop(on){var s=document.getElementById('stopread');if(s)s.style.display=on?'inline-block':'none';}
+function speakRead(){if(!('speechSynthesis' in window))return;var t=narcText();if(!t)return;try{speechSynthesis.cancel();}catch(e){}var u=new SpeechSynthesisUtterance(t);u.rate=0.98;u.onend=function(){toggleStop(false);};u.onerror=function(){toggleStop(false);};speechSynthesis.speak(u);toggleStop(true);}
+function stopRead(){try{speechSynthesis.cancel();}catch(e){}toggleStop(false);}
+
+function decode(){
+  var goal=(document.getElementById('goal').value||'').trim();
+  var base=document.getElementById('gBase').checked,tgt=document.getElementById('gTarget').checked,
+      meas=document.getElementById('gMeasure').checked,when=document.getElementById('gWhen').checked;
+  var pMin=document.getElementById('pMin').checked,pEval=document.getElementById('pEval').checked,
+      pLRE=document.getElementById('pLRE').checked,pDenied=document.getElementById('pDenied').checked;
+  var F=[], missing=[];
+  if(!base)missing.push('a starting point (baseline)');
+  if(!tgt)missing.push('a number to reach (target)');
+  if(!meas)missing.push('how it&rsquo;s measured');
+  if(!when)missing.push('a deadline');
+  // vague-word check on the text
+  var vague=/\bimprove|increase|better|make progress|as needed|appropriate\b/i.test(goal) && !/\b\d/.test(goal);
+  if(missing.length){
+    F.push({name:'This goal may not be legally measurable',chip:'weak',clabel:'Not sufficient',
+      why:'Under <b>IDEA</b>, every annual goal must be <b>measurable</b> &mdash; you can&rsquo;t tell if a child met it otherwise. Yours is missing: <b>'+missing.join(', ')+'</b>. '+(vague?'Words like &ldquo;improve&rdquo; with no number aren&rsquo;t a measurable goal. ':'')+'You can ask the team, in writing, to <b>rewrite it with a baseline, a target number, how it&rsquo;s measured, and by when</b>. They have to consider it.'});
+  } else {
+    F.push({name:'This goal looks measurable',chip:'strong',clabel:'Solid',mint:true,
+      why:'It has a baseline, a target, a way to measure, and a deadline &mdash; that&rsquo;s what a legally sufficient annual goal looks like. Good. Now make sure the <b>progress reports</b> actually report against those numbers.'});
+  }
+  F.push({name:'Your child has the right to a real, appropriate education (FAPE)',chip:'right',clabel:'Your right',mint:true,
+    why:'IDEA guarantees a <b>Free Appropriate Public Education</b>. &ldquo;Appropriate&rdquo; means the plan must be designed for <b>meaningful progress</b> for your child &mdash; not just any plan the school finds convenient.'});
+  if(pMin){F.push({name:'Services must be spelled out in minutes',chip:'right',clabel:'Your right',mint:true,
+    why:'Good &mdash; the IEP should state <b>exact service time</b> (e.g. &ldquo;30 min/week of speech&rdquo;). If any service is vague (&ldquo;as needed,&rdquo; &ldquo;consult&rdquo;), ask them to put a number on it so it&rsquo;s enforceable.'});}
+  else{F.push({name:'Pin down the service minutes',chip:'ask',clabel:'Ask this',
+    why:'Make sure every service (speech, OT, resource time) has <b>actual minutes</b> written down. &ldquo;As needed&rdquo; isn&rsquo;t enforceable &mdash; a number is.'});}
+  if(pEval){F.push({name:'They&rsquo;re past the evaluation deadline',chip:'weak',clabel:'Overdue',
+    why:'Once you consent in writing, most states require the evaluation within about <b>60 days</b>. If it&rsquo;s overdue, send a written follow-up (letter below) and note the date you asked &mdash; the clock is on them.'});}
+  if(pLRE){F.push({name:'Least Restrictive Environment (LRE)',chip:'right',clabel:'Your right',mint:true,
+    why:'IDEA says your child should be with typical peers <b>as much as appropriate</b>, with supports brought <b>to</b> them. If they&rsquo;re pulled out more than needed, the team has to justify it &mdash; ask them to.'});}
+  if(pDenied){F.push({name:'A &ldquo;no&rdquo; must come in writing (Prior Written Notice)',chip:'right',clabel:'Your right',mint:true,
+    why:'When a school refuses something, they owe you <b>Prior Written Notice</b> &mdash; a written explanation of what they refused and why. <b>Ask for it in writing.</b> It creates a record and often changes the answer.'});}
+
+  // build the request letter
+  var need = missing.length ? 'rewrite the annual goal above so it is measurable (baseline, target, method of measurement, and timeframe)'
+           : (pEval ? 'complete the evaluation I consented to' : 'schedule an IEP meeting to review my concerns');
+  LETTER='[Your name]\n[Address]\n[Date]\n\n[Case manager / Special Education Director]\n[School name]\n\nRe: [Child&rsquo;s name], Grade [ ___ ] &mdash; request regarding the IEP\n\nDear [name]:\n\nI am the parent of [child&rsquo;s name]. I am writing to request that the IEP team '+need+'.\n\n'+(missing.length?'The annual goal I&rsquo;m concerned about reads: &ldquo;'+ (goal||'[paste the goal]') +'&rdquo; As written, I can&rsquo;t tell whether my child is meeting it, because it is missing '+missing.join(', ')+'. Under IDEA, annual goals must be measurable.\n\n':'')+'Please treat this as a formal, written request. I would like to meet within [10] school days, and I am available [days/times]. Please also send me Prior Written Notice if the team declines any part of this request.\n\nThank you,\n[Your name]\n[Phone / email]';
+
+  var h='<div class="dsum">Here&rsquo;s the read &mdash; <b>'+F.length+' thing'+(F.length>1?'s':'')+'</b> to know. Schools count on parents not knowing any of this. You hold more cards than they let on.</div>';
+  F.forEach(function(f){h+='<div class="line"><span class="lname">'+f.name+'</span><br><span class="chip '+f.chip+'">'+f.clabel+'</span><div class="lflag'+(f.mint?' mint':'')+'">'+f.why+'</div></div>';});
+  h+='<div class="todo"><b>What I&rsquo;d do, in order:</b><ul>'+
+     '<li><b>Put your request in writing</b> (email counts) &mdash; there&rsquo;s a ready letter below. A verbal ask disappears; a written one starts a clock.</li>'+
+     (missing.length?'<li>At the meeting, ask: <b>&ldquo;What&rsquo;s the baseline data for this goal, and what&rsquo;s the target number?&rdquo;</b> If they don&rsquo;t have it, the goal isn&rsquo;t valid &mdash; ask them to rewrite it on the spot.</li>':'')+
+     '<li>Bring these questions: <b>&ldquo;How will you measure progress, and how often will you report it?&rdquo; &ldquo;Is this the least restrictive setting, and why?&rdquo; &ldquo;What supports are we adding, in minutes?&rdquo;</b></li>'+
+     '<li>Get <b>free help</b>: your state&rsquo;s <b>Parent Training &amp; Information Center</b> (parentcenterhub.org/find-your-center) will coach you for free, and Disability Rights orgs handle disputes.</li></ul></div>';
+  h+='<p class="nfa"><b>Educational &middot; not legal advice.</b> Special-ed law is powerful but detailed and varies by state. ESPO IEP Genius helps you spot what to question and puts it in plain English &mdash; it can&rsquo;t represent you. <b>For a dispute, get a free advocate</b> (parentcenterhub.org) or a special-education attorney. You have more rights than they show you.</p>';
+  document.getElementById('reportbody').innerHTML=h;
+  document.getElementById('letterwrap').innerHTML='<div class="blkt">&#9993; Your written request &mdash; fill in the [brackets], send it (email is fine), keep a copy</div><div class="blk">'+LETTER.replace(/</g,'&lt;')+'</div>';
+  document.getElementById('letterwrap').style.display='none';
+  var r=document.getElementById('report');r.style.display='block';r.scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
