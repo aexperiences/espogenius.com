@@ -7,27 +7,22 @@
 <meta name="description" content="Answer a few plain questions and ESPO Benefits Genius shows which public benefits you likely qualify for — SNAP, Medicare Extra Help, LIHEAP, VA pension and more — and exactly how to claim them. Runs in your browser; nothing is sent anywhere. Educational, not a benefits determination.">
 <meta name="theme-color" content="#1B1148">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/espo-benefits-genius.webmanifest">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#1B1148;--ink800:#150D38;--ink700:#2A1F5E;--ink600:#352873;--line:#3A2F74;
- --accent:#FFC46B;--accent6:#E6A94F;--mint:#5FE3C0;--off:#EEEAFB;--sea:#B3A5EC;--ok:#5FE3C0;--warn:#FFC46B;--bad:#F0846A}
+:root{--ink:#1B1148;--ink800:#150D38;--ink700:#2A1F5E;--ink600:#352873;--line:#3A2F74;--accent:#FFC46B;--accent6:#E6A94F;--mint:#5FE3C0;--off:#EEEAFB;--sea:#B3A5EC;--ok:#5FE3C0;--warn:#FFC46B;--bad:#F0846A}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#2A1F5E 0%,#160D3A 55%,#0E0827 100%);
- font-family:Inter,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--off);padding:26px 18px 70px}
+body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#2A1F5E 0%,#160D3A 55%,#0E0827 100%);font-family:Inter,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--off);padding:26px 18px 90px}
 .app{max-width:680px;margin:0 auto}
 .head{display:flex;align-items:center;gap:11px;justify-content:center;margin-bottom:6px}
 .head svg{width:34px;height:34px;border-radius:9px}
-.head .wm{font-family:Lato;font-weight:900;font-size:23px}.head .wm .g{color:var(--accent)}
+.head .wm{font-family:Lato;font-weight:900;font-size:22px}.head .wm .g{color:var(--accent)}
 .sub{text-align:center;color:var(--sea);font-size:13.5px;font-style:italic;margin:0 0 4px}
-.priv{text-align:center;color:var(--mint);font-size:12px;font-weight:600;margin:0 0 20px}
-.inbar{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:0 0 6px}
-.inbtn{background:var(--ink700);border:1px solid var(--accent);color:var(--accent);font-family:Lato;font-weight:900;font-size:13px;border-radius:999px;padding:9px 14px;cursor:pointer}
-.inbtn:hover{background:var(--accent);color:#20103A}
-.inbtn.rec{background:var(--bad);border-color:var(--bad);color:#2A0F0A}
-.inhint{color:var(--sea);font-size:12px}
-.innote{color:var(--sea);font-size:11px;margin:0 0 16px;line-height:1.5}
-.card{background:rgba(42,31,94,.4);border:1px solid var(--line);border-radius:20px;padding:22px 20px;margin-bottom:18px}
+.priv{text-align:center;color:var(--mint);font-size:12px;font-weight:600;margin:0 0 16px}
+.innote{color:var(--sea);font-size:11px;margin:0 0 14px;line-height:1.5}
+.card{background:rgba(42,31,94,.4);border:1px solid var(--line);border-radius:20px;padding:22px 20px;margin-bottom:18px;transition:opacity .3s,transform .3s}
 .card h2{font-family:Lato;font-weight:900;font-size:16px;margin:0 0 4px}
 .card .h2sub{color:var(--sea);font-size:13px;margin:0 0 14px}
 .seg{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:6px}
@@ -41,25 +36,20 @@ body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#
 .f input:focus,.f select:focus{outline:none;border-color:var(--accent)}
 .f .money{position:relative}.f .money input{padding-left:22px}.f .money::before{content:"$";position:absolute;left:11px;top:34px;color:var(--sea);font-size:14px}
 .tog{display:flex;flex-direction:column;gap:10px;margin-top:12px}
-.tog label{display:flex;align-items:flex-start;gap:11px;font-size:14px;cursor:pointer;color:var(--off)}
+.tog label{display:flex;align-items:flex-start;gap:11px;font-size:14px;cursor:pointer;color:var(--off);border-radius:10px;padding:4px}
 .tog input{margin-top:2px;width:18px;height:18px;accent-color:var(--accent);flex:0 0 auto}
 .go{display:block;width:100%;margin-top:16px;background:var(--accent);color:#20103A;font-family:Lato;font-weight:900;font-size:17px;border:0;border-radius:14px;padding:16px;cursor:pointer;transition:.14s}
 .go:hover{background:var(--accent6)}
 .lnk{background:var(--ink700);border:1px solid var(--line);color:var(--off);font-weight:600;font-size:13px;border-radius:999px;padding:9px 15px;cursor:pointer}
 .lnk:hover{border-color:var(--accent)}
 #report{display:none}
-.dsum{font-size:14px;color:var(--off);background:var(--ink800);border:1px solid var(--line);border-radius:11px;padding:12px 14px;margin:0 0 14px}
-.dsum b{color:var(--accent)}
-.tot{font-family:Lato;font-weight:900;font-size:15px;color:var(--mint);margin:0 0 14px;text-align:center;background:rgba(95,227,192,.08);border:1px solid #2f6a5e;border-radius:11px;padding:11px}
+.dsum{font-size:14px;color:var(--off);background:var(--ink800);border:1px solid var(--line);border-radius:11px;padding:12px 14px;margin:0 0 14px}.dsum b{color:var(--accent)}
 .line{border-top:1px solid var(--line);padding:12px 0}.line:first-child{border-top:0}
 .lname{font-weight:700;font-size:14.5px}
 .chip{display:inline-block;margin-top:7px;font-size:9.5px;font-weight:800;letter-spacing:.3px;padding:3px 9px;border-radius:999px;text-transform:uppercase}
-.chip.likely{color:#0C2038;background:var(--ok)}.chip.maybe{color:#2A0F0A;background:var(--warn)}.chip.value{color:var(--mint);border:1px solid var(--mint)}
-.lval{margin-top:6px;font-size:12px;font-weight:800;color:var(--mint)}
-.lflag{margin-top:8px;font-size:13px;line-height:1.5;border-radius:9px;padding:9px 12px;background:rgba(255,196,107,.09);border-left:3px solid var(--accent)}
-.lflag.mint{background:rgba(95,227,192,.08);border-left-color:var(--mint)}
-.lflag b{color:var(--off)}
-.lhow{margin-top:7px;font-size:12.5px;color:var(--sea);line-height:1.5}.lhow b{color:var(--mint)}
+.chip.a{color:#0C2038;background:var(--ok)}.chip.b{color:#2A0F0A;background:var(--bad)}.chip.c{color:var(--mint);border:1px solid var(--mint)}.chip.d{color:var(--warn);border:1px solid var(--warn)}
+.lflag{margin-top:8px;font-size:13px;line-height:1.5;border-radius:9px;padding:9px 12px;background:rgba(255,158,107,.09);border-left:3px solid var(--accent)}
+.lflag.mint{background:rgba(95,227,192,.08);border-left-color:var(--mint)}.lflag b{color:var(--off)}
 .todo{font-size:14px;line-height:1.55;color:var(--off);background:rgba(95,227,192,.07);border:1px solid #2f6a5e;border-radius:11px;padding:12px 14px;margin:14px 0 12px}
 .todo b{color:var(--mint)}.todo ul{margin:8px 0 0;padding-left:18px}.todo li{margin-bottom:5px}
 .blk{background:var(--ink800);border:1px dashed var(--line);border-radius:12px;padding:16px;margin:12px 0;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.6;white-space:pre-wrap}
@@ -68,34 +58,64 @@ body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#
 .nfa{font-size:12px;color:var(--sea);text-align:center;line-height:1.5;margin:8px 0 0}
 .foot{text-align:center;margin-top:22px}.foot a{color:var(--accent);font-weight:700;text-decoration:none;font-size:14px}
 .brandmark{width:42px;height:41px;margin:24px auto 8px;opacity:.78;background:url(/ae-mark.png) center/contain no-repeat}
-@media print{body{background:#fff;color:#111}.card,.go,.foot,.priv,.inbar,.innote,.readbar,.scanpanel{display:none!important}#report{display:block!important;border:0}.blk{color:#111;border-color:#999}}
+@media print{body{background:#fff;color:#111}.card,.go,.foot,.priv,.innote,.readbar,.scanpanel,.topbar,.steps,.steplbl,.stickybar,.resume,.scanrow{display:none!important}#report{display:block!important;border:0}.blk{color:#111;border-color:#999}}
+
+.topbar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:0 0 8px}
+.walkbtn{background:var(--mint);border:1px solid var(--mint);color:#0C2038;font-family:Lato;font-weight:900;font-size:13.5px;border-radius:999px;padding:10px 18px;cursor:pointer;transition:.14s}
+.walkbtn:hover{filter:brightness(1.06)}
+.walkbtn.rec{background:var(--bad);border-color:var(--bad);color:#2A0F0A;animation:pulse 1.3s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(240,132,106,.5)}50%{box-shadow:0 0 0 8px rgba(240,132,106,0)}}
+.installbtn{display:none;background:transparent;border:1px solid var(--sea);color:var(--sea);font-weight:800;font-size:12.5px;border-radius:999px;padding:10px 15px;cursor:pointer}
+.installbtn:hover{border-color:var(--mint);color:var(--mint)}
+.scanrow{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:0 0 6px}
+.scanbtn2{background:var(--ink700);border:1px solid var(--accent);color:var(--accent);font-family:Lato;font-weight:900;font-size:12.5px;border-radius:999px;padding:9px 14px;cursor:pointer}
+.scanbtn2:hover{background:var(--accent);color:#20103A}
+.scanpanel{background:var(--ink800);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 16px}
+.sp-t{font-size:12.5px;color:var(--off);margin-bottom:8px}
+.steps{display:flex;gap:6px;margin:2px 0 6px}
+.steps i{height:5px;flex:1;border-radius:3px;background:var(--ink700);transition:background .35s}
+.steps i.done{background:var(--mint)}.steps i.on{background:var(--accent)}
+.steplbl{text-align:center;color:var(--sea);font-size:11px;margin:0 0 16px;min-height:14px}
+.resume{display:none;font-size:12px;color:var(--sea);background:var(--ink800);border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin:0 0 14px;align-items:center;gap:10px}
+.resume.on{display:flex}.resume button{margin-left:auto;background:none;border:0;color:var(--accent);font-weight:700;cursor:pointer;font-size:12px}
+.hot{background:rgba(255,158,107,.12)!important}
+.stickybar{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:11px 16px calc(11px + env(safe-area-inset-bottom));background:linear-gradient(to top,rgba(11,7,30,.98),rgba(11,7,30,.82));backdrop-filter:blur(9px);border-top:1px solid var(--line);transform:translateY(120%);transition:transform .3s}
+.stickybar.show{transform:translateY(0)}
+.stickybar .in{max-width:680px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.stickybar button{flex:1;background:var(--accent);color:#20103A;font-family:Lato;font-weight:900;font-size:15.5px;border:0;border-radius:12px;padding:13px;cursor:pointer}
+.stickybar .sbsub{flex:0 0 auto;color:var(--sea);font-size:11.5px;max-width:120px;line-height:1.3}
+.conf{display:flex;align-items:center;gap:13px;margin:0 0 14px}
+.confmeter{flex:1;height:9px;border-radius:5px;background:var(--ink800);overflow:hidden}
+.confmeter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--warn),var(--mint));transition:width .7s}
+.confnum{font-family:Lato;font-weight:900;font-size:20px}.confnum small{display:block;font-family:Inter;font-weight:500;font-size:10px;color:var(--sea);margin-top:-2px;letter-spacing:.03em}
+.dofirst{background:linear-gradient(180deg,rgba(255,158,107,.17),rgba(255,158,107,.05));border:1px solid var(--accent);border-radius:14px;padding:14px 16px;margin:0 0 16px}
+.dofirst .k{font-family:Lato;font-weight:900;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 5px}
+.dofirst .t{font-size:14.5px;line-height:1.5}.dofirst .t b{color:#fff}
+.rank{display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;border-radius:50%;background:var(--ink700);color:var(--sea);font-size:11px;font-weight:800;margin-right:7px}
+.toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%) translateY(20px);background:var(--mint);color:#0C2038;font-weight:800;font-size:13px;padding:10px 16px;border-radius:999px;opacity:0;pointer-events:none;transition:.3s;z-index:40}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="head">
-    <svg viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="232" fill="#1B1148"/><circle cx="512" cy="330" r="148" fill="none" stroke="#FFC46B" stroke-width="13" opacity="0.5"/><g stroke="#36306B" stroke-width="20" stroke-linecap="round"><path d="M330,672 L694,672"/><path d="M330,672 L512,330"/><path d="M694,672 L512,330"/></g><circle cx="330" cy="672" r="84" fill="#5FE3C0"/><circle cx="694" cy="672" r="84" fill="#5FE3C0"/><circle cx="512" cy="330" r="104" fill="#FFC46B"/></svg>
-    <span class="wm">ESPO Benefits <span class="g">Genius</span></span>
-  </div>
+  <div class="head"><svg viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="232" fill="#1B1148"/><circle cx="512" cy="330" r="148" fill="none" stroke="#FFC46B" stroke-width="13" opacity="0.5"/><g stroke="#36306B" stroke-width="20" stroke-linecap="round"><path d="M330,672 L694,672"/><path d="M330,672 L512,330"/><path d="M694,672 L512,330"/></g><circle cx="330" cy="672" r="84" fill="#5FE3C0"/><circle cx="694" cy="672" r="84" fill="#5FE3C0"/><circle cx="512" cy="330" r="104" fill="#FFC46B"/></svg><span class="wm">ESPO Benefits <span class="g">Genius</span></span></div>
   <p class="sub">the help you&rsquo;re owed &mdash; what you likely qualify for, and how to claim it</p>
   <p class="priv">&#128274; Runs entirely in your browser. Nothing you enter is sent anywhere.</p>
-
-  <div class="inbar">
-    <button class="inbtn" id="ntalk" type="button" onclick="nTalk()">&#127908; Talk to me</button>
-    <span class="inhint">&mdash; or just tap the answers</span>
-  </div>
-  <p class="innote" id="nstatus">Voice runs <b>on your device</b> with your browser&rsquo;s own tools &mdash; nothing you enter leaves your phone.</p>
-
+  <div class="topbar"><button class="walkbtn" id="walkbtn" type="button" onclick="walkToggle()">&#127908; Walk me through it, out loud</button><button class="installbtn" id="installbtn" type="button" onclick="doInstall()">&#8595; Add to home screen</button></div>
+  <div class="steps" id="steps"><i></i><i></i></div>
+  <p class="steplbl" id="steplbl">Tap the answers, scan a paystub, or say &ldquo;Walk me through it&rdquo; and just talk.</p>
+  <div class="resume" id="resume"><span>Picked up where you left off.</span><button type="button" onclick="clearState()">Start over</button></div>
+  <p class="innote" id="nstatus">Scan &amp; voice run <b>on your device</b> with your browser&rsquo;s own tools &mdash; nothing you enter leaves your phone.</p>
+<div class="scanrow"><button class="scanbtn2" type="button" onclick="nScan()">&#128247; Scan a paystub</button><span class="inhint" style="color:var(--sea);font-size:12px">&mdash; snap a paystub to fill income</span></div>
+<div class="scanpanel" id="scanpanel" style="display:none"></div>
   <div class="card">
     <h2>1 &middot; Who&rsquo;s in the household?</h2>
     <p class="h2sub">Count everyone who lives and eats together, including yourself and any kids.</p>
     <div class="fg">
-      <div class="f"><label>People in the household</label>
-        <select id="hh"><option value="1">Just me (1)</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6+</option></select></div>
+      <div class="f"><label>People in the household</label><select id="hh"><option value="1">Just me (1)</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6+</option></select></div>
       <div class="f money"><label>Total household income per month (roughly)</label><input id="inc" type="number" min="0" placeholder="e.g. 2200"></div>
     </div>
   </div>
-
   <div class="card">
     <h2>2 &middot; A few things that unlock help</h2>
     <p class="h2sub">Tick anything that&rsquo;s true &mdash; each one opens different programs.</p>
@@ -109,7 +129,6 @@ body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#
     </div>
     <button class="go" onclick="decode()">Show me what I&rsquo;m likely owed &rarr;</button>
   </div>
-
   <div class="card" id="report">
     <h2>ESPO Benefits Genius&rsquo;s read</h2>
     <div id="reportbody"></div>
@@ -117,173 +136,146 @@ body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#
       <button class="lnk" type="button" onclick="showLetter()">&#9993; Get your claim checklist</button>
       <button class="lnk" type="button" onclick="speakRead()">&#128266; Read it to me</button>
       <button class="lnk" id="stopread" type="button" style="display:none" onclick="stopRead()">&#9209; Stop</button>
-      <button class="lnk" type="button" onclick="window.print()">&#128424; Print case file</button>
+      <button class="lnk" type="button" onclick="copyCase()">&#128203; Copy case file</button>
+      <button class="lnk" type="button" onclick="window.print()">&#128424; Print / save PDF</button>
     </div>
     <div id="letterwrap" style="display:none;margin-top:14px"></div>
   </div>
-
   <div class="foot"><a href="/">&larr; ESPO Genius</a></div>
   <div class="brandmark" aria-label="Accelerated Experiences" title="An Accelerated Experiences app"></div>
 </div>
-
+<div class="stickybar" id="stickybar"><div class="in"><button type="button" onclick="decode()">Show me what I&rsquo;m likely owed &rarr;</button><span class="sbsub">private &middot; on your device</span></div></div>
+<div class="toast" id="toast"></div>
 <script>
-function nStatus(m){var e=document.getElementById('nstatus');if(e)e.innerHTML=m;}
-function nTalk(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;var btn=document.getElementById('ntalk');
- if(!SR){nStatus('Voice isn&rsquo;t supported here &mdash; just tap the answers, or try Chrome/Safari.');return;}
- if(window._nrec){try{window._nrec.stop();}catch(e){}window._nrec=null;return;}
- var rec=new SR();window._nrec=rec;rec.lang='en-US';rec.interimResults=false;rec.maxAlternatives=1;if(btn)btn.classList.add('rec');
- nStatus('Listening&hellip; say your monthly income, and I&rsquo;ll fill it in.');
- rec.onresult=function(e){var t=e.results[0][0].transcript;var num=t.replace(/[^0-9.]/g,'');if(num){document.getElementById('inc').value=num;nStatus('Filled in $'+num+'/mo &mdash; check it and run the read.');}else{nStatus('Say the dollar amount, e.g. &ldquo;twenty two hundred&rdquo;.');}};
- rec.onerror=function(){nStatus('Didn&rsquo;t catch that &mdash; try again.');};
- rec.onend=function(){window._nrec=null;if(btn)btn.classList.remove('rec');};rec.start();}
 
-var LETTER='';
-function showLetter(){var w=document.getElementById('letterwrap');w.style.display=(w.style.display==='none'||!w.style.display)?'block':'none';if(w.style.display==='block')w.scrollIntoView({behavior:'smooth'});}
-function narcText(){var el=document.getElementById('reportbody');var t=el?(el.innerText||el.textContent||''):'';return t.replace(/ /g,' ').replace(/\s+/g,' ').trim();}
-function toggleStop(on){var s=document.getElementById('stopread');if(s)s.style.display=on?'inline-block':'none';}
+function $(id){return document.getElementById(id);}
+function nStatus(m){var e=$('nstatus');if(e)e.innerHTML=m;}
+function toast(m){var t=$('toast');if(!t)return;t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},1900);}
+var VALS=['inc','hh'],CHK=['cSenior','cMed','cKids','cVet','cDis','cSnap'],RADIOS=[],LSK='espo_benefits_v1';
+function saveState(){try{var d={v:{},c:{},r:{}};VALS.forEach(function(k){var e=$(k);if(e)d.v[k]=e.value;});CHK.forEach(function(k){var e=$(k);if(e)d.c[k]=e.checked;});RADIOS.forEach(function(n){var el=document.querySelector('input[name="'+n+'"]:checked');d.r[n]=el?el.value:null;});localStorage.setItem(LSK,JSON.stringify(d));}catch(e){}}
+function loadState(){try{var d=JSON.parse(localStorage.getItem(LSK)||'null');if(!d)return false;var any=false;VALS.forEach(function(k){if(d.v&&d.v[k]){$(k).value=d.v[k];any=true;}});CHK.forEach(function(k){if(d.c&&d.c[k]){$(k).checked=true;any=true;}});if(d.r)Object.keys(d.r).forEach(function(n){if(d.r[n]){var el=document.querySelector('input[name="'+n+'"][value="'+d.r[n]+'"]');if(el){el.checked=true;any=true;}}});return any;}catch(e){return false;}}
+function clearState(){try{localStorage.removeItem(LSK);}catch(e){}VALS.forEach(function(k){$(k).value='';});CHK.forEach(function(k){$(k).checked=false;});$('resume').classList.remove('on');$('report').style.display='none';updateSteps();toast('Cleared.');}
+function stepsDone(){return [ (($('inc').value||'').length>0||$('hh').value!=='1'), ($('cSenior').checked||$('cMed').checked||$('cKids').checked||$('cVet').checked||$('cDis').checked||$('cSnap').checked) ];}
+function updateSteps(){var arr=stepsDone();var s=$('steps').children;for(var i=0;i<s.length;i++){s[i].className=arr[i]?'done':'';}var sb=$('stickybar');if(arr[0]){sb.classList.add('show');}else{sb.classList.remove('show');}}
+var _deferred=null;
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();_deferred=e;$('installbtn').style.display='inline-block';});
+function doInstall(){if(_deferred){_deferred.prompt();_deferred.userChoice.then(function(){_deferred=null;$('installbtn').style.display='none';});}else{toast('Use your browser menu → Add to Home Screen');}}
+var SCANFIELD='inc';
+function nScan(){if(!SCANFIELD)return;var inp=document.createElement('input');inp.type='file';inp.accept='image/*';inp.setAttribute('capture','environment');
+ inp.onchange=function(){var f=inp.files&&inp.files[0];if(!f)return;
+  if(!('TextDetector' in window)){nStatus('This browser has no built-in text reader (iPhone Safari doesn&rsquo;t). Use <b>&#127908; Walk me through it</b>, or type it in.');return;}
+  nStatus('Reading it <b>on your device</b>&hellip;');var img=new Image();
+  img.onload=function(){try{new TextDetector().detect(img).then(function(r){
+    var text=(r||[]).map(function(b){return b.rawValue;}).join(' ').replace(/\s+/g,' ').trim();
+    var num=(text.match(/[\d,]{3,}/g)||[]).map(function(x){return x.replace(/,/g,'');}).sort(function(a,b){return b.length-a.length;})[0];
+    var el=$(SCANFIELD);if(el&&num){el.value=num;}saveState();updateSteps();
+    $('scanpanel').innerHTML='<div class="sp-t">&#128196; I read this on your device'+(num?' and pulled the amount <b>'+num+'</b> into the box':'')+' &mdash; check it, then run the read:</div><div style="font-size:12px;color:var(--sea);white-space:pre-wrap">'+text.replace(/</g,'&lt;').slice(0,400)+'</div>';
+    $('scanpanel').style.display='block';nStatus('Read on your device &mdash; nothing was sent anywhere.');
+  }).catch(function(){nStatus('Couldn&rsquo;t read that image &mdash; try a clearer, straight-on photo.');});}catch(e){nStatus('Text reading failed on this device.');}};
+  img.onerror=function(){nStatus('Couldn&rsquo;t open that image.');};img.src=URL.createObjectURL(f);};
+ inp.click();}
+var WALK=[
+ {say:"Let's find the help you're owed. First — how many people live and eat in your household, counting yourself?",kind:'select',field:'hh',map:[{re:'\\b(one|1|just me|myself|single)\\b',val:'1'},{re:'\\b(two|2)\\b',val:'2'},{re:'\\b(three|3)\\b',val:'3'},{re:'\\b(four|4)\\b',val:'4'},{re:'\\b(five|5)\\b',val:'5'},{re:'\\b(six|6|seven|eight|more)\\b',val:'6'}]},
+ {say:"Roughly what is your total household income per month?",kind:'number',field:'inc'},
+ {say:"Is anyone in the home sixty-five or older?",kind:'bool',field:'cSenior'},
+ {say:"Is anyone on Medicare?",kind:'bool',field:'cMed'},
+ {say:"Are there children under eighteen, or is someone pregnant?",kind:'bool',field:'cKids'},
+ {say:"Is anyone a veteran, or a veteran's surviving spouse?",kind:'bool',field:'cVet'},
+ {say:"Does anyone have a disability, or is unable to work?",kind:'bool',field:'cDis'},
+ {say:"Last one. Do you already get SNAP, or food stamps?",kind:'bool',field:'cSnap'}
+];
+var _wi=0,_walking=false,_wrec=null,_retry=0;
+function speak(t,cb){if(!('speechSynthesis' in window)){if(cb)cb();return;}try{speechSynthesis.cancel();}catch(e){}var u=new SpeechSynthesisUtterance(t);u.rate=1.0;u.onend=function(){if(cb)cb();};u.onerror=function(){if(cb)cb();};speechSynthesis.speak(u);}
+function walkToggle(){if(_walking){walkStop();return;}var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){nStatus('Voice isn&rsquo;t supported on this browser &mdash; try Chrome, or just tap the answers.');return;}_walking=true;_wi=0;_retry=0;$('walkbtn').classList.add('rec');$('walkbtn').innerHTML='&#9209; Stop the walkthrough';walkStep();}
+function walkStop(){_walking=false;try{if(_wrec)_wrec.stop();}catch(e){}try{speechSynthesis.cancel();}catch(e){}_wrec=null;$('walkbtn').classList.remove('rec');$('walkbtn').innerHTML='&#127908; Walk me through it, out loud';$('steplbl').textContent='';markHot(null);}
+function markHot(id){var labs=document.querySelectorAll('label');for(var i=0;i<labs.length;i++)labs[i].classList.remove('hot');if(id){var e=$(id);if(e){var l=e.closest('label');if(l)l.classList.add('hot');}}}
+function walkStep(){if(!_walking)return;
+ if(_wi>=WALK.length){$('steplbl').textContent='Reading it now…';markHot(null);speak("Thank you. Here's the honest read.",function(){decode();});walkStop2();return;}
+ var s=WALK[_wi];$('steplbl').textContent='Question '+(_wi+1)+' of '+WALK.length+' — listen, then answer out loud';
+ markHot((s.kind==='bool')?s.field:null);
+ speak(s.say,function(){if(_walking)listenFor(s);});}
+function walkStop2(){_walking=false;_wrec=null;$('walkbtn').classList.remove('rec');$('walkbtn').innerHTML='&#127908; Walk me through it, out loud';}
+function listenFor(s){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;var rec=new SR();_wrec=rec;rec.lang='en-US';rec.interimResults=false;rec.maxAlternatives=1;rec.continuous=(s.kind==='text');var got='';
+ rec.onresult=function(e){for(var i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)got+=e.results[i][0].transcript+' ';}if(s.kind!=='text'){try{rec.stop();}catch(e){}}};
+ rec.onerror=function(){};
+ rec.onend=function(){if(!_walking)return;got=got.trim();var ok=true;
+   if(s.kind==='text'){if(got){$(s.field).value=(($(s.field).value)?$(s.field).value+' ':'')+got;}}
+   else if(s.kind==='number'){var n=got.replace(/[^0-9.]/g,'');if(n){$(s.field).value=n;}else ok=false;}
+   else if(s.kind==='bool'){var yes=/\b(yes|yeah|yep|yup|it does|correct|true|sure|definitely|they do|we do|uh huh)\b/i.test(got);var no=/\b(no|nope|nah|it doesn'?t|does not|negative|not really|i don'?t think so)\b/i.test(got);if(yes||no){$(s.field).checked=yes;}else ok=false;}
+   else if(s.kind==='radio'||s.kind==='select'){var matched=null;for(var j=0;j<s.map.length;j++){if(new RegExp(s.map[j].re,'i').test(got)){matched=s.map[j].val;break;}}if(matched!=null){if(s.kind==='radio'){var el=document.querySelector('input[name="'+s.field+'"][value="'+matched+'"]');if(el)el.checked=true;}else{$(s.field).value=matched;}}else ok=false;}
+   saveState();updateSteps();markHot(null);
+   if(ok){_retry=0;_wi++;walkStep();}else if(_retry<1){_retry++;speak(s.kind==='bool'?"Sorry — was that a yes or a no?":"Sorry, I didn't catch that. "+s.say,function(){if(_walking)listenFor(s);});}else{_retry=0;_wi++;walkStep();}
+ };
+ try{rec.start();}catch(e){_wi++;walkStep();}}
+function narcText(){var el=$('reportbody');var t=el?(el.innerText||el.textContent||''):'';return t.replace(/ /g,' ').replace(/\s+/g,' ').trim();}
+function toggleStop(on){var s=$('stopread');if(s)s.style.display=on?'inline-block':'none';}
 function speakRead(){if(!('speechSynthesis' in window))return;var t=narcText();if(!t)return;try{speechSynthesis.cancel();}catch(e){}var u=new SpeechSynthesisUtterance(t);u.rate=0.98;u.onend=function(){toggleStop(false);};u.onerror=function(){toggleStop(false);};speechSynthesis.speak(u);toggleStop(true);}
 function stopRead(){try{speechSynthesis.cancel();}catch(e){}toggleStop(false);}
+var LETTER='';
+function showLetter(){var w=$('letterwrap');w.style.display=(w.style.display==='none'||!w.style.display)?'block':'none';if(w.style.display==='block')w.scrollIntoView({behavior:'smooth'});}
+function copyCase(){var t='ESPO BENEFITS GENIUS — CASE FILE\n\n'+narcText()+(LETTER?'\n\n----- YOUR LETTER / CHECKLIST -----\n'+LETTER:'');if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){toast('Case file copied');},function(){toast('Could not copy');});}else{toast('Copy not supported — use Print');}}
 function money(x){return '$'+Math.round(x).toLocaleString();}
-
-// Rough 2024 Federal Poverty Level, annual, by household size
-function fplAnnual(n){return 15060+(n-1)*5380;}
-
-function decode(){
-  var n=parseInt(document.getElementById('hh').value,10)||1;
-  var incMo=Math.max(0,parseFloat(document.getElementById('inc').value)||0);
-  var incYr=incMo*12;
-  var senior=document.getElementById('cSenior').checked,med=document.getElementById('cMed').checked,
-      kids=document.getElementById('cKids').checked,vet=document.getElementById('cVet').checked,
-      dis=document.getElementById('cDis').checked,snap=document.getElementById('cSnap').checked;
-  var fpl=fplAnnual(n);
-  var pctFPL=incYr>0?Math.round(incYr/fpl*100):0;
-  var F=[], est=0;
-
-  // SNAP (food) - gross income limit ~130% FPL
-  if(!snap && incYr>0 && incYr<=fpl*1.30){
-    var snapVal=n*175*12;
-    est+=snapVal;
-    F.push({name:'SNAP (food benefits) &mdash; you look eligible',chip:'likely',cl:'Likely qualify',
-      val:'&asymp; '+money(n*175)+'/mo in food help',
-      why:'Your income is roughly <b>'+pctFPL+'% of the poverty line</b>, and SNAP generally reaches households up to about <b>130%</b>. Nationally about <b>60% of eligible seniors never sign up</b> &mdash; it&rsquo;s the single most-left-behind benefit.',
-      how:'Apply through your <b>state SNAP office</b> (search &ldquo;[your state] SNAP apply&rdquo;) or get free help at <b>BenefitsCheckUp.org</b>. Takes ~30 min; you can apply online in most states.'});
-  } else if(snap){
-    F.push({name:'You already get SNAP &mdash; good. Check if the amount is right',chip:'value',cl:'Already on it',mint:true,
-      val:'',why:'You&rsquo;re in the program. Two things people miss: <b>report a drop in income right away</b> (it can raise your benefit), and seniors/disabled can often deduct <b>medical costs</b> to get more. A quick recheck at <b>BenefitsCheckUp.org</b> is worth it.',how:''});
-  }
-
-  // Medicare Extra Help + MSP
-  if(med && incYr>0 && incYr<=fpl*1.50){
-    est+=6200;
-    F.push({name:'Medicare &ldquo;Extra Help&rdquo; + a Savings Program &mdash; big one',chip:'likely',cl:'Likely qualify',
-      val:'&asymp; $6,200/yr &mdash; drug costs + your Part B premium (~$185/mo)',
-      why:'On Medicare with modest income, you likely qualify for <b>Extra Help</b> (low-income drug subsidy) and a <b>Medicare Savings Program</b> that can <b>pay your Part B premium</b>. Roughly <b>2 million people</b> who qualify aren&rsquo;t enrolled.',
-      how:'Apply for Extra Help free at <b>SSA.gov</b> (or call SSA). For the Savings Program, contact your <b>state Medicaid office</b> or a free <b>SHIP counselor</b> at <b>shiphelp.org</b>.'});
-  } else if(med){
-    F.push({name:'On Medicare? Still worth a 5-minute check',chip:'maybe',cl:'Worth checking',
-      val:'',why:'Even a little over the usual line, some states have higher limits for the Medicare Savings Programs, and Extra Help now has a bigger income cutoff than most people think.',
-      how:'A free <b>SHIP counselor</b> (<b>shiphelp.org</b>) will check your exact numbers at no cost.'});
-  }
-
-  // LIHEAP - energy help
-  if(incYr>0 && incYr<=fpl*1.50){
-    est+=500;
-    F.push({name:'LIHEAP &mdash; help with heating &amp; cooling bills',chip:'likely',cl:'Likely qualify',
-      val:'&asymp; a few hundred $/yr toward energy bills',
-      why:'LIHEAP helps low-income households with utility bills, and many states also fund <b>emergency</b> help if you&rsquo;ve got a shut-off notice. Income limits are generous (often ~150% of poverty or your state median).',
-      how:'Call <b>211</b> (United Way) or search &ldquo;[your state] LIHEAP&rdquo;. If you have a shut-off notice, say so &mdash; it&rsquo;s often fast-tracked.'});
-  }
-
-  // SSI
-  if((senior||dis) && incMo>0 && incMo<=fpl/12*1.0){
-    est+=11000;
-    F.push({name:'SSI (Supplemental Security Income) &mdash; possible monthly check',chip:'maybe',cl:'Maybe &mdash; asset-tested',
-      val:'up to ~$960/mo (2024) if assets are low',
-      why:'For people <b>65+, blind, or disabled</b> with very low income <b>and</b> low savings (about $2,000 single / $3,000 couple), SSI adds a monthly cash benefit &mdash; and in most states SSI <b>automatically brings Medicaid</b> with it.',
-      how:'Apply at <b>SSA.gov</b> or your local Social Security office. The asset limit is strict, so confirm your savings first.'});
-  }
-
-  // VA pension / Aid & Attendance
-  if(vet){
-    est+=16000;
-    F.push({name:'VA Pension / Aid &amp; Attendance &mdash; often left on the table',chip:'likely',cl:'Check it',
-      val:'&asymp; $1,300&ndash;$2,700/mo for wartime vets who need care',
-      why:'A <b>wartime veteran or surviving spouse</b> with limited income may qualify for a <b>VA pension</b>, and if they need help with daily living, <b>Aid &amp; Attendance</b> adds a substantial monthly amount. Widely unclaimed.',
-      how:'See a <b>free accredited VA rep</b> or your county Veterans Service Officer (VSO). Never pay someone to file this &mdash; help is free.'});
-  }
-
-  // WIC + free school meals
-  if(kids && incYr>0 && incYr<=fpl*1.85){
-    est+=1800;
-    F.push({name:'WIC + free school meals &mdash; for the kids',chip:'likely',cl:'Likely qualify',
-      val:'WIC food benefits + free/reduced school meals',
-      why:'<b>WIC</b> covers pregnant women and kids under 5 up to about <b>185% of poverty</b>; and at your income the children very likely qualify for <b>free or reduced-price school meals</b> too.',
-      how:'For WIC, search &ldquo;[your state] WIC apply&rdquo;. For school meals, ask the school office for the free/reduced-price meal form (or apply online through the district).'});
-  }
-
-  // Lifeline
-  if(incYr>0 && incYr<=fpl*1.35){
-    est+=110;
-    F.push({name:'Lifeline &mdash; discount on phone or internet',chip:'maybe',cl:'Small but easy',
-      val:'&asymp; $9.25/mo off phone or home internet',
-      why:'Lifeline gives a monthly discount on a phone or internet bill for low-income households (or anyone on SNAP/Medicaid/SSI).',
-      how:'Apply at <b>lifelinesupport.org</b>. If you already get SNAP or Medicaid, you qualify automatically.'});
-  }
-
-  // Property-tax relief for senior homeowners
-  if(senior){
-    F.push({name:'Senior property-tax relief &mdash; ask your county',chip:'value',cl:'Easy to miss',mint:true,
-      val:'',why:'Almost every state has a <b>property-tax exemption, freeze, or &ldquo;circuit breaker&rdquo; rebate</b> for older homeowners (and often renters). It&rsquo;s rarely automatic &mdash; you have to apply, and many people never do.',
-      how:'Call your <b>county assessor / treasurer</b> and ask about the <b>senior exemption or property-tax deferral</b>.'});
-  }
-
-  // Nothing matched
-  if(F.length===0){
-    F.push({name:'Nothing jumped out from these answers &mdash; but don&rsquo;t stop here',chip:'maybe',cl:'Check anyway',
-      val:'',why:'Based on what you entered, the big income-tested programs may not fit right now. But rules vary a lot by state, and one changed circumstance (a job loss, a medical bill, a new baby, turning 65) can open several at once.',
-      how:'Run a free full screen at <b>BenefitsCheckUp.org</b> (built by the National Council on Aging) &mdash; it checks ~2,000 programs against your exact situation.'});
-  }
-
-  // Build the claim checklist letter
-  var progs=F.map(function(f){return f.name.split(' &mdash;')[0].split(' &amp;')[0];});
-  LETTER='MY BENEFITS CLAIM CHECKLIST\n\nProgram(s) to apply for or double-check:\n';
-  F.forEach(function(f){LETTER+='  [ ] '+f.name.replace(/&mdash;.*$/,'').replace(/&amp;/g,'&').replace(/&rsquo;/g,"'").replace(/<[^>]+>/g,'').trim()+'\n';});
-  LETTER+='\nDocuments most applications ask for (gather once, use for all):\n'+
-    '  [ ] Photo ID for each adult\n'+
-    '  [ ] Social Security numbers for everyone in the household\n'+
-    '  [ ] Proof of income (recent pay stubs, benefit letters, Social Security/pension award)\n'+
-    '  [ ] Proof of address (a utility bill or lease)\n'+
-    '  [ ] Rough monthly bills (rent/mortgage, utilities, medical) &mdash; these can raise your benefit\n'+
-    (vet?'  [ ] Military discharge papers (DD-214)\n':'')+
-    (med?'  [ ] Your Medicare card\n':'')+
-    '\nWhere to start (all free):\n'+
-    '  - BenefitsCheckUp.org &mdash; one screen checks ~2,000 programs (NCOA)\n'+
-    '  - Call 211 &mdash; a local person who knows your county&rsquo;s programs\n'+
-    '  - shiphelp.org &mdash; free Medicare/Medicaid counseling\n'+
-    '  - Your local Area Agency on Aging (eldercare.acl.gov)\n\n'+
-    'Rule of thumb: applying is free, and applying does NOT cost you other benefits. Never pay a company to file these for you.';
-
-  var h='<div class="dsum">Here&rsquo;s the honest read &mdash; <b>'+F.length+'</b> program'+(F.length>1?'s':'')+' worth chasing based on what you entered. These are <b>signals, not decisions</b> &mdash; the agency makes the final call.</div>';
-  if(est>0){h+='<div class="tot">&#128176; Ballpark left on the table: <b>&asymp; '+money(est)+' a year</b> if these fit. Worth an afternoon.</div>';}
-  F.forEach(function(f){
-    h+='<div class="line"><span class="lname">'+f.name+'</span><br><span class="chip '+f.chip+'">'+f.cl+'</span>';
-    if(f.val){h+='<div class="lval">'+f.val+'</div>';}
-    h+='<div class="lflag'+(f.mint?' mint':'')+'">'+f.why+'</div>';
-    if(f.how){h+='<div class="lhow"><b>How to claim:</b> '+f.how+'</div>';}
-    h+='</div>';
-  });
-  h+='<div class="todo"><b>What I&rsquo;d do, in order:</b><ul>'+
-     '<li>Do <b>one free full screen at BenefitsCheckUp.org</b> &mdash; it catches things this quick check can&rsquo;t.</li>'+
-     '<li>Gather the <b>documents in the checklist below once</b> &mdash; the same packet works for every program.</li>'+
-     '<li>Start with the <b>biggest-dollar item</b> above; call <b>211</b> if you get stuck on any application.</li>'+
-     '<li><b>Report changes fast</b> (income drop, new baby, turning 65) &mdash; they usually help you, not hurt you.</li>'+
-     '</ul></div>';
-  h+='<p class="nfa"><b>Educational &middot; not a benefits determination.</b> Only the agency can decide if you qualify, and income limits, asset rules, and dollar amounts vary by state and year &mdash; the figures here are rough national ballparks. Applying is free and confidential. <b>Never pay anyone to file these for you.</b> You&rsquo;re likely owed more than you think.</p>';
-  document.getElementById('reportbody').innerHTML=h;
-  document.getElementById('letterwrap').innerHTML='<div class="blkt">&#128203; Your claim checklist &mdash; print it and work down the list</div><div class="blk">'+LETTER.replace(/</g,'&lt;')+'</div>';
-  document.getElementById('letterwrap').style.display='none';
-  var r=document.getElementById('report');r.style.display='block';r.scrollIntoView({behavior:'smooth'});
+function renderReport(o){
+ var h='<div class="conf"><div><span class="confnum">'+o.conf+'%<small>'+(o.confLabel||'READ COMPLETENESS')+'</small></span></div><div class="confmeter"><i id="confbar"></i></div></div>';
+ h+='<div class="dofirst"><div class="k">▶ Do this first</div><div class="t">'+o.first+'</div></div>';
+ h+='<div class="dsum">'+o.lead+'</div>';
+ o.findings.forEach(function(f,i){h+='<div class="line"><span class="lname"><span class="rank">'+(i+1)+'</span>'+f.name+'</span><br><span class="chip '+f.chip+'">'+f.clabel+'</span>'+(f.val?'<div style="margin-top:6px;font-size:12px;font-weight:800;color:var(--mint)">'+f.val+'</div>':'')+'<div class="lflag'+(f.mint?' mint':'')+'">'+f.why+'</div></div>';});
+ h+=o.todo;h+=o.nfa;
+ $('reportbody').innerHTML=h;
+ if(o.letter!=null){LETTER=o.letter;$('letterwrap').innerHTML='<div class="blkt">'+o.letterTitle+'</div><div class="blk">'+o.letter.replace(/</g,'&lt;')+'</div>';$('letterwrap').style.display='none';}
+ var r=$('report');r.style.display='block';r.scrollIntoView({behavior:'smooth'});
+ setTimeout(function(){var b=$('confbar');if(b)b.style.width=o.conf+'%';},60);
 }
+function bootKit(){if(loadState()){$('resume').classList.add('on');}updateSteps();var app=document.querySelector('.app');app.addEventListener('input',function(){saveState();updateSteps();});app.addEventListener('change',function(){saveState();updateSteps();});}
+
+
+function fplAnnual(n){return 15060+(n-1)*5380;}
+function decode(){
+  if(_walking)walkStop();
+  var n=parseInt($('hh').value,10)||1;var incMo=Math.max(0,parseFloat($('inc').value)||0);var incYr=incMo*12;
+  var senior=$('cSenior').checked,med=$('cMed').checked,kids=$('cKids').checked,vet=$('cVet').checked,dis=$('cDis').checked,snap=$('cSnap').checked;
+  var fpl=fplAnnual(n);var pctFPL=incYr>0?Math.round(incYr/fpl*100):0;var F=[],est=0;
+  var snapFired=false,ehFired=false;
+  if(!snap && incYr>0 && incYr<=fpl*1.30){snapFired=true;est+=n*175*12;
+    F.push({name:'SNAP (food benefits) &mdash; you look eligible',chip:'a',clabel:'Likely qualify',val:'&asymp; '+money(n*175)+'/mo in food help',why:'Your income is roughly <b>'+pctFPL+'% of the poverty line</b>, and SNAP generally reaches households up to about <b>130%</b>. Nationally about <b>60% of eligible seniors never sign up</b>.<br><b style="color:var(--mint)">How to claim:</b> apply through your <b>state SNAP office</b> or get free help at <b>BenefitsCheckUp.org</b>.'});}
+  else if(snap){F.push({name:'You already get SNAP &mdash; check the amount is right',chip:'c',clabel:'Already on it',mint:true,why:'Report a drop in income right away (it can raise your benefit), and seniors/disabled can often deduct <b>medical costs</b> for more. Recheck at <b>BenefitsCheckUp.org</b>.'});}
+  if(med && incYr>0 && incYr<=fpl*1.50){ehFired=true;est+=6200;
+    F.push({name:'Medicare &ldquo;Extra Help&rdquo; + a Savings Program &mdash; big one',chip:'a',clabel:'Likely qualify',val:'&asymp; $6,200/yr &mdash; drug costs + your Part B premium (~$185/mo)',why:'On Medicare with modest income, you likely qualify for <b>Extra Help</b> and a <b>Medicare Savings Program</b> that can <b>pay your Part B premium</b>. Roughly <b>2 million</b> who qualify aren&rsquo;t enrolled.<br><b style="color:var(--mint)">How to claim:</b> apply free at <b>SSA.gov</b>; for the Savings Program, a free <b>SHIP counselor</b> (shiphelp.org).'});}
+  else if(med){F.push({name:'On Medicare? Still worth a 5-minute check',chip:'d',clabel:'Worth checking',why:'Some states have higher limits, and Extra Help has a bigger cutoff than most think.<br><b style="color:var(--mint)">How:</b> a free <b>SHIP counselor</b> (shiphelp.org) will check your exact numbers.'});}
+  if(incYr>0 && incYr<=fpl*1.50){est+=500;
+    F.push({name:'LIHEAP &mdash; help with heating &amp; cooling bills',chip:'a',clabel:'Likely qualify',val:'&asymp; a few hundred $/yr toward energy bills',why:'LIHEAP helps low-income households with utility bills, and many states fund <b>emergency</b> help for shut-off notices.<br><b style="color:var(--mint)">How:</b> call <b>211</b> or search &ldquo;[your state] LIHEAP&rdquo;.'});}
+  if((senior||dis) && incMo>0 && incMo<=fpl/12){est+=11000;
+    F.push({name:'SSI &mdash; possible monthly check',chip:'d',clabel:'Maybe &mdash; asset-tested',val:'up to ~$960/mo if assets are low',why:'For people <b>65+, blind, or disabled</b> with very low income and savings (about $2,000 single), SSI adds monthly cash &mdash; and usually <b>brings Medicaid</b>.<br><b style="color:var(--mint)">How:</b> apply at <b>SSA.gov</b>.'});}
+  if(vet){est+=16000;
+    F.push({name:'VA Pension / Aid &amp; Attendance &mdash; often left on the table',chip:'a',clabel:'Check it',val:'&asymp; $1,300&ndash;$2,700/mo for wartime vets who need care',why:'A <b>wartime veteran or surviving spouse</b> with limited income may qualify for a <b>VA pension</b>, plus <b>Aid &amp; Attendance</b> if they need help with daily living.<br><b style="color:var(--mint)">How:</b> a <b>free accredited VA rep</b> or county Veterans Service Officer. Never pay to file this.'});}
+  if(kids && incYr>0 && incYr<=fpl*1.85){est+=1800;
+    F.push({name:'WIC + free school meals &mdash; for the kids',chip:'a',clabel:'Likely qualify',val:'WIC food benefits + free/reduced school meals',why:'WIC covers pregnant women and kids under 5 to about <b>185%</b> of poverty; the children very likely qualify for <b>free/reduced school meals</b> too.<br><b style="color:var(--mint)">How:</b> search &ldquo;[state] WIC apply&rdquo;; ask the school for the meal form.'});}
+  if(incYr>0 && incYr<=fpl*1.35){est+=110;
+    F.push({name:'Lifeline &mdash; discount on phone or internet',chip:'d',clabel:'Small but easy',val:'&asymp; $9.25/mo off phone or home internet',why:'A monthly discount for low-income households (or anyone on SNAP/Medicaid/SSI).<br><b style="color:var(--mint)">How:</b> apply at <b>lifelinesupport.org</b>.'});}
+  if(senior){F.push({name:'Senior property-tax relief &mdash; ask your county',chip:'c',clabel:'Easy to miss',mint:true,why:'Almost every state has a <b>property-tax exemption, freeze, or rebate</b> for older homeowners (and often renters). Rarely automatic.<br><b style="color:var(--mint)">How:</b> call your <b>county assessor</b> and ask about the senior exemption.'});}
+  if(F.length===0){F.push({name:'Nothing jumped out &mdash; but don&rsquo;t stop here',chip:'d',clabel:'Check anyway',why:'The big income-tested programs may not fit right now, but rules vary by state and one change (job loss, medical bill, new baby, turning 65) can open several.<br><b style="color:var(--mint)">How:</b> run a free full screen at <b>BenefitsCheckUp.org</b> (~2,000 programs).'});}
+
+  var conf=38+(incMo>0?18:0)+((senior||med||kids||vet||dis)?10:0)+(n>1?6:0);if(conf>85)conf=85;
+  var first;
+  if(ehFired)first='<b>Apply for Medicare Extra Help at SSA.gov &mdash; it&rsquo;s the biggest dollar item here (~$6,200/yr).</b> Then ask a free SHIP counselor about the Savings Program that pays your Part B premium.';
+  else if(vet)first='<b>See a free accredited VA rep about a VA pension and Aid &amp; Attendance.</b> It&rsquo;s the highest-value benefit here and one of the most-missed. Never pay anyone to file it.';
+  else if(snapFired)first='<b>Apply for SNAP first &mdash; it&rsquo;s money on the table you can start this week.</b> Do it through your state SNAP office or with free help at BenefitsCheckUp.org.';
+  else first='<b>Run one free full screen at BenefitsCheckUp.org.</b> It checks ~2,000 programs against your exact situation and catches what this quick check can&rsquo;t.';
+
+  var LET='MY BENEFITS CLAIM CHECKLIST\n\nPrograms to apply for or double-check:\n';
+  F.forEach(function(f){LET+='  [ ] '+f.name.replace(/&mdash;.*$/,'').replace(/&amp;/g,'&').replace(/&rsquo;/g,"'").replace(/&ldquo;|&rdquo;/g,'"').replace(/<[^>]+>/g,'').trim()+'\n';});
+  LET+='\nDocuments most applications ask for (gather once, use for all):\n  [ ] Photo ID for each adult\n  [ ] Social Security numbers for everyone in the household\n  [ ] Proof of income (pay stubs, benefit letters, award letters)\n  [ ] Proof of address (utility bill or lease)\n  [ ] Rough monthly bills (rent/mortgage, utilities, medical)\n'+(vet?'  [ ] Military discharge papers (DD-214)\n':'')+(med?'  [ ] Your Medicare card\n':'')+'\nWhere to start (all free):\n  - BenefitsCheckUp.org — one screen checks ~2,000 programs (NCOA)\n  - Call 211 — a local person who knows your county\n  - shiphelp.org — free Medicare/Medicaid counseling\n  - Your Area Agency on Aging (eldercare.acl.gov)\n\nApplying is free and does NOT cost you other benefits. Never pay a company to file these.';
+
+  var lead='Here&rsquo;s the honest read &mdash; <b>'+F.length+'</b> program'+(F.length>1?'s':'')+' worth chasing. These are <b>signals, not decisions</b> &mdash; the agency makes the final call.'+(est>0?' <b>&asymp; '+money(est)+'/yr</b> may be on the table.':'');
+  var todo='<div class="todo"><b>What I&rsquo;d do, in order:</b><ul>'+
+    '<li>Do <b>one free full screen at BenefitsCheckUp.org</b>.</li>'+
+    '<li>Gather the <b>documents in the checklist below once</b> &mdash; the same packet works for every program.</li>'+
+    '<li>Start with the <b>biggest-dollar item</b>; call <b>211</b> if you get stuck.</li>'+
+    '<li><b>Report changes fast</b> &mdash; they usually help you, not hurt you.</li></ul></div>';
+  var nfa='<p class="nfa"><b>Educational &middot; not a benefits determination.</b> Only the agency can decide, and limits and amounts vary by state and year &mdash; figures here are rough national ballparks. Applying is free and confidential. <b>Never pay anyone to file these.</b></p>';
+  renderReport({conf:conf,confLabel:'HOW COMPLETE THIS READ IS',first:first,lead:lead,findings:F,todo:todo,nfa:nfa,letter:LET,letterTitle:'&#128203; Your claim checklist &mdash; print it and work down the list'});
+}
+bootKit();
 </script>
 </body>
 </html>

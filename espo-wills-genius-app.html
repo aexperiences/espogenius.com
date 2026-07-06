@@ -7,27 +7,22 @@
 <meta name="description" content="A parent died, or there's no will — ESPO Wills & Probate Genius explains what happens, what probate costs and how long it takes, what to do this week, and the questions to ask an attorney. Runs in your browser; nothing is sent anywhere. Educational, not legal advice.">
 <meta name="theme-color" content="#1B1148">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/espo-wills-genius.webmanifest">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#1B1148;--ink800:#150D38;--ink700:#2A1F5E;--ink600:#352873;--line:#3A2F74;
- --accent:#B3A5EC;--accent6:#9A8AD8;--mint:#7FD8D0;--off:#EEEAFB;--sea:#B3A5EC;--ok:#7FD8D0;--warn:#FFC46B;--bad:#F0846A}
+:root{--ink:#1B1148;--ink800:#150D38;--ink700:#2A1F5E;--ink600:#352873;--line:#3A2F74;--accent:#B3A5EC;--accent6:#9A8AD8;--mint:#7FD8D0;--off:#EEEAFB;--sea:#B3A5EC;--ok:#7FD8D0;--warn:#FFC46B;--bad:#F0846A}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#2A1F5E 0%,#160D3A 55%,#0E0827 100%);
- font-family:Inter,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--off);padding:26px 18px 70px}
+body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#2A1F5E 0%,#160D3A 55%,#0E0827 100%);font-family:Inter,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--off);padding:26px 18px 90px}
 .app{max-width:680px;margin:0 auto}
 .head{display:flex;align-items:center;gap:11px;justify-content:center;margin-bottom:6px}
 .head svg{width:34px;height:34px;border-radius:9px}
 .head .wm{font-family:Lato;font-weight:900;font-size:22px}.head .wm .g{color:var(--accent)}
 .sub{text-align:center;color:var(--sea);font-size:13.5px;font-style:italic;margin:0 0 4px}
-.priv{text-align:center;color:var(--mint);font-size:12px;font-weight:600;margin:0 0 20px}
-.inbar{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:0 0 6px}
-.inbtn{background:var(--ink700);border:1px solid var(--accent);color:var(--accent);font-family:Lato;font-weight:900;font-size:13px;border-radius:999px;padding:9px 14px;cursor:pointer}
-.inbtn:hover{background:var(--accent);color:#20103A}
-.inbtn.rec{background:var(--bad);border-color:var(--bad);color:#2A0F0A}
-.inhint{color:var(--sea);font-size:12px}
-.innote{color:var(--sea);font-size:11px;margin:0 0 16px;line-height:1.5}
-.card{background:rgba(42,31,94,.4);border:1px solid var(--line);border-radius:20px;padding:22px 20px;margin-bottom:18px}
+.priv{text-align:center;color:var(--mint);font-size:12px;font-weight:600;margin:0 0 16px}
+.innote{color:var(--sea);font-size:11px;margin:0 0 14px;line-height:1.5}
+.card{background:rgba(42,31,94,.4);border:1px solid var(--line);border-radius:20px;padding:22px 20px;margin-bottom:18px;transition:opacity .3s,transform .3s}
 .card h2{font-family:Lato;font-weight:900;font-size:16px;margin:0 0 4px}
 .card .h2sub{color:var(--sea);font-size:13px;margin:0 0 14px}
 .seg{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:6px}
@@ -41,25 +36,21 @@ body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#
 .f input:focus,.f select:focus{outline:none;border-color:var(--accent)}
 .f .money{position:relative}.f .money input{padding-left:22px}.f .money::before{content:"$";position:absolute;left:11px;top:34px;color:var(--sea);font-size:14px}
 .tog{display:flex;flex-direction:column;gap:10px;margin-top:12px}
-.tog label{display:flex;align-items:flex-start;gap:11px;font-size:14px;cursor:pointer;color:var(--off)}
+.tog label{display:flex;align-items:flex-start;gap:11px;font-size:14px;cursor:pointer;color:var(--off);border-radius:10px;padding:4px}
 .tog input{margin-top:2px;width:18px;height:18px;accent-color:var(--accent);flex:0 0 auto}
 .go{display:block;width:100%;margin-top:16px;background:var(--accent);color:#20103A;font-family:Lato;font-weight:900;font-size:17px;border:0;border-radius:14px;padding:16px;cursor:pointer;transition:.14s}
 .go:hover{background:var(--accent6)}
 .lnk{background:var(--ink700);border:1px solid var(--line);color:var(--off);font-weight:600;font-size:13px;border-radius:999px;padding:9px 15px;cursor:pointer}
 .lnk:hover{border-color:var(--accent)}
 #report{display:none}
-.dsum{font-size:14px;color:var(--off);background:var(--ink800);border:1px solid var(--line);border-radius:11px;padding:12px 14px;margin:0 0 14px}
-.dsum b{color:var(--accent)}
-.tot{font-family:Lato;font-weight:900;font-size:15px;color:var(--warn);margin:0 0 14px;text-align:center;background:rgba(255,196,107,.08);border:1px solid #6a5a2f;border-radius:11px;padding:11px}
-.tot small{display:block;font-family:Inter;font-weight:500;font-size:11.5px;color:var(--sea);margin-top:3px}
+.dsum{font-size:14px;color:var(--off);background:var(--ink800);border:1px solid var(--line);border-radius:11px;padding:12px 14px;margin:0 0 14px}.dsum b{color:var(--accent)}
 .line{border-top:1px solid var(--line);padding:12px 0}.line:first-child{border-top:0}
 .lname{font-weight:700;font-size:14.5px}
 .chip{display:inline-block;margin-top:7px;font-size:9.5px;font-weight:800;letter-spacing:.3px;padding:3px 9px;border-radius:999px;text-transform:uppercase}
-.chip.now{color:#2A0F0A;background:var(--bad)}.chip.know{color:#0C2038;background:var(--ok)}.chip.move{color:var(--mint);border:1px solid var(--mint)}.chip.money{color:var(--warn);border:1px solid var(--warn)}
-.lflag{margin-top:8px;font-size:13px;line-height:1.5;border-radius:9px;padding:9px 12px;background:rgba(179,165,236,.10);border-left:3px solid var(--accent)}
-.lflag.mint{background:rgba(127,216,208,.08);border-left-color:var(--mint)}
-.lflag b{color:var(--off)}
-.todo{font-size:14px;line-height:1.55;color:var(--off);background:rgba(127,216,208,.07);border:1px solid #2f6a63;border-radius:11px;padding:12px 14px;margin:14px 0 12px}
+.chip.a{color:#0C2038;background:var(--ok)}.chip.b{color:#2A0F0A;background:var(--bad)}.chip.c{color:var(--mint);border:1px solid var(--mint)}.chip.d{color:var(--warn);border:1px solid var(--warn)}
+.lflag{margin-top:8px;font-size:13px;line-height:1.5;border-radius:9px;padding:9px 12px;background:rgba(255,158,107,.09);border-left:3px solid var(--accent)}
+.lflag.mint{background:rgba(95,227,192,.08);border-left-color:var(--mint)}.lflag b{color:var(--off)}
+.todo{font-size:14px;line-height:1.55;color:var(--off);background:rgba(95,227,192,.07);border:1px solid #2f6a5e;border-radius:11px;padding:12px 14px;margin:14px 0 12px}
 .todo b{color:var(--mint)}.todo ul{margin:8px 0 0;padding-left:18px}.todo li{margin-bottom:5px}
 .blk{background:var(--ink800);border:1px dashed var(--line);border-radius:12px;padding:16px;margin:12px 0;font-family:ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.6;white-space:pre-wrap}
 .blkt{font-family:Lato;font-weight:900;font-size:14px;color:var(--accent);margin:16px 0 6px}
@@ -67,38 +58,68 @@ body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#
 .nfa{font-size:12px;color:var(--sea);text-align:center;line-height:1.5;margin:8px 0 0}
 .foot{text-align:center;margin-top:22px}.foot a{color:var(--accent);font-weight:700;text-decoration:none;font-size:14px}
 .brandmark{width:42px;height:41px;margin:24px auto 8px;opacity:.78;background:url(/ae-mark.png) center/contain no-repeat}
-@media print{body{background:#fff;color:#111}.card,.go,.foot,.priv,.inbar,.innote,.readbar,.scanpanel{display:none!important}#report{display:block!important;border:0}.blk{color:#111;border-color:#999}}
+@media print{body{background:#fff;color:#111}.card,.go,.foot,.priv,.innote,.readbar,.scanpanel,.topbar,.steps,.steplbl,.stickybar,.resume,.scanrow{display:none!important}#report{display:block!important;border:0}.blk{color:#111;border-color:#999}}
+
+.topbar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:0 0 8px}
+.walkbtn{background:var(--mint);border:1px solid var(--mint);color:#0C2038;font-family:Lato;font-weight:900;font-size:13.5px;border-radius:999px;padding:10px 18px;cursor:pointer;transition:.14s}
+.walkbtn:hover{filter:brightness(1.06)}
+.walkbtn.rec{background:var(--bad);border-color:var(--bad);color:#2A0F0A;animation:pulse 1.3s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(240,132,106,.5)}50%{box-shadow:0 0 0 8px rgba(240,132,106,0)}}
+.installbtn{display:none;background:transparent;border:1px solid var(--sea);color:var(--sea);font-weight:800;font-size:12.5px;border-radius:999px;padding:10px 15px;cursor:pointer}
+.installbtn:hover{border-color:var(--mint);color:var(--mint)}
+.scanrow{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:0 0 6px}
+.scanbtn2{background:var(--ink700);border:1px solid var(--accent);color:var(--accent);font-family:Lato;font-weight:900;font-size:12.5px;border-radius:999px;padding:9px 14px;cursor:pointer}
+.scanbtn2:hover{background:var(--accent);color:#20103A}
+.scanpanel{background:var(--ink800);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 16px}
+.sp-t{font-size:12.5px;color:var(--off);margin-bottom:8px}
+.steps{display:flex;gap:6px;margin:2px 0 6px}
+.steps i{height:5px;flex:1;border-radius:3px;background:var(--ink700);transition:background .35s}
+.steps i.done{background:var(--mint)}.steps i.on{background:var(--accent)}
+.steplbl{text-align:center;color:var(--sea);font-size:11px;margin:0 0 16px;min-height:14px}
+.resume{display:none;font-size:12px;color:var(--sea);background:var(--ink800);border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin:0 0 14px;align-items:center;gap:10px}
+.resume.on{display:flex}.resume button{margin-left:auto;background:none;border:0;color:var(--accent);font-weight:700;cursor:pointer;font-size:12px}
+.hot{background:rgba(255,158,107,.12)!important}
+.stickybar{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:11px 16px calc(11px + env(safe-area-inset-bottom));background:linear-gradient(to top,rgba(11,7,30,.98),rgba(11,7,30,.82));backdrop-filter:blur(9px);border-top:1px solid var(--line);transform:translateY(120%);transition:transform .3s}
+.stickybar.show{transform:translateY(0)}
+.stickybar .in{max-width:680px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.stickybar button{flex:1;background:var(--accent);color:#20103A;font-family:Lato;font-weight:900;font-size:15.5px;border:0;border-radius:12px;padding:13px;cursor:pointer}
+.stickybar .sbsub{flex:0 0 auto;color:var(--sea);font-size:11.5px;max-width:120px;line-height:1.3}
+.conf{display:flex;align-items:center;gap:13px;margin:0 0 14px}
+.confmeter{flex:1;height:9px;border-radius:5px;background:var(--ink800);overflow:hidden}
+.confmeter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--warn),var(--mint));transition:width .7s}
+.confnum{font-family:Lato;font-weight:900;font-size:20px}.confnum small{display:block;font-family:Inter;font-weight:500;font-size:10px;color:var(--sea);margin-top:-2px;letter-spacing:.03em}
+.dofirst{background:linear-gradient(180deg,rgba(255,158,107,.17),rgba(255,158,107,.05));border:1px solid var(--accent);border-radius:14px;padding:14px 16px;margin:0 0 16px}
+.dofirst .k{font-family:Lato;font-weight:900;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 5px}
+.dofirst .t{font-size:14.5px;line-height:1.5}.dofirst .t b{color:#fff}
+.rank{display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;border-radius:50%;background:var(--ink700);color:var(--sea);font-size:11px;font-weight:800;margin-right:7px}
+.toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%) translateY(20px);background:var(--mint);color:#0C2038;font-weight:800;font-size:13px;padding:10px 16px;border-radius:999px;opacity:0;pointer-events:none;transition:.3s;z-index:40}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="head">
-    <svg viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="232" fill="#1B1148"/><circle cx="512" cy="330" r="148" fill="none" stroke="#B3A5EC" stroke-width="13" opacity="0.5"/><g stroke="#36306B" stroke-width="20" stroke-linecap="round"><path d="M330,672 L694,672"/><path d="M330,672 L512,330"/><path d="M694,672 L512,330"/></g><circle cx="330" cy="672" r="84" fill="#7FD8D0"/><circle cx="694" cy="672" r="84" fill="#7FD8D0"/><circle cx="512" cy="330" r="104" fill="#B3A5EC"/></svg>
-    <span class="wm">ESPO Wills &amp; Probate <span class="g">Genius</span></span>
-  </div>
+  <div class="head"><svg viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="232" fill="#1B1148"/><circle cx="512" cy="330" r="148" fill="none" stroke="#B3A5EC" stroke-width="13" opacity="0.5"/><g stroke="#36306B" stroke-width="20" stroke-linecap="round"><path d="M330,672 L694,672"/><path d="M330,672 L512,330"/><path d="M694,672 L512,330"/></g><circle cx="330" cy="672" r="84" fill="#7FD8D0"/><circle cx="694" cy="672" r="84" fill="#7FD8D0"/><circle cx="512" cy="330" r="104" fill="#B3A5EC"/></svg><span class="wm">ESPO Wills &amp; Probate <span class="g">Genius</span></span></div>
   <p class="sub">what happens next, in plain English &mdash; the map for the hardest week</p>
   <p class="priv">&#128274; Runs entirely in your browser. Nothing you enter is sent anywhere.</p>
-
-  <div class="inbar">
-    <button class="inbtn" id="ntalk" type="button" onclick="nTalk()">&#127908; Talk to me</button>
-    <span class="inhint">&mdash; or just tap the answers</span>
-  </div>
-  <p class="innote" id="nstatus">Voice runs <b>on your device</b> with your browser&rsquo;s own tools &mdash; nothing you enter leaves your phone.</p>
-
+  <div class="topbar"><button class="walkbtn" id="walkbtn" type="button" onclick="walkToggle()">&#127908; Walk me through it, out loud</button><button class="installbtn" id="installbtn" type="button" onclick="doInstall()">&#8595; Add to home screen</button></div>
+  <div class="steps" id="steps"><i></i><i></i></div>
+  <p class="steplbl" id="steplbl">Tap the answers, scan a statement, or say &ldquo;Walk me through it&rdquo; and just talk.</p>
+  <div class="resume" id="resume"><span>Picked up where you left off.</span><button type="button" onclick="clearState()">Start over</button></div>
+  <p class="innote" id="nstatus">Scan &amp; voice run <b>on your device</b> with your browser&rsquo;s own tools &mdash; nothing you enter leaves your phone.</p>
+<div class="scanrow"><button class="scanbtn2" type="button" onclick="nScan()">&#128247; Scan a statement</button><span class="inhint" style="color:var(--sea);font-size:12px">&mdash; snap a statement to fill the estate value</span></div>
+<div class="scanpanel" id="scanpanel" style="display:none"></div>
   <div class="card">
     <h2>1 &middot; Where are things?</h2>
     <div class="seg">
-      <label><input type="radio" name="sit" value="died" checked> Someone <b>has passed away</b> and I&rsquo;m sorting out what to do</label>
-      <label><input type="radio" name="sit" value="plan"> <b>Planning ahead</b> &mdash; I want to spare my family this</label>
+      <label><input type="radio" name="sit" id="sitDied" value="died" checked> Someone <b>has passed away</b> and I&rsquo;m sorting out what to do</label>
+      <label><input type="radio" name="sit" id="sitPlan" value="plan"> <b>Planning ahead</b> &mdash; I want to spare my family this</label>
     </div>
   </div>
-
   <div class="card">
     <h2>2 &middot; A few plain facts</h2>
     <p class="h2sub">Rough is fine. There are no wrong answers here.</p>
     <div class="fg">
-      <div class="f"><label>Is there a will?</label>
-        <select id="will"><option value="no">No will</option><option value="yes">Yes, there&rsquo;s a will</option><option value="unsure">Not sure</option><option value="trust">There&rsquo;s a living trust</option></select></div>
+      <div class="f"><label>Is there a will?</label><select id="will"><option value="no">No will</option><option value="yes">Yes, there&rsquo;s a will</option><option value="unsure">Not sure</option><option value="trust">There&rsquo;s a living trust</option></select></div>
       <div class="f money"><label>Rough size of the estate (home + accounts)</label><input id="est" type="number" min="0" placeholder="e.g. 300000"></div>
     </div>
     <div class="tog">
@@ -109,7 +130,6 @@ body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#
     </div>
     <button class="go" onclick="decode()">Show me the plain-English map &rarr;</button>
   </div>
-
   <div class="card" id="report">
     <h2>ESPO Wills &amp; Probate Genius&rsquo;s read</h2>
     <div id="reportbody"></div>
@@ -117,128 +137,138 @@ body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#
       <button class="lnk" type="button" onclick="showLetter()">&#9993; Get your checklist</button>
       <button class="lnk" type="button" onclick="speakRead()">&#128266; Read it to me</button>
       <button class="lnk" id="stopread" type="button" style="display:none" onclick="stopRead()">&#9209; Stop</button>
-      <button class="lnk" type="button" onclick="window.print()">&#128424; Print case file</button>
+      <button class="lnk" type="button" onclick="copyCase()">&#128203; Copy case file</button>
+      <button class="lnk" type="button" onclick="window.print()">&#128424; Print / save PDF</button>
     </div>
     <div id="letterwrap" style="display:none;margin-top:14px"></div>
   </div>
-
   <div class="foot"><a href="/">&larr; ESPO Genius</a></div>
   <div class="brandmark" aria-label="Accelerated Experiences" title="An Accelerated Experiences app"></div>
 </div>
-
+<div class="stickybar" id="stickybar"><div class="in"><button type="button" onclick="decode()">Show me the plain-English map &rarr;</button><span class="sbsub">private &middot; on your device</span></div></div>
+<div class="toast" id="toast"></div>
 <script>
-function nStatus(m){var e=document.getElementById('nstatus');if(e)e.innerHTML=m;}
-function nTalk(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;var btn=document.getElementById('ntalk');
- if(!SR){nStatus('Voice isn&rsquo;t supported here &mdash; just tap the answers, or try Chrome/Safari.');return;}
- if(window._nrec){try{window._nrec.stop();}catch(e){}window._nrec=null;return;}
- var rec=new SR();window._nrec=rec;rec.lang='en-US';rec.interimResults=false;rec.maxAlternatives=1;if(btn)btn.classList.add('rec');
- nStatus('Listening&hellip; say the rough estate value, and I&rsquo;ll fill it in.');
- rec.onresult=function(e){var t=e.results[0][0].transcript;var num=t.replace(/[^0-9.]/g,'');if(num){document.getElementById('est').value=num;nStatus('Filled in $'+num+' &mdash; check it and run the read.');}else{nStatus('Say the dollar amount, e.g. &ldquo;three hundred thousand&rdquo;.');}};
- rec.onerror=function(){nStatus('Didn&rsquo;t catch that &mdash; try again.');};
- rec.onend=function(){window._nrec=null;if(btn)btn.classList.remove('rec');};rec.start();}
 
-var LETTER='';
-function showLetter(){var w=document.getElementById('letterwrap');w.style.display=(w.style.display==='none'||!w.style.display)?'block':'none';if(w.style.display==='block')w.scrollIntoView({behavior:'smooth'});}
-function narcText(){var el=document.getElementById('reportbody');var t=el?(el.innerText||el.textContent||''):'';return t.replace(/ /g,' ').replace(/\s+/g,' ').trim();}
-function toggleStop(on){var s=document.getElementById('stopread');if(s)s.style.display=on?'inline-block':'none';}
+function $(id){return document.getElementById(id);}
+function nStatus(m){var e=$('nstatus');if(e)e.innerHTML=m;}
+function toast(m){var t=$('toast');if(!t)return;t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},1900);}
+var VALS=['est','will'],CHK=['cHome','cSpouse','cBene','cMinor'],RADIOS=['sit'],LSK='espo_wills_v1';
+function saveState(){try{var d={v:{},c:{},r:{}};VALS.forEach(function(k){var e=$(k);if(e)d.v[k]=e.value;});CHK.forEach(function(k){var e=$(k);if(e)d.c[k]=e.checked;});RADIOS.forEach(function(n){var el=document.querySelector('input[name="'+n+'"]:checked');d.r[n]=el?el.value:null;});localStorage.setItem(LSK,JSON.stringify(d));}catch(e){}}
+function loadState(){try{var d=JSON.parse(localStorage.getItem(LSK)||'null');if(!d)return false;var any=false;VALS.forEach(function(k){if(d.v&&d.v[k]){$(k).value=d.v[k];any=true;}});CHK.forEach(function(k){if(d.c&&d.c[k]){$(k).checked=true;any=true;}});if(d.r)Object.keys(d.r).forEach(function(n){if(d.r[n]){var el=document.querySelector('input[name="'+n+'"][value="'+d.r[n]+'"]');if(el){el.checked=true;any=true;}}});return any;}catch(e){return false;}}
+function clearState(){try{localStorage.removeItem(LSK);}catch(e){}VALS.forEach(function(k){$(k).value='';});CHK.forEach(function(k){$(k).checked=false;});$('resume').classList.remove('on');$('report').style.display='none';updateSteps();toast('Cleared.');}
+function stepsDone(){return [ (document.querySelector('input[name="sit"]:checked')!=null), (($('est').value||'').length>0||$('cHome').checked||$('cSpouse').checked||$('cBene').checked||$('cMinor').checked) ];}
+function updateSteps(){var arr=stepsDone();var s=$('steps').children;for(var i=0;i<s.length;i++){s[i].className=arr[i]?'done':'';}var sb=$('stickybar');if(arr[0]){sb.classList.add('show');}else{sb.classList.remove('show');}}
+var _deferred=null;
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();_deferred=e;$('installbtn').style.display='inline-block';});
+function doInstall(){if(_deferred){_deferred.prompt();_deferred.userChoice.then(function(){_deferred=null;$('installbtn').style.display='none';});}else{toast('Use your browser menu → Add to Home Screen');}}
+var SCANFIELD='est';
+function nScan(){if(!SCANFIELD)return;var inp=document.createElement('input');inp.type='file';inp.accept='image/*';inp.setAttribute('capture','environment');
+ inp.onchange=function(){var f=inp.files&&inp.files[0];if(!f)return;
+  if(!('TextDetector' in window)){nStatus('This browser has no built-in text reader (iPhone Safari doesn&rsquo;t). Use <b>&#127908; Walk me through it</b>, or type it in.');return;}
+  nStatus('Reading it <b>on your device</b>&hellip;');var img=new Image();
+  img.onload=function(){try{new TextDetector().detect(img).then(function(r){
+    var text=(r||[]).map(function(b){return b.rawValue;}).join(' ').replace(/\s+/g,' ').trim();
+    var num=(text.match(/[\d,]{3,}/g)||[]).map(function(x){return x.replace(/,/g,'');}).sort(function(a,b){return b.length-a.length;})[0];
+    var el=$(SCANFIELD);if(el&&num){el.value=num;}saveState();updateSteps();
+    $('scanpanel').innerHTML='<div class="sp-t">&#128196; I read this on your device'+(num?' and pulled the amount <b>'+num+'</b> into the box':'')+' &mdash; check it, then run the read:</div><div style="font-size:12px;color:var(--sea);white-space:pre-wrap">'+text.replace(/</g,'&lt;').slice(0,400)+'</div>';
+    $('scanpanel').style.display='block';nStatus('Read on your device &mdash; nothing was sent anywhere.');
+  }).catch(function(){nStatus('Couldn&rsquo;t read that image &mdash; try a clearer, straight-on photo.');});}catch(e){nStatus('Text reading failed on this device.');}};
+  img.onerror=function(){nStatus('Couldn&rsquo;t open that image.');};img.src=URL.createObjectURL(f);};
+ inp.click();}
+var WALK=[
+ {say:"Let's map this out together. First — has someone passed away, or are you planning ahead?",kind:'radio',field:'sit',map:[{re:'plan|ahead|future|spare|not yet',val:'plan'},{re:'passed|died|death|gone|away',val:'died'}]},
+ {say:"Is there a will? You can say: no will, yes there's a will, a living trust, or not sure.",kind:'select',field:'will',map:[{re:'trust',val:'trust'},{re:'not sure|unsure|don.?t know|no idea',val:'unsure'},{re:'\\byes\\b|there is|there.?s a will|has a will',val:'yes'},{re:'\\bno\\b|no will|none',val:'no'}]},
+ {say:"Roughly how big is the estate — the home plus accounts?",kind:'number',field:'est'},
+ {say:"Is there a home, or real estate, involved?",kind:'bool',field:'cHome'},
+ {say:"Is there a surviving spouse?",kind:'bool',field:'cSpouse'},
+ {say:"Do any accounts have named beneficiaries — like life insurance, a 401k, or payable on death?",kind:'bool',field:'cBene'},
+ {say:"Last one. Are minor children involved?",kind:'bool',field:'cMinor'}
+];
+var _wi=0,_walking=false,_wrec=null,_retry=0;
+function speak(t,cb){if(!('speechSynthesis' in window)){if(cb)cb();return;}try{speechSynthesis.cancel();}catch(e){}var u=new SpeechSynthesisUtterance(t);u.rate=1.0;u.onend=function(){if(cb)cb();};u.onerror=function(){if(cb)cb();};speechSynthesis.speak(u);}
+function walkToggle(){if(_walking){walkStop();return;}var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){nStatus('Voice isn&rsquo;t supported on this browser &mdash; try Chrome, or just tap the answers.');return;}_walking=true;_wi=0;_retry=0;$('walkbtn').classList.add('rec');$('walkbtn').innerHTML='&#9209; Stop the walkthrough';walkStep();}
+function walkStop(){_walking=false;try{if(_wrec)_wrec.stop();}catch(e){}try{speechSynthesis.cancel();}catch(e){}_wrec=null;$('walkbtn').classList.remove('rec');$('walkbtn').innerHTML='&#127908; Walk me through it, out loud';$('steplbl').textContent='';markHot(null);}
+function markHot(id){var labs=document.querySelectorAll('label');for(var i=0;i<labs.length;i++)labs[i].classList.remove('hot');if(id){var e=$(id);if(e){var l=e.closest('label');if(l)l.classList.add('hot');}}}
+function walkStep(){if(!_walking)return;
+ if(_wi>=WALK.length){$('steplbl').textContent='Reading it now…';markHot(null);speak("Thank you. Here's the honest read.",function(){decode();});walkStop2();return;}
+ var s=WALK[_wi];$('steplbl').textContent='Question '+(_wi+1)+' of '+WALK.length+' — listen, then answer out loud';
+ markHot((s.kind==='bool')?s.field:null);
+ speak(s.say,function(){if(_walking)listenFor(s);});}
+function walkStop2(){_walking=false;_wrec=null;$('walkbtn').classList.remove('rec');$('walkbtn').innerHTML='&#127908; Walk me through it, out loud';}
+function listenFor(s){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;var rec=new SR();_wrec=rec;rec.lang='en-US';rec.interimResults=false;rec.maxAlternatives=1;rec.continuous=(s.kind==='text');var got='';
+ rec.onresult=function(e){for(var i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)got+=e.results[i][0].transcript+' ';}if(s.kind!=='text'){try{rec.stop();}catch(e){}}};
+ rec.onerror=function(){};
+ rec.onend=function(){if(!_walking)return;got=got.trim();var ok=true;
+   if(s.kind==='text'){if(got){$(s.field).value=(($(s.field).value)?$(s.field).value+' ':'')+got;}}
+   else if(s.kind==='number'){var n=got.replace(/[^0-9.]/g,'');if(n){$(s.field).value=n;}else ok=false;}
+   else if(s.kind==='bool'){var yes=/\b(yes|yeah|yep|yup|it does|correct|true|sure|definitely|they do|we do|uh huh)\b/i.test(got);var no=/\b(no|nope|nah|it doesn'?t|does not|negative|not really|i don'?t think so)\b/i.test(got);if(yes||no){$(s.field).checked=yes;}else ok=false;}
+   else if(s.kind==='radio'||s.kind==='select'){var matched=null;for(var j=0;j<s.map.length;j++){if(new RegExp(s.map[j].re,'i').test(got)){matched=s.map[j].val;break;}}if(matched!=null){if(s.kind==='radio'){var el=document.querySelector('input[name="'+s.field+'"][value="'+matched+'"]');if(el)el.checked=true;}else{$(s.field).value=matched;}}else ok=false;}
+   saveState();updateSteps();markHot(null);
+   if(ok){_retry=0;_wi++;walkStep();}else if(_retry<1){_retry++;speak(s.kind==='bool'?"Sorry — was that a yes or a no?":"Sorry, I didn't catch that. "+s.say,function(){if(_walking)listenFor(s);});}else{_retry=0;_wi++;walkStep();}
+ };
+ try{rec.start();}catch(e){_wi++;walkStep();}}
+function narcText(){var el=$('reportbody');var t=el?(el.innerText||el.textContent||''):'';return t.replace(/ /g,' ').replace(/\s+/g,' ').trim();}
+function toggleStop(on){var s=$('stopread');if(s)s.style.display=on?'inline-block':'none';}
 function speakRead(){if(!('speechSynthesis' in window))return;var t=narcText();if(!t)return;try{speechSynthesis.cancel();}catch(e){}var u=new SpeechSynthesisUtterance(t);u.rate=0.98;u.onend=function(){toggleStop(false);};u.onerror=function(){toggleStop(false);};speechSynthesis.speak(u);toggleStop(true);}
 function stopRead(){try{speechSynthesis.cancel();}catch(e){}toggleStop(false);}
+var LETTER='';
+function showLetter(){var w=$('letterwrap');w.style.display=(w.style.display==='none'||!w.style.display)?'block':'none';if(w.style.display==='block')w.scrollIntoView({behavior:'smooth'});}
+function copyCase(){var t='ESPO WILLS & PROBATE GENIUS — CASE FILE\n\n'+narcText()+(LETTER?'\n\n----- YOUR LETTER / CHECKLIST -----\n'+LETTER:'');if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){toast('Case file copied');},function(){toast('Could not copy');});}else{toast('Copy not supported — use Print');}}
 function money(x){return '$'+Math.round(x).toLocaleString();}
+function renderReport(o){
+ var h='<div class="conf"><div><span class="confnum">'+o.conf+'%<small>'+(o.confLabel||'READ COMPLETENESS')+'</small></span></div><div class="confmeter"><i id="confbar"></i></div></div>';
+ h+='<div class="dofirst"><div class="k">▶ Do this first</div><div class="t">'+o.first+'</div></div>';
+ h+='<div class="dsum">'+o.lead+'</div>';
+ o.findings.forEach(function(f,i){h+='<div class="line"><span class="lname"><span class="rank">'+(i+1)+'</span>'+f.name+'</span><br><span class="chip '+f.chip+'">'+f.clabel+'</span>'+(f.val?'<div style="margin-top:6px;font-size:12px;font-weight:800;color:var(--mint)">'+f.val+'</div>':'')+'<div class="lflag'+(f.mint?' mint':'')+'">'+f.why+'</div></div>';});
+ h+=o.todo;h+=o.nfa;
+ $('reportbody').innerHTML=h;
+ if(o.letter!=null){LETTER=o.letter;$('letterwrap').innerHTML='<div class="blkt">'+o.letterTitle+'</div><div class="blk">'+o.letter.replace(/</g,'&lt;')+'</div>';$('letterwrap').style.display='none';}
+ var r=$('report');r.style.display='block';r.scrollIntoView({behavior:'smooth'});
+ setTimeout(function(){var b=$('confbar');if(b)b.style.width=o.conf+'%';},60);
+}
+function bootKit(){if(loadState()){$('resume').classList.add('on');}updateSteps();var app=document.querySelector('.app');app.addEventListener('input',function(){saveState();updateSteps();});app.addEventListener('change',function(){saveState();updateSteps();});}
+
 
 function decode(){
-  var died=document.querySelector('input[name="sit"]:checked').value==='died';
-  var will=document.getElementById('will').value;
-  var est=Math.max(0,parseFloat(document.getElementById('est').value)||0);
-  var home=document.getElementById('cHome').checked,spouse=document.getElementById('cSpouse').checked,
-      bene=document.getElementById('cBene').checked,minor=document.getElementById('cMinor').checked;
+  if(_walking)walkStop();
+  var sitEl=document.querySelector('input[name="sit"]:checked');var died=(sitEl?sitEl.value:'died')==='died';
+  var will=$('will').value;var est=Math.max(0,parseFloat($('est').value)||0);
+  var home=$('cHome').checked,spouse=$('cSpouse').checked,bene=$('cBene').checked,minor=$('cMinor').checked;
   var F=[];
-
   if(died){
-    // Probate cost + time estimate
-    if(est>0){
-      var lo=Math.round(est*0.03), hi=Math.round(est*0.07);
-      F.push({name:'What probate will roughly cost &amp; how long',chip:'money',cl:'The number nobody tells you',
-        val:money(lo)+'&ndash;'+money(hi)+' &middot; about 9&ndash;20 months',
-        why:'Probate &mdash; the court process that legally moves things to the heirs &mdash; typically runs <b>3&ndash;7% of the estate&rsquo;s value</b> in court, legal and executor fees, and commonly takes <b>9 to 20 months</b>. On a '+money(est)+' estate that&rsquo;s roughly <b>'+money(lo)+'&ndash;'+money(hi)+'</b>. Good news: a lot of it can be trimmed, and some assets skip probate entirely (see below).'});
-      // small estate
-      F.push({name:'Ask about the small-estate shortcut',chip:'move',cl:'Could skip most of it',mint:true,
-        val:'',why:'Most states have a <b>simplified / &ldquo;small estate&rdquo; process</b> &mdash; sometimes just an affidavit &mdash; under a dollar threshold that ranges widely by state (roughly <b>$50,000 to $185,000+</b>). If the probate-eligible assets fall under your state&rsquo;s line, you may avoid formal probate. <b>Always ask this first.</b>'});
-    }
-    // will vs no will
-    if(will==='no'||will==='unsure'){
-      F.push({name:'No will? The state&rsquo;s rulebook decides &mdash; not the family',chip:'know',cl:'What &ldquo;intestate&rdquo; means',
-        val:'',why:'With no will, the estate is <b>&ldquo;intestate,&rdquo;</b> and your state&rsquo;s law sets a fixed order of who inherits (usually spouse, then children, then parents, and so on). It <b>ignores what the person may have said they wanted</b>, and it ignores unmarried partners, stepchildren, and friends. The court also appoints an <b>administrator</b> (often the closest relative) to run it.'+(will==='unsure'?' <b>Search hard for a will first</b> &mdash; check safes, files, the lawyer who did the deed, safe-deposit box.':'')});
-    } else if(will==='yes'){
-      F.push({name:'There&rsquo;s a will &mdash; it still usually goes through probate',chip:'know',cl:'A will is a map, not a skip-pass',
-        val:'',why:'A common surprise: <b>having a will does NOT avoid probate.</b> The will names an <b>executor</b> and says who gets what, but the court still has to validate it and oversee the transfer. The executor named in the will is the one who files to open the case.'});
-    } else if(will==='trust'){
-      F.push({name:'A living trust &mdash; this is the good news',chip:'move',cl:'Likely avoids probate',mint:true,
-        val:'',why:'Assets <b>titled in the name of a living trust generally skip probate entirely</b> &mdash; the successor trustee can distribute them privately, following the trust. Watch for anything <b>left out</b> of the trust (a car, a bank account); those may still need a small probate or a &ldquo;pour-over&rdquo; step.'});
-    }
-    if(bene){
-      F.push({name:'Beneficiary accounts pass OUTSIDE probate &mdash; don&rsquo;t wait on the court',chip:'move',cl:'Claim these directly',mint:true,
-        val:'',why:'Life insurance, 401(k)/IRA, and <b>&ldquo;payable-on-death&rdquo;</b> bank accounts go <b>straight to the named beneficiary</b>, no probate needed. The beneficiary just files a claim with the company and a death certificate. <b>Don&rsquo;t let these sit</b> waiting on the estate.'});
-    }
-    if(home){
-      F.push({name:'The house &mdash; how it transfers depends on the title',chip:'know',cl:'Check the deed',
-        val:'',why:'How the home passes depends on how the <b>deed is titled</b>: <b>joint tenancy / &ldquo;right of survivorship&rdquo;</b> or a <b>transfer-on-death deed</b> passes automatically; a home in the deceased&rsquo;s name alone usually goes through probate. Keep paying the <b>mortgage, insurance and property tax</b> in the meantime &mdash; a lapse can snowball fast.'});
-    }
-    if(spouse){
-      F.push({name:'The surviving spouse has strong protections',chip:'know',cl:'The spouse is not left out',
-        val:'',why:'A surviving spouse typically has an <b>&ldquo;elective share&rdquo;</b> right and often inherits first under intestacy, plus a <b>family allowance</b> the court can grant for living expenses while the estate is tied up. Make sure the spouse claims these.'});
-    }
-    F.push({name:'This week &mdash; protect, don&rsquo;t pay',chip:'now',cl:'Do first',
-      val:'',why:'Right now: get <b>10+ certified death certificates</b> (you&rsquo;ll need them for every account), <b>secure the home and valuables</b>, and <b>do NOT pay the deceased&rsquo;s debts out of your own money</b> or distribute anything yet. Creditors get paid from the estate in a legal order; paying the wrong one first can leave you personally on the hook. Notify Social Security and any pension.'});
+    if(est>0){var lo=Math.round(est*0.03),hi=Math.round(est*0.07);
+      F.push({name:'What probate will roughly cost &amp; how long',chip:'d',clabel:'The number nobody tells you',val:money(lo)+'&ndash;'+money(hi)+' &middot; about 9&ndash;20 months',why:'Probate typically runs <b>3&ndash;7% of the estate&rsquo;s value</b> in court, legal and executor fees, and commonly takes <b>9 to 20 months</b>. On a '+money(est)+' estate that&rsquo;s roughly <b>'+money(lo)+'&ndash;'+money(hi)+'</b>. A lot can be trimmed, and some assets skip probate entirely.'});
+      F.push({name:'Ask about the small-estate shortcut',chip:'c',clabel:'Could skip most of it',mint:true,why:'Most states have a <b>simplified / &ldquo;small estate&rdquo; process</b> under a threshold that ranges widely (roughly <b>$50,000 to $185,000+</b>). If the probate-eligible assets fall under your state&rsquo;s line, you may avoid formal probate. <b>Always ask this first.</b>'});}
+    if(will==='no'||will==='unsure'){F.push({name:'No will? The state&rsquo;s rulebook decides &mdash; not the family',chip:'a',clabel:'What &ldquo;intestate&rdquo; means',why:'With no will, the estate is <b>&ldquo;intestate,&rdquo;</b> and your state&rsquo;s law sets a fixed order of who inherits. It <b>ignores what the person may have wanted</b>, and ignores unmarried partners and stepchildren. The court appoints an <b>administrator</b>.'+(will==='unsure'?' <b>Search hard for a will first</b> &mdash; safes, files, the lawyer, the safe-deposit box.':'')});}
+    else if(will==='yes'){F.push({name:'There&rsquo;s a will &mdash; it still usually goes through probate',chip:'a',clabel:'A will is a map, not a skip-pass',why:'A common surprise: <b>having a will does NOT avoid probate.</b> The will names an <b>executor</b> and who gets what, but the court still validates it and oversees the transfer.'});}
+    else if(will==='trust'){F.push({name:'A living trust &mdash; this is the good news',chip:'c',clabel:'Likely avoids probate',mint:true,why:'Assets <b>titled in the trust generally skip probate</b> &mdash; the successor trustee distributes them privately. Watch for anything <b>left out</b> of the trust; those may still need a small probate.'});}
+    if(bene){F.push({name:'Beneficiary accounts pass OUTSIDE probate',chip:'c',clabel:'Claim these directly',mint:true,why:'Life insurance, 401(k)/IRA, and <b>payable-on-death</b> accounts go <b>straight to the named beneficiary</b>. They just file a claim and a death certificate. <b>Don&rsquo;t let these sit.</b>'});}
+    if(home){F.push({name:'The house &mdash; how it transfers depends on the title',chip:'a',clabel:'Check the deed',why:'<b>Joint tenancy / right of survivorship</b> or a <b>transfer-on-death deed</b> passes automatically; a home in the deceased&rsquo;s name alone usually goes through probate. Keep the <b>mortgage, insurance and property tax</b> current meanwhile.'});}
+    if(spouse){F.push({name:'The surviving spouse has strong protections',chip:'a',clabel:'The spouse is not left out',why:'A surviving spouse typically has an <b>&ldquo;elective share&rdquo;</b> and often inherits first under intestacy, plus a <b>family allowance</b> for living expenses while the estate is tied up.'});}
+    F.push({name:'This week &mdash; protect, don&rsquo;t pay',chip:'b',clabel:'Do first',why:'Get <b>10+ certified death certificates</b>, <b>secure the home and valuables</b>, and <b>do NOT pay the deceased&rsquo;s debts out of your own money</b> or distribute anything yet. Creditors are paid from the estate in a legal order. Notify Social Security and any pension.'});
   } else {
-    // Planning ahead
-    F.push({name:'A will alone still means probate &mdash; aim higher',chip:'know',cl:'Start here',
-      val:'',why:'Everyone should have a will &mdash; <b>about 2 in 3 American adults don&rsquo;t</b>. But a will still goes through probate. The real gift to your family is <b>keeping assets OUT of probate</b> in the first place.'});
-    F.push({name:'The free / cheap moves that dodge probate',chip:'move',cl:'Do these',mint:true,
-      val:'',why:'Most of your estate can skip court with simple steps: <b>name beneficiaries</b> on every retirement and life-insurance account; add <b>&ldquo;payable-on-death&rdquo; (POD/TOD)</b> to bank and brokerage accounts; and where your state allows, a <b>transfer-on-death deed</b> on the home. These are usually free and take an afternoon.'});
-    if(est>400000||home){
-      F.push({name:'Consider a living trust for the bigger pieces',chip:'money',cl:'Worth pricing out',
-        val:'',why:'For a home plus meaningful assets, a <b>revocable living trust</b> keeps everything private and out of probate, and it manages things smoothly if you&rsquo;re ever incapacitated. It costs more upfront than a will but often <b>saves far more</b> than probate would.'});
-    }
-    if(minor){
-      F.push({name:'Name a guardian &mdash; this is the one only a will can do',chip:'now',cl:'Most important',
-        val:'',why:'A <b>will is the only place you name who raises your minor children</b> if something happens to you. Without it, a court decides. Pair it with a small trust so the money is managed for them, not handed over at 18.'});
-    }
-    F.push({name:'The four documents most families actually need',chip:'know',cl:'The checklist',
-      val:'',why:'A <b>will</b>, a <b>durable power of attorney</b> (money), a <b>healthcare proxy / medical POA</b>, and a <b>living will / advance directive</b>. The last three matter <b>while you&rsquo;re alive</b> &mdash; they&rsquo;re what spare your family a guardianship fight if you&rsquo;re ever unable to speak for yourself.'});
+    F.push({name:'A will alone still means probate &mdash; aim higher',chip:'a',clabel:'Start here',why:'Everyone should have a will &mdash; about <b>2 in 3 adults don&rsquo;t</b>. But a will still goes through probate. The real gift is <b>keeping assets OUT of probate</b>.'});
+    F.push({name:'The free / cheap moves that dodge probate',chip:'c',clabel:'Do these',mint:true,why:'<b>Name beneficiaries</b> on every retirement and life-insurance account; add <b>payable-on-death (POD/TOD)</b> to bank and brokerage accounts; and where allowed, a <b>transfer-on-death deed</b> on the home. Usually free, an afternoon of work.'});
+    if(est>400000||home){F.push({name:'Consider a living trust for the bigger pieces',chip:'d',clabel:'Worth pricing out',why:'For a home plus meaningful assets, a <b>revocable living trust</b> keeps everything private and out of probate, and manages things if you&rsquo;re ever incapacitated. Costs more upfront but often <b>saves far more</b>.'});}
+    if(minor){F.push({name:'Name a guardian &mdash; only a will can do this',chip:'b',clabel:'Most important',why:'A <b>will is the only place you name who raises your minor children</b>. Without it, a court decides. Pair it with a small trust so money is managed for them, not handed over at 18.'});}
+    F.push({name:'The four documents most families need',chip:'a',clabel:'The checklist',why:'A <b>will</b>, a <b>durable power of attorney</b>, a <b>healthcare proxy</b>, and a <b>living will</b>. The last three matter <b>while you&rsquo;re alive</b> &mdash; they spare your family a guardianship fight.'});
   }
-
-  // Letter / checklist
-  if(died){
-    LETTER='AFTER A DEATH &mdash; CHECKLIST & WHAT TO ASK AN ATTORNEY\n\nThis week:\n  [ ] Order 10+ certified copies of the death certificate (funeral home can help)\n  [ ] Secure the home, car, and valuables; keep paying mortgage/insurance/property tax\n  [ ] Find the will / trust (safe, files, safe-deposit box, the attorney who prepared it)\n  [ ] Do NOT pay the deceased’s debts from your own money, and do not distribute anything yet\n  [ ] Notify Social Security'+(spouse?' (ask about survivor benefits)':'')+', any pension, and the life-insurance company\n\nGather for the attorney / court:\n  [ ] The will or trust, if any\n  [ ] A list of accounts, the home deed, vehicle titles, and recent statements\n  [ ] Which accounts have named beneficiaries or are POD/TOD\n  [ ] A rough list of debts (mortgage, cards, medical)\n\nAsk a probate attorney (many give a free first consult):\n  [ ] Does this estate even need formal probate, or does the small-estate shortcut apply here?\n  [ ] Which assets pass outside probate (beneficiaries, joint title, trust)?\n  [ ] What must be done, in what order, and what are the deadlines?\n'+(home?'  [ ] How is the home titled, and how does it transfer?\n':'')+(spouse?'  [ ] What is the spouse’s elective share and family allowance here?\n':'')+'\nFree help: lawhelp.org (legal aid by state), your county probate court self-help center, and your state bar’s lawyer-referral line.';
-  } else {
-    LETTER='ESTATE PLANNING — MY STARTER CHECKLIST\n\nThe four documents:\n  [ ] Will'+(minor?' — names a guardian for minor children (do this first)':'')+'\n  [ ] Durable power of attorney (someone to handle money if you can’t)\n  [ ] Healthcare proxy / medical power of attorney\n  [ ] Living will / advance directive\n\nKeep assets out of probate (mostly free):\n  [ ] Name/refresh beneficiaries on every 401k, IRA, and life-insurance policy\n  [ ] Add payable-on-death (POD/TOD) to bank and brokerage accounts\n'+(home?'  [ ] Ask your county recorder about a transfer-on-death deed for the home\n':'')+(est>400000||home?'  [ ] Price out a revocable living trust for the home + larger assets\n':'')+'\nThen:\n  [ ] Tell your executor/agent where everything is\n  [ ] Store originals safely; give copies to the people named\n\nFree/low-cost help: lawhelp.org, your state bar referral line, and many local senior centers run free will clinics.';
-  }
-
-  var lead=died?'Here&rsquo;s the plain-English map &mdash; <b>'+F.length+'</b> thing'+(F.length>1?'s':'')+' to understand before you sign, pay, or hand anything over. Take it slow; almost nothing here has to happen today except protecting the assets.':'Here&rsquo;s your starting map &mdash; <b>'+F.length+'</b> move'+(F.length>1?'s':'')+' that spare your family the mess. Most cost little or nothing.';
-  var h='<div class="dsum">'+lead+'</div>';
-  F.forEach(function(f){
-    h+='<div class="line"><span class="lname">'+f.name+'</span><br><span class="chip '+f.chip+'">'+f.cl+'</span>';
-    if(f.val){h+='<div class="tot" style="margin:9px 0 0">'+f.val+'</div>';}
-    h+='<div class="lflag'+(f.mint?' mint':'')+'">'+f.why+'</div></div>';
-  });
-  h+='<div class="todo"><b>What I&rsquo;d do, in order:</b><ul>'+
-     (died?
-       '<li><b>Protect first.</b> Death certificates, secure the property, keep insurance/taxes current &mdash; and pay no debts yet.</li>'+
-       '<li><b>Sort assets into two piles:</b> those with named beneficiaries or joint title (claim directly) vs. everything else (may need probate).</li>'+
-       '<li><b>Ask one probate attorney about the small-estate shortcut</b> before assuming you need full probate &mdash; many offer a free first consult.</li>'+
-       '<li>Take the <b>checklist below</b> to that visit.</li>'
-     :
-       '<li>Do the <b>free moves first</b> &mdash; beneficiaries and POD/TOD cover most estates and cost nothing.</li>'+
-       (minor?'<li><b>Name a guardian in a will</b> &mdash; nothing else can do this.</li>':'')+
-       '<li>Decide if a <b>living trust</b> is worth it for the home and larger assets.</li>'+
-       '<li>Tell the people you named <b>where everything is.</b></li>'
-     )+'</ul></div>';
-  h+='<p class="nfa"><b>Educational &middot; not legal advice.</b> Probate, intestacy, and estate rules are set by <b>each state</b> and change; the costs and thresholds here are rough national ballparks. Nothing here creates an attorney relationship. <b>Confirm the specifics with a probate/estate attorney or free legal aid before you act.</b>'+(died?' And take your time &mdash; grief and paperwork are a hard mix; you don&rsquo;t have to do it all at once.':'')+'</p>';
-  document.getElementById('reportbody').innerHTML=h;
-  document.getElementById('letterwrap').innerHTML='<div class="blkt">&#128203; Your checklist &mdash; print it and take it in</div><div class="blk">'+LETTER.replace(/</g,'&lt;')+'</div>';
-  document.getElementById('letterwrap').style.display='none';
-  var r=document.getElementById('report');r.style.display='block';r.scrollIntoView({behavior:'smooth'});
+  var ans=(home?1:0)+(spouse?1:0)+(bene?1:0)+(minor?1:0);
+  var conf=42+(est>0?16:0)+ans*6;if(conf>85)conf=85;
+  var first;
+  if(died)first='<b>Protect first, pay nothing yet.</b> Get 10+ certified death certificates, secure the home and keep its insurance and taxes current, and do <b>not</b> pay the deceased&rsquo;s debts from your own money or hand out anything until the process is set.';
+  else first='<b>Do the free moves first.</b> Name or refresh beneficiaries on every retirement and life-insurance account, and add payable-on-death to your bank and brokerage accounts &mdash; that alone keeps most estates out of probate, for nothing.';
+  var LET;
+  if(died){LET='AFTER A DEATH — CHECKLIST & WHAT TO ASK AN ATTORNEY\n\nThis week:\n  [ ] Order 10+ certified copies of the death certificate\n  [ ] Secure the home, car, and valuables; keep paying mortgage/insurance/property tax\n  [ ] Find the will / trust (safe, files, safe-deposit box, the attorney who prepared it)\n  [ ] Do NOT pay the deceased’s debts from your own money, and do not distribute anything yet\n  [ ] Notify Social Security'+(spouse?' (ask about survivor benefits)':'')+', any pension, and the life-insurance company\n\nGather for the attorney / court:\n  [ ] The will or trust, if any\n  [ ] A list of accounts, the home deed, vehicle titles, and recent statements\n  [ ] Which accounts have named beneficiaries or are POD/TOD\n  [ ] A rough list of debts\n\nAsk a probate attorney (many give a free first consult):\n  [ ] Does this estate need formal probate, or does the small-estate shortcut apply?\n  [ ] Which assets pass outside probate?\n  [ ] What must be done, in what order, and what are the deadlines?\n'+(home?'  [ ] How is the home titled, and how does it transfer?\n':'')+(spouse?'  [ ] What is the spouse’s elective share and family allowance here?\n':'')+'\nFree help: lawhelp.org (legal aid by state), your county probate court self-help center, your state bar referral line.';}
+  else{LET='ESTATE PLANNING — MY STARTER CHECKLIST\n\nThe four documents:\n  [ ] Will'+(minor?' — names a guardian for minor children (do this first)':'')+'\n  [ ] Durable power of attorney (money)\n  [ ] Healthcare proxy / medical power of attorney\n  [ ] Living will / advance directive\n\nKeep assets out of probate (mostly free):\n  [ ] Name/refresh beneficiaries on every 401k, IRA, and life-insurance policy\n  [ ] Add payable-on-death (POD/TOD) to bank and brokerage accounts\n'+(home?'  [ ] Ask your county recorder about a transfer-on-death deed for the home\n':'')+(est>400000||home?'  [ ] Price out a revocable living trust for the home + larger assets\n':'')+'\nThen:\n  [ ] Tell your executor/agent where everything is\n  [ ] Store originals safely; give copies to the people named\n\nFree/low-cost help: lawhelp.org, your state bar referral line, and local senior centers that run free will clinics.';}
+  var lead=died?'Here&rsquo;s the plain-English map &mdash; <b>'+F.length+'</b> thing'+(F.length>1?'s':'')+' to understand before you sign, pay, or hand anything over. Take it slow.':'Here&rsquo;s your starting map &mdash; <b>'+F.length+'</b> move'+(F.length>1?'s':'')+' that spare your family the mess. Most cost little or nothing.';
+  var todo='<div class="todo"><b>What I&rsquo;d do, in order:</b><ul>'+(died?
+     '<li><b>Protect first.</b> Death certificates, secure the property, keep insurance/taxes current &mdash; pay no debts yet.</li><li><b>Sort assets into two piles:</b> named-beneficiary / joint-title (claim directly) vs. everything else (may need probate).</li><li><b>Ask one probate attorney about the small-estate shortcut</b> before assuming you need full probate.</li><li>Take the <b>checklist below</b> to that visit.</li>'
+    :'<li>Do the <b>free moves first</b> &mdash; beneficiaries and POD/TOD cover most estates.</li>'+(minor?'<li><b>Name a guardian in a will.</b></li>':'')+'<li>Decide if a <b>living trust</b> is worth it for the home and larger assets.</li><li>Tell the people you named <b>where everything is.</b></li>')+'</ul></div>';
+  var nfa='<p class="nfa"><b>Educational &middot; not legal advice.</b> Probate, intestacy, and estate rules are set by <b>each state</b> and change; costs and thresholds here are rough national ballparks. Nothing here creates an attorney relationship. <b>Confirm the specifics with a probate/estate attorney or free legal aid before you act.</b>'+(died?' Take your time &mdash; grief and paperwork are a hard mix.':'')+'</p>';
+  renderReport({conf:conf,first:first,lead:lead,findings:F,todo:todo,nfa:nfa,letter:LET,letterTitle:'&#128203; Your checklist &mdash; print it and take it in'});
 }
+bootKit();
 </script>
 </body>
 </html>
