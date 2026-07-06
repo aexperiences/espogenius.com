@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://espogenius.com/</loc></url>
-  <url><loc>https://espogenius.com/marketnarc</loc></url>
-  <url><loc>https://espogenius.com/billnarc</loc></url>
-  <url><loc>https://espogenius.com/iepnarc</loc></url>
-  <url><loc>https://espogenius.com/homenarc</loc></url>
-  <url><loc>https://espogenius.com/pawnarc</loc></url>
-  <url><loc>https://espogenius.com/carenarc</loc></url>
+  <url><loc>https://espogenius.com/espo-iep-genius-app</loc></url>
+  <url><loc>https://espogenius.com/espo-care-genius-app</loc></url>
+  <url><loc>https://espogenius.com/espo-benefits-genius-app</loc></url>
+  <url><loc>https://espogenius.com/espo-wills-genius-app</loc></url>
   <url><loc>https://espogenius.com/privacy</loc></url>
   <url><loc>https://espogenius.com/terms</loc></url>
 </urlset>
