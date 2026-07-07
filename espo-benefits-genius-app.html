@@ -105,15 +105,13 @@ body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#
   <div class="steps" id="steps"><i></i><i></i></div>
   <p class="steplbl" id="steplbl">Tap the answers, scan a paystub, or say &ldquo;Walk me through it&rdquo; and just talk.</p>
   <div class="resume" id="resume"><span>Picked up where you left off.</span><button type="button" onclick="clearState()">Start over</button></div>
-  <p class="innote" id="nstatus">Scan &amp; voice run <b>on your device</b> with your browser&rsquo;s own tools &mdash; nothing you enter leaves your phone.</p>
-<div class="scanrow"><button class="scanbtn2" type="button" onclick="nScan()">&#128247; Scan a paystub</button><span class="inhint" style="color:var(--sea);font-size:12px">&mdash; snap a paystub to fill income</span></div>
-<div class="scanpanel" id="scanpanel" style="display:none"></div>
+  <p class="innote" id="nstatus">Voice runs <b>on your device</b> with your browser&rsquo;s own tools &mdash; nothing you enter leaves your phone.</p>
   <div class="card">
     <h2>1 &middot; Who&rsquo;s in the household?</h2>
     <p class="h2sub">Count everyone who lives and eats together, including yourself and any kids.</p>
     <div class="fg">
       <div class="f"><label>People in the household</label><select id="hh"><option value="1">Just me (1)</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6+</option></select></div>
-      <div class="f money"><label>Total household income per month (roughly)</label><input id="inc" type="number" min="0" placeholder="e.g. 2200"></div>
+      <div class="f"><label>Household income per month (a rough range is fine)</label><select id="inc"><option value="">Choose a range…</option><option value="800">Under $1,000</option><option value="1500">$1,000–$2,000</option><option value="2500">$2,000–$3,000</option><option value="3500">$3,000–$4,000</option><option value="4500">$4,000–$5,000</option><option value="6500">Over $5,000</option></select></div>
     </div>
   </div>
   <div class="card">
@@ -160,7 +158,7 @@ function updateSteps(){var arr=stepsDone();var s=$('steps').children;for(var i=0
 var _deferred=null;
 window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();_deferred=e;$('installbtn').style.display='inline-block';});
 function doInstall(){if(_deferred){_deferred.prompt();_deferred.userChoice.then(function(){_deferred=null;$('installbtn').style.display='none';});}else{toast('Use your browser menu → Add to Home Screen');}}
-var SCANFIELD='inc';
+var SCANFIELD='';
 function nScan(){if(!SCANFIELD)return;var inp=document.createElement('input');inp.type='file';inp.accept='image/*';inp.setAttribute('capture','environment');
  inp.onchange=function(){var f=inp.files&&inp.files[0];if(!f)return;
   if(!('TextDetector' in window)){nStatus('This browser has no built-in text reader (iPhone Safari doesn&rsquo;t). Use <b>&#127908; Walk me through it</b>, or type it in.');return;}
@@ -176,7 +174,7 @@ function nScan(){if(!SCANFIELD)return;var inp=document.createElement('input');in
  inp.click();}
 var WALK=[
  {say:"Let's find the help you're owed. First — how many people live and eat in your household, counting yourself?",kind:'select',field:'hh',map:[{re:'\\b(one|1|just me|myself|single)\\b',val:'1'},{re:'\\b(two|2)\\b',val:'2'},{re:'\\b(three|3)\\b',val:'3'},{re:'\\b(four|4)\\b',val:'4'},{re:'\\b(five|5)\\b',val:'5'},{re:'\\b(six|6|seven|eight|more)\\b',val:'6'}]},
- {say:"Roughly what is your total household income per month?",kind:'number',field:'inc'},
+ {say:"Roughly, is your monthly household income under one thousand, one to two thousand, two to three, three to four, four to five, or over five thousand?",kind:'select',field:'inc',map:[{re:"under|less|below|thousand only|one thousand$|^one$",val:"800"},{re:"one to two|1 to 2|between one|fifteen hundred|1000|1500",val:"1500"},{re:"two to three|2 to 3|twenty five hundred|2500",val:"2500"},{re:"three to four|3 to 4|thirty five|3500",val:"3500"},{re:"four to five|4 to 5|forty five|4500",val:"4500"},{re:"over five|above five|more than five|6000|6500|5000",val:"6500"}]},
  {say:"Is anyone in the home sixty-five or older?",kind:'bool',field:'cSenior'},
  {say:"Is anyone on Medicare?",kind:'bool',field:'cMed'},
  {say:"Are there children under eighteen, or is someone pregnant?",kind:'bool',field:'cKids'},

@@ -324,14 +324,14 @@ function decode(){
 
   var h='<div class="conf"><div><span class="confnum">'+conf+'%<small>READ COMPLETENESS</small></span></div><div class="confmeter"><i id="confbar"></i></div></div>';
   h+='<div class="dofirst"><div class="k">&#9654; Do this first</div><div class="t">'+first+'</div></div>';
-  h+='<div class="dsum">Here&rsquo;s the read &mdash; <b>'+F.length+'</b> thing'+(F.length>1?'s':'')+' to know, in priority order. Schools count on parents not knowing any of this. You hold more cards than they let on.</div>';
+  h+='<div class="dsum">Here&rsquo;s the read &mdash; <b>'+F.length+'</b> thing'+(F.length>1?'s':'')+' to know, in priority order. Most parents are never walked through any of this — knowing it lets you work with the team from a place of confidence, not conflict.</div>';
   F.forEach(function(f,i){h+='<div class="line"><span class="lname"><span class="rank">'+(i+1)+'</span>'+f.name+'</span><br><span class="chip '+f.chip+'">'+f.clabel+'</span><div class="lflag'+(f.mint?' mint':'')+'">'+f.why+'</div></div>';});
   h+='<div class="todo"><b>Then, in order:</b><ul>'+
      '<li><b>Put your request in writing</b> (email counts) &mdash; the ready letter is below. A verbal ask disappears; a written one starts a clock.</li>'+
      (missing.length?'<li>At the meeting, ask: <b>&ldquo;What&rsquo;s the baseline data for this goal, and what&rsquo;s the target number?&rdquo;</b> If they don&rsquo;t have it, the goal isn&rsquo;t valid &mdash; ask them to rewrite it on the spot.</li>':'')+
      '<li>Bring these questions: <b>&ldquo;How will you measure progress, and how often will you report it?&rdquo; &ldquo;Is this the least restrictive setting, and why?&rdquo; &ldquo;What supports are we adding, in minutes?&rdquo;</b></li>'+
      '<li>Get <b>free help</b>: your state&rsquo;s <b>Parent Training &amp; Information Center</b> (parentcenterhub.org/find-your-center) will coach you for free.</li></ul></div>';
-  h+='<p class="nfa"><b>Educational &middot; not legal advice.</b> Special-ed law is powerful but detailed and varies by state. ESPO IEP Genius helps you spot what to question and puts it in plain English &mdash; it can&rsquo;t represent you. <b>For a dispute, get a free advocate</b> (parentcenterhub.org) or a special-education attorney. You have more rights than they show you.</p>';
+  h+='<p class="nfa"><b>Educational &middot; not legal advice.</b> Special-ed law is powerful but detailed and varies by state. ESPO IEP Genius helps you spot what to question and puts it in plain English &mdash; it can&rsquo;t represent you. <b>For a dispute, get a free advocate</b> (parentcenterhub.org) or a special-education attorney. You have more rights here than are usually spelled out — use them, calmly and on the record.</p>';
   $('reportbody').innerHTML=h;
   $('letterwrap').innerHTML='<div class="blkt">&#9993; Your written request &mdash; fill in the [brackets], send it (email is fine), keep a copy</div><div class="blk">'+LETTER.replace(/</g,'&lt;')+'</div>';
   $('letterwrap').style.display='none';
