@@ -92,6 +92,8 @@ textarea:focus{outline:none;border-color:var(--accent)}
 .foot{text-align:center;margin-top:22px}.foot a{color:var(--accent);font-weight:700;text-decoration:none;font-size:14px}
 .brandmark{width:42px;height:41px;margin:24px auto 8px;opacity:.78;background:url(/ae-mark.png) center/contain no-repeat}
 @media print{body{background:#fff;color:#111}.card,.go,.foot,.priv,.inbar,.innote,.readbar,.scanpanel,.topbar,.steps,.steplbl,.stickybar,.resume{display:none!important}#report{display:block!important;border:0}.blk{color:#111;border-color:#999}}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+.lnk,.walkbtn,.inbtn,.scanbtn2{min-height:44px}
 </style>
 </head>
 <body>
@@ -109,7 +111,7 @@ textarea:focus{outline:none;border-color:var(--accent)}
   </div>
 
   <div class="steps" id="steps"><i></i><i></i><i></i></div>
-  <p class="steplbl" id="steplbl">Type it, scan it, or tap &ldquo;Walk me through it&rdquo; and just talk.</p>
+  <p class="steplbl" id="steplbl" aria-live="polite">Type it, scan it, or tap &ldquo;Walk me through it&rdquo; and just talk.</p>
 
   <div class="resume" id="resume"><span id="resumetxt">Picked up where you left off.</span><button type="button" onclick="clearState()">Start over</button></div>
 
@@ -231,12 +233,12 @@ function setStepLbl(m){$('steplbl').textContent=m;}
 function markHot(field){var labs=document.querySelectorAll('.tog label');labs.forEach(function(l){l.classList.remove('hot');});if(field){var l=$('l_'+field);if(l)l.classList.add('hot');}}
 function walkStep(){
  if(!_walking)return;
- if(_wi>=WALK.length){setStepLbl('Reading your IEP…');markHot(null);speak("Thank you. Here's the honest read.",function(){decode();});walkStop2();return;}
+ if(_wi>=WALK.length){setStepLbl('Reading your IEP…');markHot(null);var c3=$('card3');if(c3)c3.scrollIntoView({behavior:'smooth',block:'center'});speak("Thank you. Here's the honest read.",function(){decode();});walkStop2();return;}
  var s=WALK[_wi];var stepPct=Math.round(((_wi)/WALK.length)*100);
  setStepLbl('Question '+(_wi+1)+' of '+WALK.length+' — listen, then answer out loud');
  markHot(s.kind==='bool'?s.field:null);
  if(_wi===0){$('card1').scrollIntoView({behavior:'smooth',block:'center'});}else{$('card2').scrollIntoView({behavior:'smooth',block:'center'});}
- speak(s.say,function(){if(_walking)listenFor(s);});
+ speak(s.say,function(){if(_walking)setTimeout(function(){if(_walking)listenFor(s);},300);});
 }
 function walkStop2(){_walking=false;_wrec=null;$('walkbtn').classList.remove('rec');$('walkbtn').innerHTML='&#127908; Walk me through it, out loud';}
 function listenFor(s){
@@ -254,8 +256,8 @@ function listenFor(s){
      var yes=/\b(yes|yeah|yep|yup|it does|correct|true|sure|definitely|uh huh)\b/i.test(got);
      var no=/\b(no|nope|nah|it doesn'?t|does not|it does not|negative|not really|i don'?t think so)\b/i.test(got);
      if(yes||no){$(s.field).checked=yes;$(s.field).dispatchEvent(new Event('change'));saveState();updateSteps();markHot(null);_wi++;_retry=0;walkStep();}
-     else if(_retry<1){_retry++;speak("Sorry — was that a yes or a no?",function(){if(_walking)listenFor(s);});}
-     else {_retry=0;_wi++;walkStep();/* skip, leave unchecked */}
+     else if(_retry<1){_retry++;speak("Sorry — was that a yes or a no?",function(){if(_walking)setTimeout(function(){if(_walking)listenFor(s);},300);});}
+     else {_retry=0;toast('Didn’t catch that — left it unchecked, you can tap it');_wi++;walkStep();/* skip, leave unchecked */}
    }
  };
  try{rec.start();}catch(e){_wi++;walkStep();}
@@ -322,7 +324,7 @@ function decode(){
            : (pEval ? 'complete the evaluation I consented to' : 'schedule an IEP meeting to review my concerns');
   LETTER='[Your name]\n[Address]\n[Date]\n\n[Case manager / Special Education Director]\n[School name]\n\nRe: [Child&rsquo;s name], Grade [ ___ ] — request regarding the IEP\n\nDear [name]:\n\nI am the parent of [child&rsquo;s name]. I am writing to request that the IEP team '+need+'.\n\n'+(missing.length?'The annual goal I&rsquo;m concerned about reads: “'+(goal||'[paste the goal]')+'” As written, I can&rsquo;t tell whether my child is meeting it, because it is missing '+missing.join(', ')+'. Under IDEA, annual goals must be measurable.\n\n':'')+'Please treat this as a formal, written request. I would like to meet within [10] school days, and I am available [days/times]. Please also send me Prior Written Notice if the team declines any part of this request.\n\nThank you,\n[Your name]\n[Phone / email]';
 
-  var h='<div class="conf"><div><span class="confnum">'+conf+'%<small>READ COMPLETENESS</small></span></div><div class="confmeter"><i id="confbar"></i></div></div>';
+  var h='<div class="conf"><div><span class="confnum">'+conf+'%<small>HOW MUCH YOU TOLD ME</small></span></div><div class="confmeter"><i id="confbar"></i></div></div>';
   h+='<div class="dofirst"><div class="k">&#9654; Do this first</div><div class="t">'+first+'</div></div>';
   h+='<div class="dsum">Here&rsquo;s the read &mdash; <b>'+F.length+'</b> thing'+(F.length>1?'s':'')+' to know, in priority order. Most parents are never walked through any of this — knowing it lets you work with the team from a place of confidence, not conflict.</div>';
   F.forEach(function(f,i){h+='<div class="line"><span class="lname"><span class="rank">'+(i+1)+'</span>'+f.name+'</span><br><span class="chip '+f.chip+'">'+f.clabel+'</span><div class="lflag'+(f.mint?' mint':'')+'">'+f.why+'</div></div>';});

@@ -59,6 +59,8 @@ body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#
 .foot{text-align:center;margin-top:22px}.foot a{color:var(--accent);font-weight:700;text-decoration:none;font-size:14px}
 .brandmark{width:42px;height:41px;margin:24px auto 8px;opacity:.78;background:url(/ae-mark.png) center/contain no-repeat}
 @media print{body{background:#fff;color:#111}.card,.go,.foot,.priv,.innote,.readbar,.scanpanel,.topbar,.steps,.steplbl,.stickybar,.resume,.scanrow{display:none!important}#report{display:block!important;border:0}.blk{color:#111;border-color:#999}}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+.lnk,.walkbtn,.inbtn,.scanbtn2{min-height:44px}
 
 .topbar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:0 0 8px}
 .walkbtn{background:var(--mint);border:1px solid var(--mint);color:#0C2038;font-family:Lato;font-weight:900;font-size:13.5px;border-radius:999px;padding:10px 18px;cursor:pointer;transition:.14s}
@@ -103,7 +105,7 @@ body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#
   <p class="priv">&#128274; Runs entirely in your browser. Nothing you enter is sent anywhere.</p>
   <div class="topbar"><button class="walkbtn" id="walkbtn" type="button" onclick="walkToggle()">&#127908; Walk me through it, out loud</button><button class="installbtn" id="installbtn" type="button" onclick="doInstall()">&#8595; Add to home screen</button></div>
   <div class="steps" id="steps"><i></i><i></i></div>
-  <p class="steplbl" id="steplbl">Tap the answers, scan a statement, or say &ldquo;Walk me through it&rdquo; and just talk.</p>
+  <p class="steplbl" id="steplbl" aria-live="polite">Tap the answers, scan a statement, or say &ldquo;Walk me through it&rdquo; and just talk.</p>
   <div class="resume" id="resume"><span>Picked up where you left off.</span><button type="button" onclick="clearState()">Start over</button></div>
   <p class="innote" id="nstatus">Scan &amp; voice run <b>on your device</b> with your browser&rsquo;s own tools &mdash; nothing you enter leaves your phone.</p>
 <div class="scanrow"><button class="scanbtn2" type="button" onclick="nScan()">&#128247; Scan a statement</button><span class="inhint" style="color:var(--sea);font-size:12px">&mdash; snap a bank statement to fill the amount</span></div>
@@ -191,7 +193,7 @@ function walkStep(){if(!_walking)return;
  if(_wi>=WALK.length){$('steplbl').textContent='Reading it now…';markHot(null);speak("Thank you. Here's the honest read.",function(){decode();});walkStop2();return;}
  var s=WALK[_wi];$('steplbl').textContent='Question '+(_wi+1)+' of '+WALK.length+' — listen, then answer out loud';
  markHot((s.kind==='bool')?s.field:null);
- speak(s.say,function(){if(_walking)listenFor(s);});}
+ speak(s.say,function(){if(_walking)setTimeout(function(){if(_walking)listenFor(s);},300);});}
 function walkStop2(){_walking=false;_wrec=null;$('walkbtn').classList.remove('rec');$('walkbtn').innerHTML='&#127908; Walk me through it, out loud';}
 function listenFor(s){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;var rec=new SR();_wrec=rec;rec.lang='en-US';rec.interimResults=false;rec.maxAlternatives=1;rec.continuous=(s.kind==='text');var got='';
  rec.onresult=function(e){for(var i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)got+=e.results[i][0].transcript+' ';}if(s.kind!=='text'){try{rec.stop();}catch(e){}}};
@@ -202,7 +204,7 @@ function listenFor(s){var SR=window.SpeechRecognition||window.webkitSpeechRecogn
    else if(s.kind==='bool'){var yes=/\b(yes|yeah|yep|yup|it does|correct|true|sure|definitely|they do|we do|uh huh)\b/i.test(got);var no=/\b(no|nope|nah|it doesn'?t|does not|negative|not really|i don'?t think so)\b/i.test(got);if(yes||no){$(s.field).checked=yes;}else ok=false;}
    else if(s.kind==='radio'||s.kind==='select'){var matched=null;for(var j=0;j<s.map.length;j++){if(new RegExp(s.map[j].re,'i').test(got)){matched=s.map[j].val;break;}}if(matched!=null){if(s.kind==='radio'){var el=document.querySelector('input[name="'+s.field+'"][value="'+matched+'"]');if(el)el.checked=true;}else{$(s.field).value=matched;}}else ok=false;}
    saveState();updateSteps();markHot(null);
-   if(ok){_retry=0;_wi++;walkStep();}else if(_retry<1){_retry++;speak(s.kind==='bool'?"Sorry — was that a yes or a no?":"Sorry, I didn't catch that. "+s.say,function(){if(_walking)listenFor(s);});}else{_retry=0;_wi++;walkStep();}
+   if(ok){_retry=0;_wi++;walkStep();}else if(_retry<1){_retry++;speak(s.kind==='bool'?"Sorry — was that a yes or a no?":"Sorry, I didn't catch that. "+s.say,function(){if(_walking)setTimeout(function(){if(_walking)listenFor(s);},300);});}else{_retry=0;if(s.kind==='bool')toast('Didn’t catch that — left it unchecked, you can tap it');else if(s.kind==='number')toast('Didn’t catch a number — say it as digits, or type it');else toast('Didn’t catch that — you can tap it');_wi++;walkStep();}
  };
  try{rec.start();}catch(e){_wi++;walkStep();}}
 function narcText(){var el=$('reportbody');var t=el?(el.innerText||el.textContent||''):'';return t.replace(/ /g,' ').replace(/\s+/g,' ').trim();}
@@ -214,7 +216,7 @@ function showLetter(){var w=$('letterwrap');w.style.display=(w.style.display==='
 function copyCase(){var t='ESPO CARE GENIUS — CASE FILE\n\n'+narcText()+(LETTER?'\n\n----- YOUR LETTER / CHECKLIST -----\n'+LETTER:'');if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){toast('Case file copied');},function(){toast('Could not copy');});}else{toast('Copy not supported — use Print');}}
 function money(x){return '$'+Math.round(x).toLocaleString();}
 function renderReport(o){
- var h='<div class="conf"><div><span class="confnum">'+o.conf+'%<small>'+(o.confLabel||'READ COMPLETENESS')+'</small></span></div><div class="confmeter"><i id="confbar"></i></div></div>';
+ var h='<div class="conf"><div><span class="confnum">'+o.conf+'%<small>'+(o.confLabel||'HOW MUCH YOU TOLD ME')+'</small></span></div><div class="confmeter"><i id="confbar"></i></div></div>';
  h+='<div class="dofirst"><div class="k">▶ Do this first</div><div class="t">'+o.first+'</div></div>';
  h+='<div class="dsum">'+o.lead+'</div>';
  o.findings.forEach(function(f,i){h+='<div class="line"><span class="lname"><span class="rank">'+(i+1)+'</span>'+f.name+'</span><br><span class="chip '+f.chip+'">'+f.clabel+'</span>'+(f.val?'<div style="margin-top:6px;font-size:12px;font-weight:800;color:var(--mint)">'+f.val+'</div>':'')+'<div class="lflag'+(f.mint?' mint':'')+'">'+f.why+'</div></div>';});
@@ -234,13 +236,13 @@ function decode(){
   var savings=Math.max(0,parseFloat($('savings').value)||0);
   var home=$('cHome').checked,gift=$('cGift').checked,vet=$('cVet').checked;
   var F=[],limit=2000;
-  if(savings>limit){F.push({name:'You&rsquo;re over the Medicaid asset line &mdash; but don&rsquo;t just hand it over',chip:'c',clabel:'The honest move',why:'Medicaid generally allows only about <b>$2,000 in countable assets</b> for a single person. You&rsquo;re over by roughly <b>'+money(savings-limit)+'</b>. The mistake families make is <b>spending it all on the nursing home first</b>. You don&rsquo;t have to. That money can often be <b>legally converted into things that don&rsquo;t count</b>: home repairs, a reliable car, an <b>irrevocable</b> funeral/burial plan, paying off debt, needed dental/medical. It stays in the family instead of going to the facility.'});}
-  else{F.push({name:'Assets look near the Medicaid line',chip:'a',clabel:'On track',mint:true,why:'Countable savings look at or under the rough <b>$2,000</b> limit for a single person. Don&rsquo;t spend down further than you must &mdash; and confirm exactly what counts, because rules and the exact figures vary by state.'});}
+  if(savings>limit){F.push({name:'You&rsquo;re over the Medicaid asset line &mdash; but don&rsquo;t just hand it over',chip:'c',clabel:'The honest move',why:'Medicaid generally allows only roughly <b>$2,000 in countable assets</b> for a single person <b>(check the current figure for your state)</b>. You&rsquo;re over by roughly <b>'+money(savings-limit)+'</b>. The mistake families make is <b>spending it all on the nursing home first</b>. You don&rsquo;t have to. That money can often be <b>legally converted into things that don&rsquo;t count</b>: home repairs, a reliable car, an <b>irrevocable</b> funeral/burial plan, paying off debt, needed dental/medical. It stays in the family instead of going to the facility.'});}
+  else{F.push({name:'Assets look near the Medicaid line',chip:'a',clabel:'On track',mint:true,why:'Countable savings look at or under the rough <b>$2,000</b> limit for a single person <b>(check the current figure for your state)</b>. Don&rsquo;t spend down further than you must &mdash; and confirm exactly what counts, because rules and the exact figures vary by state.'});}
   if(gift){F.push({name:'The 5-year look-back &mdash; handle with care',chip:'b',clabel:'Careful',why:'Gifts or below-value transfers in the <b>last 5 years</b> can trigger a <b>penalty period</b> (months of no Medicaid). <b>Do NOT give money away to &ldquo;hide&rdquo; it</b> &mdash; that&rsquo;s the classic mistake and it usually backfires. If gifts already happened, <b>document them</b> and get advice; there are legal ways to cure or plan around a penalty, but only with an elder-law attorney.'});}
   if(home){F.push({name:'The home is usually protected &mdash; don&rsquo;t rush to sell',chip:'a',clabel:'Protected (mostly)',mint:true,why:'While your parent (or their spouse) lives there, the home is <b>usually exempt</b>. <b>Selling it turns a protected house into countable cash</b>, often the worst move. Later, &ldquo;estate recovery&rdquo; can make a claim against it &mdash; but planning (a life estate, certain trusts, or the spouse/heir rules) can protect it. <b>Talk to an elder-law attorney before selling anything.</b>'});}
   if(married){F.push({name:'The at-home spouse is NOT left broke',chip:'a',clabel:'Spouse protection',mint:true,why:'When one spouse needs care, the <b>&ldquo;community spouse&rdquo;</b> at home is allowed to keep a protected share of the assets (often up to roughly <b>$150,000</b>) <b>and</b> a minimum monthly income. Most families never claim these protections. Make sure yours does.'});}
   F.push({name:'Medicare does NOT pay for long-term custodial care',chip:'d',clabel:'The big surprise',why:'This blindsides almost everyone: <b>Medicare covers only short rehab stays</b>, not ongoing help with daily living in a nursing home. <b>Medicaid</b> is the program that covers long-term care &mdash; which is exactly why these rules matter.'});
-  if(vet){F.push({name:'Check VA Aid &amp; Attendance',chip:'c',clabel:'Money on the table',why:'A wartime veteran or surviving spouse who needs help with daily living may qualify for <b>VA Aid &amp; Attendance</b> &mdash; a monthly benefit worth <b>~$1,500&ndash;$2,700/month</b> toward care. Widely unclaimed. Check through an accredited VA rep (free).'});}
+  if(vet){F.push({name:'Check VA Aid &amp; Attendance',chip:'c',clabel:'Money on the table',why:'A wartime veteran or surviving spouse who needs help with daily living may qualify for <b>VA Aid &amp; Attendance</b> &mdash; a monthly benefit worth <b>roughly $1,500&ndash;$2,700/month</b> toward care. Widely unclaimed. Check through an accredited VA rep (free).'});}
 
   var ans=(savings>0?1:0)+(home?1:0)+(gift?1:0)+(vet?1:0);
   var conf=44+(savings>0?14:0)+ans*6; if(conf>86)conf=86;

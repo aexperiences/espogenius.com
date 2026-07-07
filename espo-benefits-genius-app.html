@@ -59,6 +59,8 @@ body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#
 .foot{text-align:center;margin-top:22px}.foot a{color:var(--accent);font-weight:700;text-decoration:none;font-size:14px}
 .brandmark{width:42px;height:41px;margin:24px auto 8px;opacity:.78;background:url(/ae-mark.png) center/contain no-repeat}
 @media print{body{background:#fff;color:#111}.card,.go,.foot,.priv,.innote,.readbar,.scanpanel,.topbar,.steps,.steplbl,.stickybar,.resume,.scanrow{display:none!important}#report{display:block!important;border:0}.blk{color:#111;border-color:#999}}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+.lnk,.walkbtn,.inbtn,.scanbtn2{min-height:44px}
 
 .topbar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:0 0 8px}
 .walkbtn{background:var(--mint);border:1px solid var(--mint);color:#0C2038;font-family:Lato;font-weight:900;font-size:13.5px;border-radius:999px;padding:10px 18px;cursor:pointer;transition:.14s}
@@ -103,7 +105,7 @@ body{margin:0;min-height:100vh;background:radial-gradient(120% 80% at 50% -10%,#
   <p class="priv">&#128274; Runs entirely in your browser. Nothing you enter is sent anywhere.</p>
   <div class="topbar"><button class="walkbtn" id="walkbtn" type="button" onclick="walkToggle()">&#127908; Walk me through it, out loud</button><button class="installbtn" id="installbtn" type="button" onclick="doInstall()">&#8595; Add to home screen</button></div>
   <div class="steps" id="steps"><i></i><i></i></div>
-  <p class="steplbl" id="steplbl">Tap the answers, or say &ldquo;Walk me through it&rdquo; and just talk.</p>
+  <p class="steplbl" id="steplbl" aria-live="polite">Tap the answers, or say &ldquo;Walk me through it&rdquo; and just talk.</p>
   <div class="resume" id="resume"><span>Picked up where you left off.</span><button type="button" onclick="clearState()">Start over</button></div>
   <p class="innote" id="nstatus">Voice runs <b>on your device</b> with your browser&rsquo;s own tools &mdash; nothing you enter leaves your phone.</p>
   <div class="card">
@@ -191,7 +193,7 @@ function walkStep(){if(!_walking)return;
  if(_wi>=WALK.length){$('steplbl').textContent='Reading it now…';markHot(null);speak("Thank you. Here's the honest read.",function(){decode();});walkStop2();return;}
  var s=WALK[_wi];$('steplbl').textContent='Question '+(_wi+1)+' of '+WALK.length+' — listen, then answer out loud';
  markHot((s.kind==='bool')?s.field:null);
- speak(s.say,function(){if(_walking)listenFor(s);});}
+ speak(s.say,function(){if(_walking)setTimeout(function(){if(_walking)listenFor(s);},300);});}
 function walkStop2(){_walking=false;_wrec=null;$('walkbtn').classList.remove('rec');$('walkbtn').innerHTML='&#127908; Walk me through it, out loud';}
 function listenFor(s){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;var rec=new SR();_wrec=rec;rec.lang='en-US';rec.interimResults=false;rec.maxAlternatives=1;rec.continuous=(s.kind==='text');var got='';
  rec.onresult=function(e){for(var i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)got+=e.results[i][0].transcript+' ';}if(s.kind!=='text'){try{rec.stop();}catch(e){}}};
@@ -202,7 +204,7 @@ function listenFor(s){var SR=window.SpeechRecognition||window.webkitSpeechRecogn
    else if(s.kind==='bool'){var yes=/\b(yes|yeah|yep|yup|it does|correct|true|sure|definitely|they do|we do|uh huh)\b/i.test(got);var no=/\b(no|nope|nah|it doesn'?t|does not|negative|not really|i don'?t think so)\b/i.test(got);if(yes||no){$(s.field).checked=yes;}else ok=false;}
    else if(s.kind==='radio'||s.kind==='select'){var matched=null;for(var j=0;j<s.map.length;j++){if(new RegExp(s.map[j].re,'i').test(got)){matched=s.map[j].val;break;}}if(matched!=null){if(s.kind==='radio'){var el=document.querySelector('input[name="'+s.field+'"][value="'+matched+'"]');if(el)el.checked=true;}else{$(s.field).value=matched;}}else ok=false;}
    saveState();updateSteps();markHot(null);
-   if(ok){_retry=0;_wi++;walkStep();}else if(_retry<1){_retry++;speak(s.kind==='bool'?"Sorry — was that a yes or a no?":"Sorry, I didn't catch that. "+s.say,function(){if(_walking)listenFor(s);});}else{_retry=0;_wi++;walkStep();}
+   if(ok){_retry=0;_wi++;walkStep();}else if(_retry<1){_retry++;speak(s.kind==='bool'?"Sorry — was that a yes or a no?":"Sorry, I didn't catch that. "+s.say,function(){if(_walking)setTimeout(function(){if(_walking)listenFor(s);},300);});}else{_retry=0;if(s.kind==='bool')toast('Didn’t catch that — left it unchecked, you can tap it');else if(s.kind==='number')toast('Didn’t catch a number — say it as digits, or type it');else toast('Didn’t catch that — you can tap it');_wi++;walkStep();}
  };
  try{rec.start();}catch(e){_wi++;walkStep();}}
 function narcText(){var el=$('reportbody');var t=el?(el.innerText||el.textContent||''):'';return t.replace(/ /g,' ').replace(/\s+/g,' ').trim();}
@@ -214,7 +216,7 @@ function showLetter(){var w=$('letterwrap');w.style.display=(w.style.display==='
 function copyCase(){var t='ESPO BENEFITS GENIUS — CASE FILE\n\n'+narcText()+(LETTER?'\n\n----- YOUR LETTER / CHECKLIST -----\n'+LETTER:'');if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){toast('Case file copied');},function(){toast('Could not copy');});}else{toast('Copy not supported — use Print');}}
 function money(x){return '$'+Math.round(x).toLocaleString();}
 function renderReport(o){
- var h='<div class="conf"><div><span class="confnum">'+o.conf+'%<small>'+(o.confLabel||'READ COMPLETENESS')+'</small></span></div><div class="confmeter"><i id="confbar"></i></div></div>';
+ var h='<div class="conf"><div><span class="confnum">'+o.conf+'%<small>'+(o.confLabel||'HOW MUCH YOU TOLD ME')+'</small></span></div><div class="confmeter"><i id="confbar"></i></div></div>';
  h+='<div class="dofirst"><div class="k">▶ Do this first</div><div class="t">'+o.first+'</div></div>';
  h+='<div class="dsum">'+o.lead+'</div>';
  o.findings.forEach(function(f,i){h+='<div class="line"><span class="lname"><span class="rank">'+(i+1)+'</span>'+f.name+'</span><br><span class="chip '+f.chip+'">'+f.clabel+'</span>'+(f.val?'<div style="margin-top:6px;font-size:12px;font-weight:800;color:var(--mint)">'+f.val+'</div>':'')+'<div class="lflag'+(f.mint?' mint':'')+'">'+f.why+'</div></div>';});
@@ -235,10 +237,10 @@ function decode(){
   var fpl=fplAnnual(n);var pctFPL=incYr>0?Math.round(incYr/fpl*100):0;var F=[],est=0;
   var snapFired=false,ehFired=false;
   if(!snap && incYr>0 && incYr<=fpl*1.30){snapFired=true;est+=n*175*12;
-    F.push({name:'SNAP (food benefits) &mdash; you look eligible',chip:'a',clabel:'Likely qualify',val:'&asymp; '+money(n*175)+'/mo in food help',why:'Your income is roughly <b>'+pctFPL+'% of the poverty line</b>, and SNAP generally reaches households up to about <b>130%</b>. Nationally about <b>60% of eligible seniors never sign up</b>.<br><b style="color:var(--mint)">How to claim:</b> apply through your <b>state SNAP office</b> or get free help at <b>BenefitsCheckUp.org</b>.'});}
+    F.push({name:'SNAP (food benefits) &mdash; you look eligible',chip:'a',clabel:'Likely qualify',val:'&asymp; '+money(n*175)+'/mo in food help',why:'Your income is roughly <b>'+pctFPL+'% of the poverty line</b>, and SNAP generally reaches households up to about <b>130%</b>. Many eligible people never enroll.<br><b style="color:var(--mint)">How to claim:</b> apply through your <b>state SNAP office</b> or get free help at <b>BenefitsCheckUp.org</b>.'});}
   else if(snap){F.push({name:'You already get SNAP &mdash; check the amount is right',chip:'c',clabel:'Already on it',mint:true,why:'Report a drop in income right away (it can raise your benefit), and seniors/disabled can often deduct <b>medical costs</b> for more. Recheck at <b>BenefitsCheckUp.org</b>.'});}
   if(med && incYr>0 && incYr<=fpl*1.50){ehFired=true;est+=6200;
-    F.push({name:'Medicare &ldquo;Extra Help&rdquo; + a Savings Program &mdash; big one',chip:'a',clabel:'Likely qualify',val:'&asymp; $6,200/yr &mdash; drug costs + your Part B premium (~$185/mo)',why:'On Medicare with modest income, you likely qualify for <b>Extra Help</b> and a <b>Medicare Savings Program</b> that can <b>pay your Part B premium</b>. Roughly <b>2 million</b> who qualify aren&rsquo;t enrolled.<br><b style="color:var(--mint)">How to claim:</b> apply free at <b>SSA.gov</b>; for the Savings Program, a free <b>SHIP counselor</b> (shiphelp.org).'});}
+    F.push({name:'Medicare &ldquo;Extra Help&rdquo; + a Savings Program &mdash; big one',chip:'a',clabel:'Likely qualify',val:'&asymp; $6,200/yr &mdash; drug costs + your Part B premium (~$185/mo)',why:'On Medicare with modest income, you likely qualify for <b>Extra Help</b> and a <b>Medicare Savings Program</b> that can <b>pay your Part B premium</b>. Many who qualify never enroll.<br><b style="color:var(--mint)">How to claim:</b> apply free at <b>SSA.gov</b>; for the Savings Program, a free <b>SHIP counselor</b> (shiphelp.org).'});}
   else if(med){F.push({name:'On Medicare? Still worth a 5-minute check',chip:'d',clabel:'Worth checking',why:'Some states have higher limits, and Extra Help has a bigger cutoff than most think.<br><b style="color:var(--mint)">How:</b> a free <b>SHIP counselor</b> (shiphelp.org) will check your exact numbers.'});}
   if(incYr>0 && incYr<=fpl*1.50){est+=500;
     F.push({name:'LIHEAP &mdash; help with heating &amp; cooling bills',chip:'a',clabel:'Likely qualify',val:'&asymp; a few hundred $/yr toward energy bills',why:'LIHEAP helps low-income households with utility bills, and many states fund <b>emergency</b> help for shut-off notices.<br><b style="color:var(--mint)">How:</b> call <b>211</b> or search &ldquo;[your state] LIHEAP&rdquo;.'});}
@@ -264,14 +266,14 @@ function decode(){
   F.forEach(function(f){LET+='  [ ] '+f.name.replace(/&mdash;.*$/,'').replace(/&amp;/g,'&').replace(/&rsquo;/g,"'").replace(/&ldquo;|&rdquo;/g,'"').replace(/<[^>]+>/g,'').trim()+'\n';});
   LET+='\nDocuments most applications ask for (gather once, use for all):\n  [ ] Photo ID for each adult\n  [ ] Social Security numbers for everyone in the household\n  [ ] Proof of income (pay stubs, benefit letters, award letters)\n  [ ] Proof of address (utility bill or lease)\n  [ ] Rough monthly bills (rent/mortgage, utilities, medical)\n'+(vet?'  [ ] Military discharge papers (DD-214)\n':'')+(med?'  [ ] Your Medicare card\n':'')+'\nWhere to start (all free):\n  - BenefitsCheckUp.org — one screen checks ~2,000 programs (NCOA)\n  - Call 211 — a local person who knows your county\n  - shiphelp.org — free Medicare/Medicaid counseling\n  - Your Area Agency on Aging (eldercare.acl.gov)\n\nApplying is free and does NOT cost you other benefits. Never pay a company to file these.';
 
-  var lead='Here&rsquo;s the honest read &mdash; <b>'+F.length+'</b> program'+(F.length>1?'s':'')+' worth chasing. These are <b>signals, not decisions</b> &mdash; the agency makes the final call.'+(est>0?' <b>&asymp; '+money(est)+'/yr</b> may be on the table.':'');
+  var lead='Here&rsquo;s the honest read &mdash; <b>'+F.length+'</b> program'+(F.length>1?'s':'')+' worth chasing. These are <b>signals, not decisions</b> &mdash; the agency makes the final call.'+(est>0?' Several of these could be worth real money each year &mdash; worth checking, one by one.':'');
   var todo='<div class="todo"><b>What I&rsquo;d do, in order:</b><ul>'+
     '<li>Do <b>one free full screen at BenefitsCheckUp.org</b>.</li>'+
     '<li>Gather the <b>documents in the checklist below once</b> &mdash; the same packet works for every program.</li>'+
     '<li>Start with the <b>biggest-dollar item</b>; call <b>211</b> if you get stuck.</li>'+
     '<li><b>Report changes fast</b> &mdash; they usually help you, not hurt you.</li></ul></div>';
-  var nfa='<p class="nfa"><b>Educational &middot; not a benefits determination.</b> Only the agency can decide, and limits and amounts vary by state and year &mdash; figures here are rough national ballparks. Applying is free and confidential. <b>Never pay anyone to file these.</b></p>';
-  renderReport({conf:conf,confLabel:'HOW COMPLETE THIS READ IS',first:first,lead:lead,findings:F,todo:todo,nfa:nfa,letter:LET,letterTitle:'&#128203; Your claim checklist &mdash; print it and work down the list'});
+  var nfa='<p class="nfa"><b>Educational &middot; not a benefits determination.</b> Eligibility here is <b>estimated from your income band</b> against <b>2024 federal poverty guidelines</b>; only the agency can decide, and limits and amounts vary by state and year. Applying is free and confidential. <b>Never pay anyone to file these.</b></p>';
+  renderReport({conf:conf,confLabel:'HOW MUCH YOU TOLD ME',first:first,lead:lead,findings:F,todo:todo,nfa:nfa,letter:LET,letterTitle:'&#128203; Your claim checklist &mdash; print it and work down the list'});
 }
 bootKit();
 </script>
