@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ESPO Genius — plain-English help for life's hardest paperwork</title>
+<meta name="description" content="One calm app for life's high-stakes paperwork — your child's IEP, an aging parent's care, the benefits you're owed, and what happens after a death. Honest, private, on your side. Runs on your device.">
+<meta name="theme-color" content="#1B1148">
+<link rel="icon" href="/favicon.svg?v=3" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png?v=3" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1B1148;--ink800:#150D38;--ink700:#2A1F5E;--ink600:#352873;--line:#3A2F74;
+  --accent:#FF9E6B;--accent6:#E4875A;--mint:#5FE3C0;--off:#EEEAFB;--sea:#B3A5EC;
+  --serif:Lato;--sans:Inter,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{margin:0;display:flex;flex-direction:column;height:100dvh;overflow:hidden;
+  background:radial-gradient(120% 80% at 50% -10%,#2A1F5E 0%,#160D3A 55%,#0E0827 100%);
+  color:var(--off);font-family:var(--sans)}
+/* top bar */
+.top{flex:0 0 auto;display:flex;align-items:center;gap:11px;padding:12px 16px 10px;
+  border-bottom:1px solid var(--line);background:rgba(21,13,56,.55);position:relative;z-index:6}
+.top .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--off)}
+.top .brand svg{width:30px;height:30px;border-radius:8px;display:block}
+.top .brand b{font-family:var(--serif);font-weight:900;font-size:17px;letter-spacing:-.2px}
+.top .brand b .g{color:var(--accent)}
+.top .sp{flex:1}
+.top .priv{color:var(--mint);font-size:11.5px;font-weight:700;white-space:nowrap}
+@media(max-width:430px){.top .priv{display:none}}
+/* mode subtitle strip */
+.strip{flex:0 0 auto;text-align:center;padding:9px 16px;color:var(--sea);font-size:13px;font-style:italic;
+  border-bottom:1px solid var(--line);background:rgba(21,13,56,.35);min-height:38px}
+/* frame */
+.stage{flex:1 1 auto;min-height:0;position:relative}
+#frame{width:100%;height:100%;border:0;display:block;background:transparent}
+.loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--sea);font-size:13px;pointer-events:none;opacity:0;transition:opacity .2s}
+.loading.on{opacity:1}
+/* bottom nav — "that style" */
+.nav{flex:0 0 auto;display:flex;gap:4px;padding:8px 8px calc(8px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,#1a1044,#0f0a2a);border-top:1px solid var(--line);position:relative}
+.nav::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(255,158,107,.35),transparent)}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;border:0;background:transparent;
+  color:var(--sea);font-family:var(--sans);font-size:11px;font-weight:700;cursor:pointer;border-radius:12px;transition:.15s;position:relative}
+.tab .ic{font-size:19px;line-height:1}
+.tab .nm{letter-spacing:.01em}
+.tab:hover{color:var(--off)}
+.tab.on{color:var(--accent)}
+.tab.on::after{content:"";position:absolute;top:2px;width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px rgba(255,158,107,.7)}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/" aria-label="ESPO Genius home">
+    <svg viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="232" fill="#1B1148"/><circle cx="512" cy="330" r="148" fill="none" stroke="#FF9E6B" stroke-width="13" opacity="0.5"/><g stroke="#36306B" stroke-width="20" stroke-linecap="round"><path d="M330,672 L694,672"/><path d="M330,672 L512,330"/><path d="M694,672 L512,330"/></g><circle cx="330" cy="672" r="84" fill="#5FE3C0"/><circle cx="694" cy="672" r="84" fill="#5FE3C0"/><circle cx="512" cy="330" r="104" fill="#FF9E6B"/></svg>
+    <b>ESPO <span class="g">Genius</span></b>
+  </a>
+  <span class="sp"></span>
+  <span class="priv">&#128274; Private &middot; on your device</span>
+</header>
+
+<div class="strip" id="strip" aria-live="polite">Plain-English help for life's hardest paperwork.</div>
+
+<main class="stage">
+  <iframe id="frame" title="ESPO Genius tool" allow="microphone; camera; autoplay"></iframe>
+  <div class="loading" id="loading">Opening&hellip;</div>
+</main>
+
+<nav class="nav" id="nav" role="tablist"></nav>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(id){return document.getElementById(id);};
+  var frameCss="#aenav,#aemenu,#aescrim,.head,.sub,.priv,.topbar,.foot,.brandmark,.stickybar{display:none!important}"
+    +"body{padding:16px 16px 26px!important;min-height:auto!important}";
+  var MODES={
+    iep:     {nm:'IEP',      ic:'🎒', sub:"Your child's IEP, read against their rights — in plain English.",        url:'/espo-iep-genius-app?embed=1'},
+    care:    {nm:'Care',     ic:'🫂', sub:"Long-term care & Medicaid — before you spend down or sell.",              url:'/espo-care-genius-app?embed=1'},
+    benefits:{nm:'Benefits', ic:'🛟', sub:"The help you're owed — what you likely qualify for, and how to claim it.", url:'/espo-benefits-genius-app?embed=1'},
+    wills:   {nm:'Wills',    ic:'📜', sub:"Wills & probate — the map for the hardest week.",                        url:'/espo-wills-genius-app?embed=1'}
+  };
+  var ORDER=['iep','care','benefits','wills'];
+  var cur=null;
+
+  function renderNav(){
+    var n=$('nav'), h='';
+    ORDER.forEach(function(k){ var m=MODES[k];
+      h+='<button class="tab" role="tab" id="tab-'+k+'" data-k="'+k+'" aria-label="'+m.nm+'"><span class="ic" aria-hidden="true">'+m.ic+'</span><span class="nm">'+m.nm+'</span></button>';
+    });
+    n.innerHTML=h;
+    [].forEach.call(n.querySelectorAll('.tab'),function(b){ b.onclick=function(){ pick(b.getAttribute('data-k')); }; });
+  }
+
+  function injectFrameCss(){
+    try{
+      var f=$('frame'), d=f.contentDocument||(f.contentWindow&&f.contentWindow.document);
+      if(!d) return;
+      var s=d.getElementById('__espoGeniusEmbed');
+      if(!s){ s=d.createElement('style'); s.id='__espoGeniusEmbed'; (d.head||d.documentElement).appendChild(s); }
+      s.textContent=frameCss;
+    }catch(e){}
+  }
+
+  function pick(k){
+    if(!MODES[k]) k='iep';
+    cur=k; var m=MODES[k];
+    $('strip').textContent=m.sub;
+    [].forEach.call($('nav').querySelectorAll('.tab'),function(b){
+      var on=b.getAttribute('data-k')===k; b.classList.toggle('on',on); b.setAttribute('aria-selected',on?'true':'false');
+    });
+    $('loading').classList.add('on');
+    var f=$('frame');
+    f.onload=function(){ injectFrameCss(); /* re-inject a few times as the sub-app + family-nav boot */
+      var t=0, iv=setInterval(function(){ injectFrameCss(); if(++t>8) clearInterval(iv); },250);
+      $('loading').classList.remove('on');
+    };
+    f.src=m.url;
+    try{ history.replaceState(null,'','#'+k); }catch(e){}
+    try{ document.title='ESPO '+m.nm+' Genius'; }catch(e){}
+  }
+
+  renderNav();
+  var start=(location.hash||'').replace('#','');
+  pick(MODES[start]?start:'iep');
+  window.addEventListener('hashchange',function(){ var k=(location.hash||'').replace('#',''); if(MODES[k]&&k!==cur) pick(k); });
+})();
+</script>
+</body>
+</html>
