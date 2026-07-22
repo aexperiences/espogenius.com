@@ -4,152 +4,132 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ESPO Genius — plain-English help for life's hardest paperwork</title>
-<meta name="description" content="ESPO Genius reads life's high-stakes paperwork in plain English — your child's IEP, an aging parent's care, the benefits you're owed, and what happens after a death. Honest, private, and on your side.">
-<link rel="canonical" href="https://espogenius.com/">
+<meta name="description" content="One calm app for life's high-stakes paperwork — your child's IEP, an aging parent's care, the benefits you're owed, and what happens after a death. Honest, private, on your side. Runs on your device.">
 <meta name="theme-color" content="#1B1148">
-<meta name="robots" content="index,follow">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="ESPO Genius">
-<meta property="og:title" content="ESPO Genius — plain-English help for life's hardest paperwork">
-<meta property="og:description" content="Your child's IEP, an aging parent's care, the benefits you're owed, and what happens after a death — read honestly, in plain English.">
-<meta property="og:url" content="https://espogenius.com/">
-<meta property="og:image" content="https://espogenius.com/og-espogenius.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ESPO Genius — plain-English help for life's hardest paperwork">
-<meta name="twitter:description" content="Honest, private apps for the high-stakes moments where a regular person holds none of the cards.">
-<meta name="twitter:image" content="https://espogenius.com/og-espogenius.png">
 <link rel="icon" href="/favicon.svg?v=3" type="image/svg+xml">
 <link rel="icon" href="/favicon-32.png?v=3" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/styles.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"ESPO Genius","url":"https://espogenius.com/","publisher":{"@type":"Organization","name":"Accelerated Experiences LLC","url":"https://aexperiences.com"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"ESPO Genius","url":"https://espogenius.com/","parentOrganization":{"@type":"Organization","name":"Accelerated Experiences LLC","url":"https://aexperiences.com"},"sameAs":["https://aexperiences.com","https://espomusic.com","https://espodrama.com"]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{--amber:#FF9E6B}
-  .gnav{position:sticky;top:0;z-index:30;background:rgba(20,13,51,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .gnav .wrap{display:flex;align-items:center;gap:16px;padding-block:14px}
-  .ghero{text-align:center;padding:clamp(54px,9vw,96px) 0 clamp(40px,6vw,64px)}
-  .ghero .wordmark{font-family:Lato;font-weight:900;font-size:clamp(15px,2vw,17px);letter-spacing:2px;text-transform:uppercase;color:var(--sea);margin:0 0 22px}
-  .ghero .wordmark .n{color:var(--amber)}
-  .ghero h1{font-size:clamp(38px,7vw,68px);max-width:15ch;margin:0 auto .42em}
-  .ghero h1 em{font-style:italic;color:var(--amber)}
-  .ghero .lede{font-size:clamp(18px,2.3vw,22px);color:var(--sea);max-width:56ch;margin:0 auto 30px}
-  .ghero .btn-row{justify-content:center}
-  .ghero .trial{margin-top:22px;color:var(--mint,#5FE3C0);font-size:14px;font-weight:600}
-  .sec-intro{max-width:52ch}.sec-intro.center{margin-inline:auto;text-align:center;max-width:46ch}
-  .gfoot{background:var(--ink-800);border-top:1px solid var(--line);padding:40px 0;font-size:14.5px}
-  .gfoot .meta{color:var(--sea);margin:0 0 14px}
-  .gfoot nav{display:flex;gap:18px;flex-wrap:wrap}.gfoot nav a{color:var(--off);opacity:.82}.gfoot nav a:hover{opacity:1}
-  .narc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}
-  @media(max-width:640px){.narc-grid{grid-template-columns:1fr}}
-  .narc{display:block;background:var(--ink-700);border:1px solid var(--line);border-top:3px solid var(--nac);border-radius:16px;padding:22px 22px 20px;text-decoration:none;transition:.16s}
-  .narc:hover{transform:translateY(-3px);border-color:var(--nac);text-decoration:none}
-  .nicon{width:54px;height:54px;border-radius:14px;display:block;margin-bottom:13px}
-  .ntop{display:flex;align-items:center;gap:10px;justify-content:space-between}
-  .nname{font-family:Lato;font-weight:900;font-size:22px;color:var(--off)}.nname .n{color:var(--nac)}
-  .nstat{font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--sea);border:1px solid var(--line);border-radius:999px;padding:3px 9px;white-space:nowrap}
-  .nstat.live{color:var(--nac);border-color:var(--nac)}
-  .ndom{font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--sea);margin:9px 0 8px}
-  .ndesc{font-size:14.5px;color:var(--off);opacity:.92;margin:0 0 14px;line-height:1.55}
-  .nlink{font-weight:700;color:var(--nac);font-size:14px}
-  .reassure{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
-  @media(max-width:720px){.reassure{grid-template-columns:1fr}}
-  .rc{background:var(--ink-700);border:1px solid var(--line);border-radius:14px;padding:18px 18px}
-  .rc h3{font-size:15px;margin:0 0 6px}.rc p{color:var(--sea);font-size:13.5px;margin:0;line-height:1.5}
-  .price{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
-  @media(max-width:720px){.price{grid-template-columns:1fr}}
-  .pt{background:var(--ink-700);border:1px solid var(--line);border-radius:16px;padding:22px}
-  .pt.best{border:2px solid var(--amber)}
-  .pt .ptag{font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.6px}
-  .pt .amt{font-family:Lato;font-weight:900;font-size:34px;margin:8px 0 2px}
-  .pt .amt small{font-family:Inter;font-weight:500;font-size:15px;color:var(--sea)}
-  .pt p{color:var(--sea);font-size:14px;margin:6px 0 0}
+:root{
+  --ink:#1B1148;--ink800:#150D38;--ink700:#2A1F5E;--ink600:#352873;--line:#3A2F74;
+  --accent:#FF9E6B;--accent6:#E4875A;--mint:#5FE3C0;--off:#EEEAFB;--sea:#B3A5EC;
+  --serif:Lato;--sans:Inter,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{margin:0;display:flex;flex-direction:column;height:100dvh;overflow:hidden;
+  background:radial-gradient(120% 80% at 50% -10%,#2A1F5E 0%,#160D3A 55%,#0E0827 100%);
+  color:var(--off);font-family:var(--sans)}
+/* top bar */
+.top{flex:0 0 auto;display:flex;align-items:center;gap:11px;padding:12px 16px 10px;
+  border-bottom:1px solid var(--line);background:rgba(21,13,56,.55);position:relative;z-index:6}
+.top .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--off)}
+.top .brand svg{width:30px;height:30px;border-radius:8px;display:block}
+.top .brand b{font-family:var(--serif);font-weight:900;font-size:17px;letter-spacing:-.2px}
+.top .brand b .g{color:var(--accent)}
+.top .sp{flex:1}
+.top .priv{color:var(--mint);font-size:11.5px;font-weight:700;white-space:nowrap}
+@media(max-width:430px){.top .priv{display:none}}
+/* mode subtitle strip */
+.strip{flex:0 0 auto;text-align:center;padding:9px 16px;color:var(--sea);font-size:13px;font-style:italic;
+  border-bottom:1px solid var(--line);background:rgba(21,13,56,.35);min-height:38px}
+/* frame */
+.stage{flex:1 1 auto;min-height:0;position:relative}
+#frame{width:100%;height:100%;border:0;display:block;background:transparent}
+.loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--sea);font-size:13px;pointer-events:none;opacity:0;transition:opacity .2s}
+.loading.on{opacity:1}
+/* bottom nav — "that style" */
+.nav{flex:0 0 auto;display:flex;gap:4px;padding:8px 8px calc(8px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,#1a1044,#0f0a2a);border-top:1px solid var(--line);position:relative}
+.nav::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(255,158,107,.35),transparent)}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;border:0;background:transparent;
+  color:var(--sea);font-family:var(--sans);font-size:11px;font-weight:700;cursor:pointer;border-radius:12px;transition:.15s;position:relative}
+.tab .ic{font-size:19px;line-height:1}
+.tab .nm{letter-spacing:.01em}
+.tab:hover{color:var(--off)}
+.tab.on{color:var(--accent)}
+.tab.on::after{content:"";position:absolute;top:2px;width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px rgba(255,158,107,.7)}
 </style>
 </head>
 <body>
-<h1 class="sr-only">ESPO Genius — plain-English help for life's hardest paperwork. Four honest apps: ESPO IEP Genius, ESPO Care Genius, ESPO Benefits Genius, and ESPO Wills & Probate Genius.</h1>
+<header class="top">
+  <a class="brand" href="/" aria-label="ESPO Genius home">
+    <svg viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="232" fill="#1B1148"/><circle cx="512" cy="330" r="148" fill="none" stroke="#FF9E6B" stroke-width="13" opacity="0.5"/><g stroke="#36306B" stroke-width="20" stroke-linecap="round"><path d="M330,672 L694,672"/><path d="M330,672 L512,330"/><path d="M694,672 L512,330"/></g><circle cx="330" cy="672" r="84" fill="#5FE3C0"/><circle cx="694" cy="672" r="84" fill="#5FE3C0"/><circle cx="512" cy="330" r="104" fill="#FF9E6B"/></svg>
+    <b>ESPO <span class="g">Genius</span></b>
+  </a>
+  <span class="sp"></span>
+  <span class="priv">&#128274; Private &middot; on your device</span>
+</header>
 
-<header class="gnav"><div class="wrap">
-  <a class="brand" href="/"><img src="/favicon.svg" alt="" style="height:30px;width:30px;border-radius:8px"><span class="wm" style="font-family:Lato;font-weight:900;font-size:21px">ESPO <span class="n" style="color:var(--amber)">Genius</span></span></a>
-  <a class="btn" href="#apps" style="margin-left:auto">See the apps</a>
-</div></header>
+<div class="strip" id="strip" aria-live="polite">Plain-English help for life's hardest paperwork.</div>
 
-<section class="ghero"><div class="wrap">
-  <p class="wordmark">ESPO <span class="n">Genius</span> &middot; plain-English intelligence</p>
-  <h1>For life&rsquo;s <em>hardest</em> paperwork.</h1>
-  <p class="lede">Your child&rsquo;s IEP. An aging parent&rsquo;s care. The benefits you&rsquo;re owed. The week after a death. These are the moments a regular person holds none of the cards &mdash; so ESPO Genius reads them <strong>honestly, in plain English</strong>, tells you the next move, and points you to the free professional who can help.</p>
-  <div class="btn-row">
-    <a class="btn" href="#apps">See the four apps <span aria-hidden="true">&rsaquo;</span></a>
-    <a class="btn btn-ghost" href="#why">Why we built this</a>
-  </div>
-  <p class="trial">&#128274; Every app runs entirely in your browser. Nothing you enter is ever sent anywhere.</p>
-</div></section>
+<main class="stage">
+  <iframe id="frame" title="ESPO Genius tool" allow="microphone; camera; autoplay"></iframe>
+  <div class="loading" id="loading">Opening&hellip;</div>
+</main>
 
-<section class="section" id="apps"><div class="wrap">
-  <p class="kicker">The ESPO Genius line</p>
-  <h2>Four honest reads for four hard moments.</h2>
-  <p class="lede sec-intro" style="margin-bottom:26px">Each one points the same honest engine at a high-stakes corner of life &mdash; reads your situation against your actual rights, shows real confidence (and an honest &ldquo;I&rsquo;m not sure&rdquo;), and hands you a ready letter or checklist to take to the people who can help.</p>
-  <div class="narc-grid">
-    <a class="narc" href="/espo-iep-genius-app" style="--nac:#F0C24A"><svg class="nicon" viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="232" fill="#1B1148"/><circle cx="512" cy="330" r="148" fill="none" stroke="#F0C24A" stroke-width="13" opacity="0.5"/><g stroke="#36306B" stroke-width="20" stroke-linecap="round"><path d="M330,672 L694,672"/><path d="M330,672 L512,330"/><path d="M694,672 L512,330"/></g><circle cx="330" cy="672" r="84" fill="#B3A5EC"/><circle cx="694" cy="672" r="84" fill="#B3A5EC"/><circle cx="512" cy="330" r="104" fill="#F0C24A"/></svg><div class="ntop"><span class="nname">ESPO IEP <span class="n">Genius</span></span><span class="nstat live">ready &middot; open it</span></div><p class="ndom">special education</p><p class="ndesc">Your child&rsquo;s IEP read against their rights &mdash; the goals that aren&rsquo;t legally measurable, and how to walk into the meeting ready.</p><span class="nlink">Open IEP Genius &rarr;</span></a>
-    <a class="narc" href="/espo-care-genius-app" style="--nac:#E0909C"><svg class="nicon" viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="232" fill="#1B1148"/><circle cx="512" cy="330" r="148" fill="none" stroke="#E0909C" stroke-width="13" opacity="0.5"/><g stroke="#36306B" stroke-width="20" stroke-linecap="round"><path d="M330,672 L694,672"/><path d="M330,672 L512,330"/><path d="M694,672 L512,330"/></g><circle cx="330" cy="672" r="84" fill="#B6CDC0"/><circle cx="694" cy="672" r="84" fill="#B6CDC0"/><circle cx="512" cy="330" r="104" fill="#E0909C"/></svg><div class="ntop"><span class="nname">ESPO Care <span class="n">Genius</span></span><span class="nstat live">ready &middot; open it</span></div><p class="ndom">aging &amp; long-term care</p><p class="ndesc">Long-term care and Medicaid in plain English &mdash; what&rsquo;s protected and the honest moves before you spend down savings or sell the house.</p><span class="nlink">Open Care Genius &rarr;</span></a>
-    <a class="narc" href="/espo-benefits-genius-app" style="--nac:#FFC46B"><svg class="nicon" viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="232" fill="#1B1148"/><circle cx="512" cy="330" r="148" fill="none" stroke="#FFC46B" stroke-width="13" opacity="0.5"/><g stroke="#36306B" stroke-width="20" stroke-linecap="round"><path d="M330,672 L694,672"/><path d="M330,672 L512,330"/><path d="M694,672 L512,330"/></g><circle cx="330" cy="672" r="84" fill="#5FE3C0"/><circle cx="694" cy="672" r="84" fill="#5FE3C0"/><circle cx="512" cy="330" r="104" fill="#FFC46B"/></svg><div class="ntop"><span class="nname">ESPO Benefits <span class="n">Genius</span></span><span class="nstat live">ready &middot; open it</span></div><p class="ndom">the help you&rsquo;re owed</p><p class="ndesc">The public benefits you likely qualify for &mdash; SNAP, Medicare Extra Help, VA pension and more &mdash; and exactly how to claim them.</p><span class="nlink">Open Benefits Genius &rarr;</span></a>
-    <a class="narc" href="/espo-wills-genius-app" style="--nac:#B3A5EC"><svg class="nicon" viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="232" fill="#1B1148"/><circle cx="512" cy="330" r="148" fill="none" stroke="#B3A5EC" stroke-width="13" opacity="0.5"/><g stroke="#36306B" stroke-width="20" stroke-linecap="round"><path d="M330,672 L694,672"/><path d="M330,672 L512,330"/><path d="M694,672 L512,330"/></g><circle cx="330" cy="672" r="84" fill="#7FD8D0"/><circle cx="694" cy="672" r="84" fill="#7FD8D0"/><circle cx="512" cy="330" r="104" fill="#B3A5EC"/></svg><div class="ntop"><span class="nname">ESPO Wills &amp; Probate <span class="n">Genius</span></span><span class="nstat live">ready &middot; open it</span></div><p class="ndom">wills &amp; what comes after</p><p class="ndesc">What happens after a death, what probate really costs, and what to do this week &mdash; the plain-English map for the hardest week.</p><span class="nlink">Open Wills Genius &rarr;</span></a>
-  </div>
-</div></section>
+<nav class="nav" id="nav" role="tablist"></nav>
 
-<section class="section bleed-light" id="why"><div class="wrap">
-  <p class="kicker">Why ESPO Genius</p>
-  <h2>Built for the person who was never let in the room.</h2>
-  <p class="lede sec-intro" style="margin-bottom:34px">In these moments the system holds all the jargon and all the leverage. We hand it back &mdash; plainly, and on your side.</p>
-  <div class="grid cols-3">
-    <div class="card light"><h3>&#128173; Plain English, always</h3><p>What&rsquo;s happening and what to do, in language a tired human can read at 11pm &mdash; not a wall of legal and medical jargon.</p></div>
-    <div class="card light"><h3>&#128737;&#65039; Honest by default</h3><p>It earns its confidence instead of faking it, and says &ldquo;I&rsquo;m not sure &mdash; here&rsquo;s the free professional to ask&rdquo; when it should. In these arenas, a bluff is dangerous.</p></div>
-    <div class="card light"><h3>&#128274; Private on your device</h3><p>An IEP names your child; a parent&rsquo;s finances are your family&rsquo;s most sensitive thing. Every app runs in your browser &mdash; nothing is uploaded.</p></div>
-  </div>
-</div></section>
+<script>
+(function(){
+  "use strict";
+  var $=function(id){return document.getElementById(id);};
+  var frameCss="#aenav,#aemenu,#aescrim,.head,.sub,.priv,.topbar,.foot,.brandmark,.stickybar{display:none!important}"
+    +"body{padding:16px 16px 26px!important;min-height:auto!important}";
+  var MODES={
+    iep:     {nm:'IEP',      ic:'🎒', sub:"Your child's IEP, read against their rights — in plain English.",        url:'/espo-iep-genius-app?embed=1'},
+    care:    {nm:'Care',     ic:'🫂', sub:"Long-term care & Medicaid — before you spend down or sell.",              url:'/espo-care-genius-app?embed=1'},
+    benefits:{nm:'Benefits', ic:'🛟', sub:"The help you're owed — what you likely qualify for, and how to claim it.", url:'/espo-benefits-genius-app?embed=1'},
+    wills:   {nm:'Wills',    ic:'📜', sub:"Wills & probate — the map for the hardest week.",                        url:'/espo-wills-genius-app?embed=1'}
+  };
+  var ORDER=['iep','care','benefits','wills'];
+  var cur=null;
 
-<section class="section"><div class="wrap">
-  <p class="kicker">What every app gives you</p>
-  <h2>Not a chatbot. A read you can act on.</h2>
-  <div class="reassure" style="margin-top:20px">
-    <div class="rc"><h3>&#128269; The honest read</h3><p>Your situation checked against the actual rules &mdash; with what looks wrong, and why.</p></div>
-    <div class="rc"><h3>&#9993;&#65039; A ready letter or checklist</h3><p>The exact thing to print and bring &mdash; the request, the questions, the documents.</p></div>
-    <div class="rc"><h3>&#128266; Read aloud &amp; print</h3><p>Have it read to you, and print a case file to hand a spouse, sibling, or advocate.</p></div>
-  </div>
-</div></section>
+  function renderNav(){
+    var n=$('nav'), h='';
+    ORDER.forEach(function(k){ var m=MODES[k];
+      h+='<button class="tab" role="tab" id="tab-'+k+'" data-k="'+k+'" aria-label="'+m.nm+'"><span class="ic" aria-hidden="true">'+m.ic+'</span><span class="nm">'+m.nm+'</span></button>';
+    });
+    n.innerHTML=h;
+    [].forEach.call(n.querySelectorAll('.tab'),function(b){ b.onclick=function(){ pick(b.getAttribute('data-k')); }; });
+  }
 
-<section class="section bleed-light" id="pricing"><div class="wrap">
-  <p class="kicker">Free in preview &middot; simple pricing later</p>
-  <h2>One honest price. Cancel anytime.</h2>
-  <p class="lede sec-intro" style="margin-bottom:24px"><strong>Every app is free while we&rsquo;re in preview</strong> &mdash; open any of the four and get your honest read, no sign-up, no card. When subscriptions open this is the plan: a 3-day free trial, no app-store fees, no contracts, cancel anytime. All-Access covers the whole line, and ESPO Benefits Genius stays free through community partners.</p>
-  <div class="price">
-    <div class="pt"><div class="ptag">Single app</div><div class="amt">$9.99<small>/mo</small></div><p>Just the one you need.</p></div>
-    <div class="pt best"><div class="ptag">All-Access &middot; Best value</div><div class="amt">$99.99<small>/yr</small></div><p>All four apps &middot; about $8.33/mo, billed yearly.</p></div>
-    <div class="pt"><div class="ptag">All-Access &middot; Monthly</div><div class="amt">$19.99<small>/mo</small></div><p>All four, month to month.</p></div>
-  </div>
-</div></section>
+  function injectFrameCss(){
+    try{
+      var f=$('frame'), d=f.contentDocument||(f.contentWindow&&f.contentWindow.document);
+      if(!d) return;
+      var s=d.getElementById('__espoGeniusEmbed');
+      if(!s){ s=d.createElement('style'); s.id='__espoGeniusEmbed'; (d.head||d.documentElement).appendChild(s); }
+      s.textContent=frameCss;
+    }catch(e){}
+  }
 
-<section class="section center"><div class="wrap" style="max-width:680px">
-  <h2>Start with the one that&rsquo;s weighing on you.</h2>
-  <p class="lede center" style="margin-bottom:26px">Open any app free &mdash; no sign-up to see your first honest read. It runs right in your browser.</p>
-  <div class="btn-row" style="justify-content:center">
-    <a class="btn" href="#apps">Open an app <span aria-hidden="true">&rarr;</span></a>
-    <a class="btn btn-ghost" href="mailto:anthonye@aexperiences.studio?subject=ESPO%20Genius">Get in touch</a>
-  </div>
-</div></section>
+  function pick(k){
+    if(!MODES[k]) k='iep';
+    cur=k; var m=MODES[k];
+    $('strip').textContent=m.sub;
+    [].forEach.call($('nav').querySelectorAll('.tab'),function(b){
+      var on=b.getAttribute('data-k')===k; b.classList.toggle('on',on); b.setAttribute('aria-selected',on?'true':'false');
+    });
+    $('loading').classList.add('on');
+    var f=$('frame');
+    f.onload=function(){ injectFrameCss(); /* re-inject a few times as the sub-app + family-nav boot */
+      var t=0, iv=setInterval(function(){ injectFrameCss(); if(++t>8) clearInterval(iv); },250);
+      $('loading').classList.remove('on');
+    };
+    f.src=m.url;
+    try{ history.replaceState(null,'','#'+k); }catch(e){}
+    try{ document.title='ESPO '+m.nm+' Genius'; }catch(e){}
+  }
 
-<footer class="gfoot"><div class="wrap">
-  <div class="foot-brand" style="display:flex;align-items:center;gap:12px;margin-bottom:16px"><img src="/favicon.svg" alt="" style="height:32px;width:32px;border-radius:9px"><span class="wm" style="font-family:Lato;font-weight:900;font-size:20px">ESPO <span class="n" style="color:var(--amber)">Genius</span></span></div>
-  <p class="meta">A four-app line of plain-English help for life&rsquo;s hardest paperwork &middot; An <a href="https://aexperiences.com" rel="noopener" style="color:var(--amber)">Accelerated Experiences LLC</a> line &middot; &copy; 2026 &middot; Post Falls, Idaho</p>
-  <nav>
-    <a href="/espo-iep-genius-app">IEP Genius</a><a href="/espo-care-genius-app">Care Genius</a><a href="/espo-benefits-genius-app">Benefits Genius</a><a href="/espo-wills-genius-app">Wills &amp; Probate Genius</a>
-    <a href="https://aexperiences.com" rel="noopener">Accelerated Experiences</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a>
-  </nav>
-  <div class="brandmark" aria-label="Accelerated Experiences" title="An Accelerated Experiences app"></div>
-</div></footer>
-  <script src="/family-nav.js" defer></script>
-</body></html>
+  renderNav();
+  var start=(location.hash||'').replace('#','');
+  pick(MODES[start]?start:'iep');
+  window.addEventListener('hashchange',function(){ var k=(location.hash||'').replace('#',''); if(MODES[k]&&k!==cur) pick(k); });
+})();
+</script>
+</body>
+</html>
