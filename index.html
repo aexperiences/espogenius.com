@@ -26,7 +26,7 @@ body{margin:0;display:flex;flex-direction:column;height:100dvh;overflow:hidden;
 /* top bar */
 .top{flex:0 0 auto;display:flex;align-items:center;gap:11px;padding:12px 16px 10px;
   border-bottom:1px solid var(--line);background:rgba(21,13,56,.55);position:relative;z-index:6}
-.top .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--off)}
+.top .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--off);cursor:pointer}
 .top .brand svg{width:30px;height:30px;border-radius:8px;display:block}
 .top .brand b{font-family:var(--serif);font-weight:900;font-size:17px;letter-spacing:-.2px}
 .top .brand b .g{color:var(--accent)}
@@ -41,6 +41,26 @@ body{margin:0;display:flex;flex-direction:column;height:100dvh;overflow:hidden;
 #frame{width:100%;height:100%;border:0;display:block;background:transparent}
 .loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--sea);font-size:13px;pointer-events:none;opacity:0;transition:opacity .2s}
 .loading.on{opacity:1}
+/* door chooser — the landing */
+#chooser{position:absolute;inset:0;overflow:auto;display:none;
+  padding:26px 16px calc(28px + env(safe-area-inset-bottom))}
+#chooser.on{display:block}
+.ch-head{text-align:center;max-width:560px;margin:4px auto 20px}
+.ch-head h1{font-family:var(--serif);font-weight:900;font-size:23px;margin:0 0 7px;letter-spacing:-.3px;line-height:1.15}
+.ch-head p{margin:0;color:var(--sea);font-size:13.5px;line-height:1.5}
+.doors{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:640px;margin:0 auto}
+@media(max-width:540px){.doors{grid-template-columns:1fr;max-width:420px}}
+.door{display:flex;gap:13px;align-items:flex-start;text-align:left;width:100%;cursor:pointer;
+  background:linear-gradient(180deg,rgba(53,40,115,.55),rgba(28,20,66,.5));border:1px solid var(--line);
+  border-radius:18px;padding:16px 15px;color:var(--off);font-family:var(--sans);transition:transform .16s,border-color .16s,box-shadow .16s}
+.door:hover{transform:translateY(-2px);border-color:var(--accent);box-shadow:0 14px 32px rgba(0,0,0,.38)}
+.door:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.door .dic{font-size:30px;line-height:1;flex:0 0 auto;margin-top:1px}
+.door .dtx{flex:1;min-width:0}
+.door .dnm{font-family:var(--serif);font-weight:900;font-size:16.5px;margin:0 0 4px;display:block}
+.door .dsub{color:var(--sea);font-size:12.5px;line-height:1.45;margin:0}
+.door .go{color:var(--accent);font-size:12px;font-weight:700;margin-top:9px;display:inline-block}
+.ch-foot{text-align:center;color:var(--sea);font-size:11.5px;margin:20px auto 0;max-width:520px;opacity:.85}
 /* bottom nav — "that style" */
 .nav{flex:0 0 auto;display:flex;gap:4px;padding:8px 8px calc(8px + env(safe-area-inset-bottom));
   background:linear-gradient(180deg,#1a1044,#0f0a2a);border-top:1px solid var(--line);position:relative}
@@ -52,11 +72,12 @@ body{margin:0;display:flex;flex-direction:column;height:100dvh;overflow:hidden;
 .tab:hover{color:var(--off)}
 .tab.on{color:var(--accent)}
 .tab.on::after{content:"";position:absolute;top:2px;width:5px;height:5px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px rgba(255,158,107,.7)}
+.tab.home{flex:0 0 auto;padding-left:10px;padding-right:10px}
 </style>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="/" aria-label="ESPO Genius home">
+  <a class="brand" href="/" id="brand" aria-label="ESPO Genius — all doors">
     <svg viewBox="0 0 1024 1024" aria-hidden="true"><rect width="1024" height="1024" rx="232" fill="#1B1148"/><circle cx="512" cy="330" r="148" fill="none" stroke="#FF9E6B" stroke-width="13" opacity="0.5"/><g stroke="#36306B" stroke-width="20" stroke-linecap="round"><path d="M330,672 L694,672"/><path d="M330,672 L512,330"/><path d="M694,672 L512,330"/></g><circle cx="330" cy="672" r="84" fill="#5FE3C0"/><circle cx="694" cy="672" r="84" fill="#5FE3C0"/><circle cx="512" cy="330" r="104" fill="#FF9E6B"/></svg>
     <b>ESPO <span class="g">Genius</span></b>
   </a>
@@ -67,11 +88,19 @@ body{margin:0;display:flex;flex-direction:column;height:100dvh;overflow:hidden;
 <div class="strip" id="strip" aria-live="polite">Plain-English help for life's hardest paperwork.</div>
 
 <main class="stage">
-  <iframe id="frame" title="ESPO Genius tool" allow="microphone; camera; autoplay"></iframe>
+  <div id="chooser" class="on">
+    <div class="ch-head">
+      <h1>Which door do you need?</h1>
+      <p>One calm tool for each of life's hardest kinds of paperwork. Pick the one you're facing — everything runs privately, right on your device.</p>
+    </div>
+    <div class="doors" id="doors"></div>
+    <p class="ch-foot">Educational, not legal advice. Nothing you enter is sent anywhere.</p>
+  </div>
+  <iframe id="frame" title="ESPO Genius tool" allow="microphone; camera; autoplay" style="display:none"></iframe>
   <div class="loading" id="loading">Opening&hellip;</div>
 </main>
 
-<nav class="nav" id="nav" role="tablist"></nav>
+<nav class="nav" id="nav" role="tablist" style="display:none"></nav>
 
 <script>
 (function(){
@@ -86,37 +115,68 @@ body{margin:0;display:flex;flex-direction:column;height:100dvh;overflow:hidden;
     wills:   {nm:'Wills',    ic:'📜', sub:"Wills & probate — the map for the hardest week.",                        url:'/espo-wills-genius-app?embed=1'}
   };
   var ORDER=['iep','care','benefits','wills'];
+  var DEFSTRIP="Plain-English help for life's hardest paperwork.";
   var cur=null;
 
   function renderNav(){
     var n=$('nav'), h='';
+    h+='<button class="tab home" id="tab-home" data-home="1" aria-label="All doors"><span class="ic" aria-hidden="true">◍</span><span class="nm">Doors</span></button>';
     ORDER.forEach(function(k){ var m=MODES[k];
       h+='<button class="tab" role="tab" id="tab-'+k+'" data-k="'+k+'" aria-label="'+m.nm+'"><span class="ic" aria-hidden="true">'+m.ic+'</span><span class="nm">'+m.nm+'</span></button>';
     });
     n.innerHTML=h;
-    [].forEach.call(n.querySelectorAll('.tab'),function(b){ b.onclick=function(){ pick(b.getAttribute('data-k')); }; });
+    [].forEach.call(n.querySelectorAll('.tab'),function(b){
+      b.onclick=function(){ if(b.getAttribute('data-home')) showChooser(); else pick(b.getAttribute('data-k')); };
+    });
+  }
+
+  function renderDoors(){
+    var d=$('doors'), h='';
+    ORDER.forEach(function(k){ var m=MODES[k];
+      h+='<button class="door" data-k="'+k+'"><span class="dic" aria-hidden="true">'+m.ic+'</span>'
+        +'<span class="dtx"><span class="dnm">'+m.nm+'</span><p class="dsub">'+m.sub+'</p>'
+        +'<span class="go">Open '+m.nm+' &rarr;</span></span></button>';
+    });
+    d.innerHTML=h;
+    [].forEach.call(d.querySelectorAll('.door'),function(b){ b.onclick=function(){ pick(b.getAttribute('data-k')); }; });
   }
 
   function injectFrameCss(){
     try{
-      var f=$('frame'), d=f.contentDocument||(f.contentWindow&&f.contentWindow.document);
-      if(!d) return;
-      var s=d.getElementById('__espoGeniusEmbed');
-      if(!s){ s=d.createElement('style'); s.id='__espoGeniusEmbed'; (d.head||d.documentElement).appendChild(s); }
+      var f=$('frame'), doc=f.contentDocument||(f.contentWindow&&f.contentWindow.document);
+      if(!doc) return;
+      var s=doc.getElementById('__espoGeniusEmbed');
+      if(!s){ s=doc.createElement('style'); s.id='__espoGeniusEmbed'; (doc.head||doc.documentElement).appendChild(s); }
       s.textContent=frameCss;
     }catch(e){}
   }
 
+  function showChooser(){
+    cur=null;
+    $('chooser').classList.add('on');
+    $('frame').style.display='none';
+    try{ $('frame').src='about:blank'; }catch(e){}
+    $('nav').style.display='none';
+    $('loading').classList.remove('on');
+    $('strip').textContent=DEFSTRIP;
+    [].forEach.call($('nav').querySelectorAll('.tab'),function(b){ b.classList.remove('on'); b.setAttribute('aria-selected','false'); });
+    try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){}
+    try{ document.title="ESPO Genius — plain-English help for life's hardest paperwork"; }catch(e){}
+  }
+
   function pick(k){
-    if(!MODES[k]) k='iep';
+    if(!MODES[k]){ showChooser(); return; }
     cur=k; var m=MODES[k];
+    $('chooser').classList.remove('on');
+    $('frame').style.display='block';
+    $('nav').style.display='flex';
     $('strip').textContent=m.sub;
     [].forEach.call($('nav').querySelectorAll('.tab'),function(b){
       var on=b.getAttribute('data-k')===k; b.classList.toggle('on',on); b.setAttribute('aria-selected',on?'true':'false');
     });
     $('loading').classList.add('on');
     var f=$('frame');
-    f.onload=function(){ injectFrameCss(); /* re-inject a few times as the sub-app + family-nav boot */
+    f.onload=function(){ injectFrameCss();
       var t=0, iv=setInterval(function(){ injectFrameCss(); if(++t>8) clearInterval(iv); },250);
       $('loading').classList.remove('on');
     };
@@ -126,9 +186,17 @@ body{margin:0;display:flex;flex-direction:column;height:100dvh;overflow:hidden;
   }
 
   renderNav();
+  renderDoors();
+  $('brand').addEventListener('click',function(e){ e.preventDefault(); showChooser(); });
+
   var start=(location.hash||'').replace('#','');
-  pick(MODES[start]?start:'iep');
-  window.addEventListener('hashchange',function(){ var k=(location.hash||'').replace('#',''); if(MODES[k]&&k!==cur) pick(k); });
+  if(MODES[start]) pick(start); else showChooser();
+
+  window.addEventListener('hashchange',function(){
+    var k=(location.hash||'').replace('#','');
+    if(MODES[k]){ if(k!==cur) pick(k); }
+    else if(cur!==null){ showChooser(); }
+  });
 })();
 </script>
 </body>
