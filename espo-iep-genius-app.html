@@ -194,7 +194,7 @@ var CHK=['gBase','gTarget','gMeasure','gWhen','pMin','pEval','pLRE','pDenied'];
 var LSK='espo_iep_v1';
 function saveState(){try{var d={goal:$('goal').value};CHK.forEach(function(k){d[k]=$(k).checked;});localStorage.setItem(LSK,JSON.stringify(d));}catch(e){}}
 function loadState(){try{var d=JSON.parse(localStorage.getItem(LSK)||'null');if(!d)return false;var any=false;if(d.goal){$('goal').value=d.goal;any=true;}CHK.forEach(function(k){if(d[k]){$(k).checked=true;any=true;}});return any;}catch(e){return false;}}
-function clearState(){try{localStorage.removeItem(LSK);}catch(e){}$('goal').value='';CHK.forEach(function(k){$(k).checked=false;});$('resume').classList.remove('on');$('report').style.display='none';_gOvr={};_gLast='';var _gb=$('gread');if(_gb){_gb.style.display='none';_gb.innerHTML='';}updateSteps();toast('Cleared.');}
+function clearState(){try{localStorage.removeItem(LSK);}catch(e){}$('goal').value='';CHK.forEach(function(k){$(k).checked=false;});$('resume').classList.remove('on');$('report').style.display='none';_gOvr={};_gSet={};_gLast='';var _gb=$('gread');if(_gb){_gb.style.display='none';_gb.innerHTML='';}updateSteps();toast('Cleared.');}
 
 /* ---------- the goal reader (runs on your device, reads only what you pasted) ---------- */
 function readGoal(raw){
@@ -269,9 +269,9 @@ var GLBL={
   measure:{l:'How they&rsquo;ll measure it',                  n:'I couldn&rsquo;t find how progress gets measured in this wording.'},
   when:   {l:'By when (a deadline)',                     n:'I couldn&rsquo;t find a deadline in this wording.'}
 };
-var _gOvr={}, _gLast='';
+var _gOvr={}, _gSet={}, _gLast='';
 function esc(x){return String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function tidyQ(x){return String(x).replace(/[\s,;:]*\b(?:to|with|and|of|for|in|on|at|by|from|than)\s*$/i,'').replace(/[\s,;:-]+$/,'');}
+function tidyQ(x){return String(x).replace(/[\s,;:]*\b(?:to|with|and|of|for|in|on|at|by|from|than)\s*$/i,'').replace(/\s+[a-z]$/i,'').replace(/[\s,;:-]+$/,'');}
 function runGoalRead(force){
   var el=$('goal'); if(!el) return;
   var txt=(el.value||'').trim();
@@ -282,7 +282,8 @@ function runGoalRead(force){
   var r=readGoal(txt), found=0, h='';
   ['base','target','measure','when'].forEach(function(k){
     var hit=r[k], id=GKEYS[k], cb=$(id);
-    if(hit){ found++; if(cb && !_gOvr[id] && !cb.checked){ cb.checked=true; } }
+    if(hit){ found++; if(cb && !_gOvr[id] && !cb.checked){ cb.checked=true; _gSet[id]=true; } }
+    else if(cb && !_gOvr[id] && _gSet[id] && cb.checked){ cb.checked=false; _gSet[id]=false; }
     h+='<div class="gr-r '+(hit?'yes':'no')+'"><span class="gr-m" aria-hidden="true">'+(hit?'&#10003;':'&#9675;')+'</span>'
       +'<span class="gr-l">'+GLBL[k].l
       +(hit?'<span class="gr-q">&ldquo;'+esc(tidyQ(hit.q))+'&rdquo;</span>':'<span class="gr-n">'+GLBL[k].n+'</span>')
