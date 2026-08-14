@@ -53,6 +53,17 @@ textarea:focus{outline:none;border-color:var(--accent)}
 .tog{display:flex;flex-direction:column;gap:10px;margin-top:12px}
 .tog label{display:flex;align-items:flex-start;gap:11px;font-size:14px;cursor:pointer;color:var(--off);border-radius:10px;padding:4px;transition:background .2s}
 .tog label.hot{background:rgba(255,158,107,.12)}
+.gread{background:var(--ink800);border:1px solid var(--line);border-radius:12px;padding:12px 13px;margin:0 0 14px}
+.gread .gr-t{font-size:12.5px;font-weight:700;color:var(--off);margin:0 0 9px}
+.gread .gr-r{display:flex;align-items:flex-start;gap:9px;font-size:12.5px;line-height:1.45;padding:5px 0;border-top:1px solid rgba(58,47,116,.55)}
+.gread .gr-r:first-of-type{border-top:0}
+.gread .gr-m{flex:0 0 auto;font-weight:900;font-size:13px;line-height:1.35;width:14px;text-align:center}
+.gread .yes .gr-m{color:var(--mint)}
+.gread .no .gr-m{color:var(--accent)}
+.gread .gr-l{color:var(--off)}
+.gread .gr-q{display:block;color:var(--sea);font-style:italic;margin-top:2px;word-break:break-word}
+.gread .gr-n{display:block;color:var(--sea);margin-top:2px}
+.gread .gr-f{color:var(--sea);font-size:11px;line-height:1.5;margin:9px 0 0}
 .tog input{margin-top:2px;width:18px;height:18px;accent-color:var(--accent);flex:0 0 auto}
 .go{display:block;width:100%;margin-top:16px;background:var(--accent);color:#20103A;font-family:Lato;font-weight:900;font-size:17px;border:0;border-radius:14px;padding:16px;cursor:pointer;transition:.14s}
 .go:hover{background:var(--accent6)}
@@ -131,6 +142,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
   <div class="card" id="card2">
     <h2>2 &middot; A few quick checks on that goal</h2>
     <p class="h2sub">Under IDEA, an annual goal must be <b>measurable</b>. Check what&rsquo;s actually in the wording.</p>
+    <div class="gread" id="gread" style="display:none"></div>
     <div class="tog">
       <label id="l_gBase"><input type="checkbox" id="gBase"> It says <b>where my child is starting</b> (a baseline &mdash; e.g. &ldquo;reads 40 words/min now&rdquo;)</label>
       <label id="l_gTarget"><input type="checkbox" id="gTarget"> It says <b>the number to reach</b> (a target &mdash; e.g. &ldquo;to 90 words/min&rdquo;)</label>
@@ -182,7 +194,108 @@ var CHK=['gBase','gTarget','gMeasure','gWhen','pMin','pEval','pLRE','pDenied'];
 var LSK='espo_iep_v1';
 function saveState(){try{var d={goal:$('goal').value};CHK.forEach(function(k){d[k]=$(k).checked;});localStorage.setItem(LSK,JSON.stringify(d));}catch(e){}}
 function loadState(){try{var d=JSON.parse(localStorage.getItem(LSK)||'null');if(!d)return false;var any=false;if(d.goal){$('goal').value=d.goal;any=true;}CHK.forEach(function(k){if(d[k]){$(k).checked=true;any=true;}});return any;}catch(e){return false;}}
-function clearState(){try{localStorage.removeItem(LSK);}catch(e){}$('goal').value='';CHK.forEach(function(k){$(k).checked=false;});$('resume').classList.remove('on');$('report').style.display='none';updateSteps();toast('Cleared.');}
+function clearState(){try{localStorage.removeItem(LSK);}catch(e){}$('goal').value='';CHK.forEach(function(k){$(k).checked=false;});$('resume').classList.remove('on');$('report').style.display='none';_gOvr={};_gLast='';var _gb=$('gread');if(_gb){_gb.style.display='none';_gb.innerHTML='';}updateSteps();toast('Cleared.');}
+
+/* ---------- the goal reader (runs on your device, reads only what you pasted) ---------- */
+function readGoal(raw){
+  var t=String(raw||'').replace(/[‘’]/g,"'").replace(/[“”]/g,'"').replace(/\s+/g,' ').trim();
+  var out={base:null,target:null,measure:null,when:null,text:t};
+  if(!t) return out;
+  function first(pats){
+    for(var i=0;i<pats.length;i++){var m=t.match(pats[i]); if(m) return {q:(m[0]).trim(),at:m.index,end:m.index+m[0].length};}
+    return null;
+  }
+  out.when=first([
+    /\bby\s+(?:the\s+)?(?:end of\s+)?(?:the\s+)?(?:\d{4}\s*[-\/]\s*\d{2,4}\s+)?(?:IEP|school|academic|calendar)\s*year/i,
+    /\bby\s+(?:the\s+)?(?:next\s+)?annual\s+(?:review|IEP|meeting)/i,
+    /\bby\s+(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s*\d{0,2},?\s*\d{4}/i,
+    /\bby\s+\d{1,2}\/\d{1,2}\/\d{2,4}/i,
+    /\b(?:within|in|over|across)\s+\d+\s*(?:school\s+)?(?:days?|weeks?|months?|marking periods?|quarters?|trimesters?|grading periods?)/i,
+    /\bby\s+(?:the\s+)?end of(?:\s+the)?\s+[a-z0-9\-]+(?:\s+(?:year|semester|term|period))?/i,
+    /\bby\s+(?:the\s+)?(?:annual|next)[^.;]{0,25}/i
+  ]);
+  out.measure=first([
+    /\b\d+\s*(?:out of|of|\/)\s*\d+\s*(?:consecutive\s+)?(?:trials?|opportunities|attempts|probes?|sessions?|occasions?|days?|times)/i,
+    /\b\d+(?:\.\d+)?\s*%\s*(?:accuracy|correct|of the time|or (?:better|higher|above))/i,
+    /\bas measured by[^.;]{0,55}/i,
+    /\b(?:measured by|progress monitoring|curriculum[- ]based measurement|running records?|work samples?|teacher[- ](?:charted|collected|recorded) data|charted data|data collection|observational data|rubrics?|checklists?|probes?)\b[^.;]{0,30}/i,
+    /\b\d+\s*consecutive\s+[a-z]+/i
+  ]);
+  out.base=first([
+    /\bfrom\s+\d+(?:\.\d+)?\s*%?\s*(?:[a-z\/]+\s+){0,4}?to\b/i,
+    /\b(?:given\s+)?a?\s*baseline\s*(?:of|is|:)?\s*\d+(?:\.\d+)?\s*%?[a-z\/ ]{0,18}/i,
+    /\b(?:currently|presently|at present|at this time|now)\b[^.;]{0,45}?\d+(?:\.\d+)?\s*%?[a-z\/ ]{0,18}/i,
+    /\d+(?:\.\d+)?\s*%?[a-z\/ ]{0,18}\b(?:currently|at present|at this time|as a baseline)\b/i,
+    /\bbaseline\b[^.;]{0,40}/i
+  ]);
+  function numIn(r){ return (r && r.nat!=null) ? r.nat : (r?r.at:-1); }
+  function badSpot(nat){
+    var spans=[out.base,out.when];
+    for(var i=0;i<spans.length;i++){var s=spans[i]; if(s && nat>=s.at && nat<s.end) return true;}
+    return false;
+  }
+  var strict=[
+    /\btarget\s*(?:of|is|:)?\s*(\d+(?:\.\d+)?\s*%?)[a-z\/ ]{0,18}/i,
+    /\b(?:increase|improve|raise|grow|move)\s+(?:[^.;]{0,30}?)\bto\s+(\d+(?:\.\d+)?\s*%?)[a-z\/ ]{0,18}/i,
+    /\b(?:to|reach|reaching|achieve|achieving|attain|attaining)\s+(?:at least\s+)?(\d+(?:\.\d+)?\s*%?)[a-z\/ ]{0,18}/i,
+    /\bat least\s+(\d+(?:\.\d+)?\s*%?)[a-z\/ ]{0,18}/i,
+    /\b(?:a\s+)?(?:score|level|rate|goal)\s+of\s+(\d+(?:\.\d+)?\s*%?)[a-z\/ ]{0,18}/i
+  ];
+  for(var si=0;si<strict.length;si++){
+    var re1=new RegExp(strict[si].source,'ig'),m1;
+    while((m1=re1.exec(t))){
+      var nat=m1.index+m1[0].indexOf(m1[1]);
+      if(badSpot(nat)) continue;
+      out.target={q:m1[0].trim(),at:m1.index,end:m1.index+m1[0].length,nat:nat};break;
+    }
+    if(out.target)break;
+  }
+  if(!out.target){
+    var re2=/\bwill\b[^.;]{0,55}?(\d+(?:\.\d+)?\s*%?)([a-z\/ -]{0,18})/ig,mm;
+    while((mm=re2.exec(t))){
+      var nat2=mm.index+mm[0].lastIndexOf(mm[1]);
+      if(/^\s*-?\s*(day|week|month|year|quarter|trimester|marking|grading|session|minute|min\b|hour|second)/i.test(mm[2]||'')) continue;
+      if(badSpot(nat2)) continue;
+      out.target={q:mm[0].trim(),at:mm.index,end:mm.index+mm[0].length,nat:nat2};break;
+    }
+  }
+  return out;
+}
+
+var GKEYS={base:'gBase',target:'gTarget',measure:'gMeasure',when:'gWhen'};
+var GLBL={
+  base:   {l:'Where your child is starting (a baseline)', n:'I couldn&rsquo;t find a starting number in this wording.'},
+  target: {l:'The number to reach (a target)',            n:'I couldn&rsquo;t find a number to reach in this wording.'},
+  measure:{l:'How they&rsquo;ll measure it',                  n:'I couldn&rsquo;t find how progress gets measured in this wording.'},
+  when:   {l:'By when (a deadline)',                     n:'I couldn&rsquo;t find a deadline in this wording.'}
+};
+var _gOvr={}, _gLast='';
+function esc(x){return String(x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function tidyQ(x){return String(x).replace(/[\s,;:]*\b(?:to|with|and|of|for|in|on|at|by|from|than)\s*$/i,'').replace(/[\s,;:-]+$/,'');}
+function runGoalRead(force){
+  var el=$('goal'); if(!el) return;
+  var txt=(el.value||'').trim();
+  if(!force && txt===_gLast) return;
+  _gLast=txt;
+  var box=$('gread');
+  if(txt.length<12){ box.style.display='none'; box.innerHTML=''; return; }
+  var r=readGoal(txt), found=0, h='';
+  ['base','target','measure','when'].forEach(function(k){
+    var hit=r[k], id=GKEYS[k], cb=$(id);
+    if(hit){ found++; if(cb && !_gOvr[id] && !cb.checked){ cb.checked=true; } }
+    h+='<div class="gr-r '+(hit?'yes':'no')+'"><span class="gr-m" aria-hidden="true">'+(hit?'&#10003;':'&#9675;')+'</span>'
+      +'<span class="gr-l">'+GLBL[k].l
+      +(hit?'<span class="gr-q">&ldquo;'+esc(tidyQ(hit.q))+'&rdquo;</span>':'<span class="gr-n">'+GLBL[k].n+'</span>')
+      +'</span></div>';
+  });
+  var head = found===4 ? '&#128214;&nbsp; I read that wording &mdash; all four pieces are there'
+           : found===0 ? '&#128214;&nbsp; I read that wording &mdash; I couldn&rsquo;t find any of the four pieces'
+           : '&#128214;&nbsp; I read that wording &mdash; I found '+found+' of the 4 pieces';
+  box.innerHTML='<p class="gr-t">'+head+'</p>'+h
+    +'<p class="gr-f">I&rsquo;m reading only the words you pasted, so I can miss things that live elsewhere in the plan &mdash; <b>the boxes below are yours to correct.</b> Tick or untick anything and I&rsquo;ll leave it alone.</p>';
+  box.style.display='block';
+  saveState(); updateSteps();
+}
 
 /* ---------- stepper ---------- */
 function updateSteps(){
@@ -208,7 +321,7 @@ function nScan(){var inp=document.createElement('input');inp.type='file';inp.acc
     var text=(r||[]).map(function(b){return b.rawValue;}).join(' ').replace(/\s+/g,' ').trim();
     var g=$('goal');g.value=(g.value?g.value+' ':'')+text;saveState();updateSteps();
     $('scanpanel').innerHTML='<div class="sp-t">&#128196; I read this and dropped it into the goal box &mdash; check it, then run the read:</div><div style="font-size:12px;color:var(--sea);white-space:pre-wrap">'+text.replace(/</g,'&lt;')+'</div>';
-    $('scanpanel').style.display='block';nStatus('Read on your device &mdash; nothing was sent anywhere.');
+    $('scanpanel').style.display='block';nStatus('Read on your device &mdash; nothing was sent anywhere.');runGoalRead(true);
   }).catch(function(){nStatus('Couldn&rsquo;t read that image &mdash; try a clearer, straight-on photo.');});}catch(e){nStatus('Text reading failed on this device.');}};
   img.onerror=function(){nStatus('Couldn&rsquo;t open that image.');};img.src=URL.createObjectURL(f);};
  inp.click();}
@@ -250,7 +363,7 @@ function listenFor(s){
  rec.onerror=function(){};
  rec.onend=function(){if(!_walking)return;got=got.trim();
    if(s.kind==='text'){
-     if(got){$(s.field).value=(($(s.field).value)?$(s.field).value+' ':'')+got;saveState();updateSteps();}
+     if(got){$(s.field).value=(($(s.field).value)?$(s.field).value+' ':'')+got;saveState();updateSteps();runGoalRead(true);}
      _wi++;_retry=0;walkStep();
    } else {
      var yes=/\b(yes|yeah|yep|yup|it does|correct|true|sure|definitely|uh huh)\b/i.test(got);
@@ -347,6 +460,12 @@ function decode(){
   updateSteps();
   document.querySelector('.app').addEventListener('input',function(){saveState();updateSteps();});
   document.querySelector('.app').addEventListener('change',function(){saveState();updateSteps();});
+  var _gt=null;
+  $('goal').addEventListener('input',function(){clearTimeout(_gt);_gt=setTimeout(function(){runGoalRead(false);},320);});
+  ['gBase','gTarget','gMeasure','gWhen'].forEach(function(id){
+    $(id).addEventListener('change',function(){_gOvr[id]=true;});
+  });
+  runGoalRead(true);
 })();
 </script>
   <script src="/family-nav.js" defer></script>
