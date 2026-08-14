@@ -192,8 +192,8 @@ var CHK=['gBase','gTarget','gMeasure','gWhen','pMin','pEval','pLRE','pDenied'];
 
 /* ---------- save / resume ---------- */
 var LSK='espo_iep_v1';
-function saveState(){try{var d={goal:$('goal').value};CHK.forEach(function(k){d[k]=$(k).checked;});localStorage.setItem(LSK,JSON.stringify(d));}catch(e){}}
-function loadState(){try{var d=JSON.parse(localStorage.getItem(LSK)||'null');if(!d)return false;var any=false;if(d.goal){$('goal').value=d.goal;any=true;}CHK.forEach(function(k){if(d[k]){$(k).checked=true;any=true;}});return any;}catch(e){return false;}}
+function saveState(){try{var d={goal:$('goal').value};CHK.forEach(function(k){d[k]=$(k).checked;});d._auto=(typeof _gSet==='object'&&_gSet)?_gSet:{};localStorage.setItem(LSK,JSON.stringify(d));}catch(e){}}
+function loadState(){try{var d=JSON.parse(localStorage.getItem(LSK)||'null');if(!d)return false;var any=false;if(d.goal){$('goal').value=d.goal;any=true;}if(d._auto&&typeof d._auto==='object'){_gSet=d._auto;}CHK.forEach(function(k){if(d[k]){$(k).checked=true;any=true;}});return any;}catch(e){return false;}}
 function clearState(){try{localStorage.removeItem(LSK);}catch(e){}$('goal').value='';CHK.forEach(function(k){$(k).checked=false;});$('resume').classList.remove('on');$('report').style.display='none';_gOvr={};_gSet={};_gLast='';var _gb=$('gread');if(_gb){_gb.style.display='none';_gb.innerHTML='';}updateSteps();toast('Cleared.');}
 
 /* ---------- the goal reader (runs on your device, reads only what you pasted) ---------- */
