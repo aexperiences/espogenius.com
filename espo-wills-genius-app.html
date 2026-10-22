@@ -193,9 +193,10 @@ var WALK=[
  {say:"Last one. Are minor children involved?",kind:'bool',field:'cMinor'}
 ];
 var _wi=0,_walking=false,_wrec=null,_retry=0;
-function speak(t,cb){if(!('speechSynthesis' in window)){if(cb)cb();return;}try{speechSynthesis.cancel();}catch(e){}var u=new SpeechSynthesisUtterance(t);u.rate=1.0;u.onend=function(){if(cb)cb();};u.onerror=function(){if(cb)cb();};speechSynthesis.speak(u);}
+/* Oct 22 2026: Roz, the house voice in Turbo, never the device voice (SSOT A5.3.1) */ (function(){ if(window.AEVoice&&window.AEVoice.v>=2) return; var sc=document.createElement('script'); sc.src='https://www.aexperiences.com/ae-voice.js'; sc.async=true; (document.head||document.documentElement).appendChild(sc); })(); document.addEventListener('pointerdown',function(){ if(window.AEVoice&&window.AEVoice.v>=2) window.AEVoice.unlock(); },true);
+function speak(t,cb){ if(!(window.AEVoice&&window.AEVoice.v>=2)){ if(cb)cb(); return; } window.AEVoice.speak(String(t||''),{voice:'roz'}).then(function(){ if(cb)cb(); }); }
 function walkToggle(){if(_walking){walkStop();return;}var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){nStatus('Voice isn&rsquo;t supported on this browser &mdash; try Chrome, or just tap the answers.');return;}_walking=true;_wi=0;_retry=0;$('walkbtn').classList.add('rec');$('walkbtn').innerHTML='&#9209; Stop the walkthrough';walkStep();}
-function walkStop(){_walking=false;try{if(_wrec)_wrec.stop();}catch(e){}try{speechSynthesis.cancel();}catch(e){}_wrec=null;$('walkbtn').classList.remove('rec');$('walkbtn').innerHTML='&#127908; Walk me through it, out loud';$('steplbl').textContent='';markHot(null);}
+function walkStop(){_walking=false;try{if(_wrec)_wrec.stop();}catch(e){}try{if(window.AEVoice&&window.AEVoice.v>=2)window.AEVoice.stop();}catch(e){}_wrec=null;$('walkbtn').classList.remove('rec');$('walkbtn').innerHTML='&#127908; Walk me through it, out loud';$('steplbl').textContent='';markHot(null);}
 function markHot(id){var labs=document.querySelectorAll('label');for(var i=0;i<labs.length;i++)labs[i].classList.remove('hot');if(id){var e=$(id);if(e){var l=e.closest('label');if(l)l.classList.add('hot');}}}
 function walkStep(){if(!_walking)return;
  if(_wi>=WALK.length){$('steplbl').textContent='Reading it now…';markHot(null);speak("Thank you. Here's the honest read.",function(){decode();});walkStop2();return;}
@@ -217,8 +218,8 @@ function listenFor(s){var SR=window.SpeechRecognition||window.webkitSpeechRecogn
  try{rec.start();}catch(e){_wi++;walkStep();}}
 function narcText(){var el=$('reportbody');var t=el?(el.innerText||el.textContent||''):'';return t.replace(/ /g,' ').replace(/\s+/g,' ').trim();}
 function toggleStop(on){var s=$('stopread');if(s)s.style.display=on?'inline-block':'none';}
-function speakRead(){if(!('speechSynthesis' in window))return;var t=narcText();if(!t)return;try{speechSynthesis.cancel();}catch(e){}var u=new SpeechSynthesisUtterance(t);u.rate=0.98;u.onend=function(){toggleStop(false);};u.onerror=function(){toggleStop(false);};speechSynthesis.speak(u);toggleStop(true);}
-function stopRead(){try{speechSynthesis.cancel();}catch(e){}toggleStop(false);}
+function speakRead(){var t=narcText();if(!t||!(window.AEVoice&&window.AEVoice.v>=2))return;toggleStop(true);window.AEVoice.speak(String(t),{voice:'roz',maxWaitMs:12000}).then(function(){toggleStop(false);});}
+function stopRead(){try{if(window.AEVoice&&window.AEVoice.v>=2)window.AEVoice.stop();}catch(e){}toggleStop(false);}
 var LETTER='';
 function showLetter(){var w=$('letterwrap');w.style.display=(w.style.display==='none'||!w.style.display)?'block':'none';if(w.style.display==='block')w.scrollIntoView({behavior:'smooth'});}
 function copyCase(){var t='ESPO WILLS & PROBATE GENIUS — CASE FILE\n\n'+narcText()+(LETTER?'\n\n----- YOUR LETTER / CHECKLIST -----\n'+LETTER:'');if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){toast('Case file copied');},function(){toast('Could not copy');});}else{toast('Copy not supported — use Print');}}
